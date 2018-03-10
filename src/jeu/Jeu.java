@@ -1,0 +1,230 @@
+package jeu;
+
+import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+
+public class Jeu {
+	/**Entier qui indique quel joueur est en train de jouer */
+	int entrainjouer;
+	/**Entier qui indique a quel tour de jeu on est */
+	int tour;
+	/**Carte du jeu */
+	Map map;
+	/**Contexte graphique dans lequel on affiche le jeu */
+	GraphicsContext gc;
+	/**Entier qui décrit si on est: 0 dans le jeu; 1 dans le menu1(déplacement/attaque); 2 dans le menu2(changertour) */
+	int menu;
+	/**Position du curseur dans le menu 0 : attaquer et 1 : deplacer */
+	int positioncurseur1;
+	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
+	boolean update;
+	Gestionatq atq;
+	Gestiondepl depl;
+
+	
+/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
+	
+	/**
+	 * Constructeur de Jeu.
+	 * 
+	 * @param gc 
+	 * 		Contexte graphique dans lequel on affiche
+	 * 
+	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
+	 * 			
+	 */	
+	Jeu(GraphicsContext gc){
+		map = new Map();
+		tour = 0;
+		entrainjouer=0;
+		this.gc=gc;
+		menu=0;
+		positioncurseur1 = 0;
+		update=true;
+		atq = new Gestionatq(map);
+		depl = new Gestiondepl(map);
+	}
+/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
+	
+	void update() {
+		map.renderanim(gc); //animation des sprites
+		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
+			 map.render(gc);
+			 update=false;
+		}
+	
+	    if (menu==1) {
+	    		if (depl.deplacementencours) {
+	    			depl.render(this);
+	    		}
+	    		if (atq.attaqueencours) {
+	    			atq.render(this);
+	    		}
+	    }
+	    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
+			
+	}
+/*_Controle du clavier____________________________________________________________________________________________________________ */	
+	/**
+	 * Controle du clavier:
+	 * 
+	 * A permet de selectionner une case.
+	 * B permet de sortir du menu.
+	 * LEFT,RIGHT,UP,DOWN correspondent aux fleches pour se diriger.
+	 * 
+	 *@param code
+	 *		Code de la touche appuyee.
+	 * 
+	 */	
+	void touch(KeyCode code) {
+	    switch(code) {
+	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
+	    			switch(menu) {
+	    			case 1:
+		    				if (positioncurseur1==0) {
+		    					// gestion de l'attaque
+		    					menu = atq.attaque();
+		    				}
+		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
+		    					// gestion de deplacement
+		    					menu = depl.deplacement();
+		    				}
+		    				update=true;
+		    				break;
+	    			case 0:
+			    			System.out.print(map.selectionne);
+			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
+			    			else {menu=2; positioncurseur1=0;};	 
+			    			break;
+	    			case 2:
+	    					passertour();
+	    					break;
+	    			default:
+	    					break;
+	    			} 
+	    			break; 
+	    case B : 
+		    	depl.deplacementencours=false;menu=0;
+		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;} //pour faire revenir le curseur a l'unite qui attaque
+		    	update=true; break;
+		case LEFT:  
+					switch(menu) {
+					case 0: map.leftcurseur(); break;//on bouge sur la map
+					case 1:
+							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-1,depl.deplist))) {
+								map.leftcurseur(); //on selectionne case pour deplacement
+							}
+							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
+								atq.downenemi(); //on change la cible de l'attaque
+								map.adaptaffichage(map.selectionne.rang);
+							}
+							break;
+					default:
+							break;
+					} update=true; break;
+		case RIGHT: 
+					switch(menu) {
+					case 0: map.rightcurseur(); break;
+					case 1:
+							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+1,depl.deplist))) {
+								map.rightcurseur(); //on selectionne case pour deplacement
+							}
+							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
+								atq.upenemi();//on change la cible de l'attaque
+								map.adaptaffichage(map.selectionne.rang);
+							}
+							break;
+					default:
+							break;
+					} update=true;break;
+		case UP:  
+					switch(menu) {
+					case 1:
+							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-50,depl.deplist))) {
+								map.upcurseur();//on selectionne case pour deplacement
+							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {upcurseur1();} //on bouge curseur du menu
+							break;
+					case 0: map.upcurseur(); break;//on bouge curseur de map
+					default:
+							break;
+					} update=true; break; 
+		case DOWN: 
+					switch(menu) {
+					case 1:
+							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+50,depl.deplist))) {
+								map.downcurseur();//on selectionne case pour deplacement
+							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {downcurseur1();}//on bouge curseur du menu
+							break;
+					case 0: map.downcurseur(); break;//on bouge curseur de map
+					default:
+							break;
+					} update=true; break;
+	    default:
+	    		break;
+	    }
+	}
+/*_Affichage du menu1_____________________________________________________________________________________________________________ */	
+	/**
+	 * Affichage du menu de deplacement et d'attaque, true le montre en false le cache en recouvrant tout le coter(a adapter plus tard)
+	 * 			
+	 */	
+	void menurender() {
+		Image menucache = new Image("wood.jpg",400,600,false,false);
+		gc.drawImage(menucache, 600, 0);
+	    switch(menu) {
+	    case 1:
+				Image menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
+				Image curseur = new Image("curseurmenu1.png",200, 320, false, false);
+				gc.drawImage(menu1, 650, 50);
+				gc.drawImage(curseur, 650,50+positioncurseur1*52);
+				break;
+	    case 2:
+    			Image menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
+	    		Image curseur2 = new Image("curseurmenu1.png", 200, 320, false, false);
+	    		gc.drawImage(menu2, 650, 50);
+	    		gc.drawImage(curseur2, 650,50+positioncurseur1*52);
+	    		break;
+
+	    default:
+	    		break;
+		}
+	}
+
+/*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
+	
+	void upcurseur1() {if (positioncurseur1 != 0) {positioncurseur1 -= 1;}}
+	void downcurseur1() {if (positioncurseur1 != 1){positioncurseur1 += 1;}}
+	
+	
+	/**
+	 * 
+	 * @param e
+	 * @param list
+	 * @return true si l'entier e est dans la liste list, false sinon
+	 */
+	boolean inlist(int e, int[] list) {
+		for (int i=0;i<list.length;i++) {
+			if (list[i]==e) {
+				return true;
+			}
+		} return false;
+	}
+	
+	void passertour() {
+    	ArrayList<Unite> listeunit = map.equipe.get(entrainjouer);
+		entrainjouer++;	//Change de joueur
+		if (entrainjouer == map.nombrejoueur) {
+			entrainjouer = 0;
+		}
+		tour++; //Change de tour
+		menu=0;
+		for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
+			Unite temp = listeunit.get(k);
+			temp.valable=true;
+			temp.restdeplacement=temp.deplacement;
+		}
+	}
+}
