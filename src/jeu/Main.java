@@ -36,7 +36,7 @@ public class Main extends Application {
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	    Image fond = new Image("wood.jpg", WIDTH, HEIGHT, false, false); //sert pour le fond du menu a droite
-
+	    System.out.println("coucou");
 	    
 	    Jeu game = new Jeu(gc);	// Creation d'une partie
 	    game.map.map1(2); // Selection de la map
