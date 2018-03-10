@@ -32,7 +32,6 @@ public class Main extends Application {
 	    Scene scene = new Scene(root);
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
-	    System.out.println("coucou1");
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	    Image fond = new Image("wood.jpg", WIDTH, HEIGHT, false, false); //sert pour le fond du menu a droite
