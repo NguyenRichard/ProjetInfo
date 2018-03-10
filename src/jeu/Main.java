@@ -32,6 +32,7 @@ public class Main extends Application {
 	    Scene scene = new Scene(root);
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
+	    System.out.println("coucou");
 
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 
