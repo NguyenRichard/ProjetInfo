@@ -90,5 +90,6 @@ public class Case {
 		int distanceLin = Math.abs(this.rang/50-cible.rang/50);
 		return distanceCol + distanceLin;
 	}
+	//test mofification
 	
 }
