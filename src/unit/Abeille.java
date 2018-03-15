@@ -10,7 +10,7 @@ public class Abeille extends Unite{
 		images = new String[2];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;
-			images[k] = "abeille"+l+".png";
+			images[k] = "abeille/abeille"+l+".png";
 		}
 		deplacement=15;
 		restdeplacement=deplacement;
