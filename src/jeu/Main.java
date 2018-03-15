@@ -40,7 +40,7 @@ public class Main extends Application { //Nouveau test
 	    Jeu game = new Jeu(gc);	// Creation d'une partie
 	    game.map.map1(2); // Selection de la map
 	    gc.drawImage(fond, 0, 0);
-	    
+	    System.out.println("coucou");
 	    	/* Mouvement curseur */
 	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	        public void handle(KeyEvent e) {
