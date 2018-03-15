@@ -10,7 +10,7 @@ public class Scarabe extends Unite {
 		images = new String[6];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;
-			images[k] = "scarabe-"+l+".png";
+			images[k] = "scarabe/scarabe-"+l+".png";
 		}
 		deplacement=15;
 		restdeplacement=deplacement;

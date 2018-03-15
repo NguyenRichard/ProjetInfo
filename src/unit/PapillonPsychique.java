@@ -10,7 +10,7 @@ public class PapillonPsychique extends Unite{
 			images = new String[8];
 			for (int k = 0; k < images.length; k++ ) {
 				int l = k+1;
-				images[k] = "papillon-psychique-"+l+".png";
+				images[k] = "papillonpsychique/papillon-psychique-"+l+".png";
 			}
 			deplacement=15;
 			restdeplacement=deplacement;
