@@ -22,7 +22,7 @@ public class Gestionatq {
 		this.map=map;
 	}
 	
-	/**Application des degats a l'unite selectionne. Suppression de l'unite en cas de degats lethaux */
+	/**Applicationdes degats a l'unite selectionne. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
 		map.selectionne.unite.pv = map.selectionne.unite.pv - map.selectionnemenu.unite.dmg;
 		if (map.selectionne.unite.pv < 0) {
@@ -32,8 +32,10 @@ public class Gestionatq {
 		}
 		map.selectionnemenu.unite.valable=false;
 	}
-	
-	
+	/**
+	 * Verifie si l'attaque est en cours ou non et effectue l'attaque.
+	 * @return le boleen qui sera la prochaine valeur du menu.
+	 */
 	int attaque() {
 		if(attaqueencours) {
 			prisedegat();//effectue l'attaque et rend l'unite non valable
@@ -51,7 +53,7 @@ public class Gestionatq {
 	}
 
 	/**
-	 * Met a jour la atqlist pour la case selectionne
+	 * Met à jour la atqlist pour la case selectionne
 	 * 
 	 * @see Map#selectionne
 	 * @see #atqlist	

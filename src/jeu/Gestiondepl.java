@@ -45,14 +45,17 @@ public class Gestiondepl {
 			}
 		}
 	}
-	
+	/**
+	 * Verifie si le deplacement est en cours ou non pour et effectue le deplacement
+	 * @return le booleen qui correspond a la prochaine valeur du menu.
+	 */
 	int deplacement() {
 		if (deplacementencours) {
-			map.selectionnemenu.unite.restdeplacement -= map.selectionne.terrain.deplacement; //on prend en compte le cout en déplacement
+			map.selectionnemenu.unite.restdeplacement -= map.selectionne.terrain.deplacement; //on prend en compte le cout en deplacement
 			map.moveUnite(map.selectionnemenu,map.selectionne);
 			map.selectionnemenu = map.selectionne;
 			listUpdate();
-			if (map.selectionnemenu.unite.restdeplacement == 0) { // on arrive à 0 déplacements
+			if (map.selectionnemenu.unite.restdeplacement == 0) { // on arrive a� 0 deplacements
 				deplacementencours=false;
 				return 0;
 			}
