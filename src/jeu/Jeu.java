@@ -14,7 +14,7 @@ public class Jeu {
 	Map map;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
-	/**Entier qui décrit si on est: 0 dans le jeu; 1 dans le menu1(déplacement/attaque); 2 dans le menu2(changertour) */
+	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque); 2 dans le menu2(changertour) */
 	int menu;
 	/**Position du curseur dans le menu 0 : attaquer et 1 : deplacer */
 	int positioncurseur1;
