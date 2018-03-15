@@ -22,7 +22,7 @@ public class Gestionatq {
 		this.map=map;
 	}
 	
-	/**Applicationdes degats a l'unite selectionne. Suppression de l'unite en cas de degats lethaux */
+	/**Application des degats a l'unite selectionne. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
 		map.selectionne.unite.pv = map.selectionne.unite.pv - map.selectionnemenu.unite.dmg;
 		if (map.selectionne.unite.pv < 0) {
@@ -32,6 +32,7 @@ public class Gestionatq {
 		}
 		map.selectionnemenu.unite.valable=false;
 	}
+	
 	
 	int attaque() {
 		if(attaqueencours) {
@@ -50,7 +51,7 @@ public class Gestionatq {
 	}
 
 	/**
-	 * Met à jour la atqlist pour la case selectionne
+	 * Met a jour la atqlist pour la case selectionne
 	 * 
 	 * @see Map#selectionne
 	 * @see #atqlist	
