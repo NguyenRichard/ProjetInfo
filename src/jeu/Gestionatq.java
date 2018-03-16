@@ -8,12 +8,12 @@ import terrain.Void;
 public class Gestionatq {
 	
 	Map map;
-	ArrayList<Case> atqlist;
+	private ArrayList<Case> atqlist;
 	/**Tableau des cases a portee de l'unite sur la case selectionne et contenant une unite adverse,
 	 *  sert a la selection de l'unite pour l'attaque */
 	ArrayList<Case> atqenemi;
 	/**indice dans le tableau atqenemi de l'unite enemi selectionne par le curseur, sert pour changer la cible */
-	int numenemi;
+	private int numenemi;
 	/**Determine si une attaque est en cours */
 	boolean attaqueencours;
 	
