@@ -19,7 +19,7 @@ public class Void extends Terrain {
 		super(taille);
 		maxcompteur = 1;
 		images = new String[1];
-		images[0]="Void.png";
+		images[0]="terrains/Void.png";
 		deplacement=100;
 	}
 	public String toString() {

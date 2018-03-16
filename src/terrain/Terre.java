@@ -8,7 +8,7 @@ public class Terre extends Terrain{
 		super(taille);
 		maxcompteur = 1;
 		images = new String[1];
-		images[0]="terre.jpg";
+		images[0]="terrains/terre.jpg";
 		deplacement=1;
 	}
 	public String toString() {
