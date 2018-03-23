@@ -22,6 +22,7 @@ public class Jeu {
 	boolean update;
 	Gestionatq atq;
 	Gestiondepl depl;
+	Gestioncapture capt;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -45,6 +46,7 @@ public class Jeu {
 		update=true;
 		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map);
+		capt = new Gestioncapture(map);
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -91,6 +93,8 @@ public class Jeu {
 		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
 		    					// gestion de deplacement
 		    					menu = depl.deplacement();
+		    					capt.refreshCapture();
+		    					
 		    				}
 		    				update=true;
 		    				break;

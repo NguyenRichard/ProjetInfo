@@ -4,6 +4,8 @@ package jeu;
 public class Batiment extends Element{
 	/**Entier qui decrit l'appartenance du batiment a un joueur */
 	int joueur;
+	/**Entier qui decrit les points de vie du batimen*/
+	int pv;
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -21,6 +23,7 @@ public class Batiment extends Element{
 		super(taille);
 		maxcompteur = 1;	
 		joueur = 0;
+		pv = 100;
 		images = new String[0]; // Lorsque les types fille sont creees, mettre cette ligne dans le constructeur du type fille
 	}
 	public String toString() {
