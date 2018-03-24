@@ -7,6 +7,7 @@ public class Batiment extends Element{
 	/**Entier qui decrit les points de vie du batimen*/
 	int pv;
 	
+	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
 	/**
@@ -24,7 +25,8 @@ public class Batiment extends Element{
 		maxcompteur = 1;	
 		joueur = 0;
 		pv = 100;
-		images = new String[0]; // Lorsque les types fille sont creees, mettre cette ligne dans le constructeur du type fille
+		images = new String[1]; // Lorsque les types fille sont creees, mettre cette ligne dans le constructeur du type fille
+		images[0] = "batiment"+".png";
 	}
 	public String toString() {
 		return "batiment"; // A changer en methode abstraite avec le bon nom selon le type de batiment fille

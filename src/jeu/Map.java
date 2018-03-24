@@ -187,6 +187,12 @@ public class Map {
         plateau[rang].terrain=terrain;
     }
     
+    /**
+     * Fonction qui ajoute le batiment sur le rang "rang" de map.
+     */
+    void addbatiment(int rang, Batiment batiment) {
+    	plateau[rang].batiment=batiment;
+    }
     
     /**
      * Fonction qui ajoute l'unite "unite" sur le rang "rang" de map.
@@ -224,6 +230,7 @@ public class Map {
         addunite(105,new Scarabe(taillec,1),1);
         addunite(106,new Scarabe(taillec,1),1);
         addunite(107,new Scarabe(taillec,1),1);
+        addbatiment(157,new Batiment(taillec));
         this.affichageEquipe(0);
         this.affichageEquipe(1);
         

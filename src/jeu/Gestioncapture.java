@@ -13,7 +13,7 @@ public class Gestioncapture {
 	}
 	
 	public boolean verifCase() {
-		if (map.selectionnemenu.batiment != null) {
+		if (map.selectionnemenu.batiment != null && map.selectionnemenu.batiment.joueur != map.selectionnemenu.unite.joueur) {
 			return true;
 		}
 		return false;

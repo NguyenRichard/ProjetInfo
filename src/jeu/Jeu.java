@@ -14,14 +14,17 @@ public class Jeu {
 	Map map;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
-	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque); 2 dans le menu2(changertour) */
+	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour) */
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer et 1 : deplacer */
+	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer et 2 : capturer */
 	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
+	/**Objet contenant les methodes pour gerer l'attaque entre unites*/
 	Gestionatq atq;
+	/**Objet contenant les methodes pour gerer le deplacement des unites*/
 	Gestiondepl depl;
+	/**Objet contenant les methodes pour gerer la capture des batiments*/
 	Gestioncapture capt;
 
 	
@@ -95,6 +98,10 @@ public class Jeu {
 		    					menu = depl.deplacement();
 		    					capt.refreshCapture();
 		    					
+		    				}
+		    				else if (positioncurseur1==2) {
+		    					// gestion de la capture
+		    					menu = capt.capture();
 		    				}
 		    				update=true;
 		    				break;
@@ -194,13 +201,13 @@ public class Jeu {
 
 	    default:
 	    		break;
-		}
+		} 
 	}
 
 /*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
 	
 	void upcurseur1() {if (positioncurseur1 != 0) {positioncurseur1 -= 1;}}
-	void downcurseur1() {if (positioncurseur1 != 1){positioncurseur1 += 1;}}
+	void downcurseur1() {if (positioncurseur1 != 2){positioncurseur1 += 1;}}
 	
 	
 	/**
