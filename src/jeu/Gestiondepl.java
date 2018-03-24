@@ -52,6 +52,12 @@ public class Gestiondepl {
 	int deplacement() {
 		if (deplacementencours) {
 			map.selectionnemenu.unite.restdeplacement -= map.selectionne.terrain.deplacement; //on prend en compte le cout en deplacement
+			if (map.selectionnemenu.batiment != null) {
+				if (map.selectionnemenu.batiment.entraincapture) {
+					map.selectionnemenu.batiment.entraincapture=false;
+					map.selectionnemenu.batiment.pv=100;
+				}
+			}
 			map.moveUnite(map.selectionnemenu,map.selectionne);
 			map.selectionnemenu = map.selectionne;
 			listUpdate();

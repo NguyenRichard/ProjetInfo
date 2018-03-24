@@ -3,6 +3,7 @@ package jeu;
 
 import java.util.ArrayList;
 
+import batiments.Carregris;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import terrain.Terre;
@@ -230,7 +231,7 @@ public class Map {
         addunite(105,new Scarabe(taillec,1),1);
         addunite(106,new Scarabe(taillec,1),1);
         addunite(107,new Scarabe(taillec,1),1);
-        addbatiment(157,new Batiment(taillec));
+        addbatiment(157,new Carregris(taillec,0));
         this.affichageEquipe(0);
         this.affichageEquipe(1);
         

@@ -96,7 +96,6 @@ public class Jeu {
 		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
 		    					// gestion de deplacement
 		    					menu = depl.deplacement();
-		    					capt.refreshCapture();
 		    					
 		    				}
 		    				else if (positioncurseur1==2) {
