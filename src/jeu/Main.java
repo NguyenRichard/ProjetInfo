@@ -8,7 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -34,36 +33,52 @@ public class Main extends Application { //Nouveau test
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	   
-	    Image fond = new Image("wood.jpg", WIDTH, HEIGHT, false, false); //sert pour le fond du menu a droite
-	    
 	    Jeu game = new Jeu(gc);	// Creation d'une partie
-	    game.map.map1(2); // Selection de la map
-	    gc.drawImage(fond, 0, 0);
+		game.map.map1(2); // Selection de la map
 
-	    	/* Mouvement curseur */
-	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	        public void handle(KeyEvent e) {
-	        	game.touch(e.getCode());
-	        }
-	    });
-	    
-	    	/* Refresh animation */
-	    new AnimationTimer() {          
+    	/* Refresh animation */
+	   AnimationTimer animation = new AnimationTimer() {          
 	        public void handle(long arg0) {              
 	          
 
-	          game.update();
-	          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
-	          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-	          gc.setFill(Color.BISQUE);
-	          gc.setStroke(Color.BLACK);
-	          gc.setLineWidth(1);
-	          gc.fillText(txt, 650, 50 );
-	          gc.strokeText(txt, 650, 50 ); 
+		          game.update();
+		          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
+		          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+		          gc.setFill(Color.BISQUE);
+		          gc.setStroke(Color.BLACK);
+		          gc.setLineWidth(1);
+		          gc.fillText(txt, 650, 50 );
+		          gc.strokeText(txt, 650, 50 ); 
+	        	}
+	    };
+	    
+	    	/* Mouvement curseur */
+	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	        public void handle(KeyEvent e) {
+	        	if (game.ingame == false){
+	        		switch(e.getCode()) {
+	        		case ENTER:	
+	        		    	game.map.render(gc);
+	        		    	animation.start();
+	        		    	game.ingame = true;
+					default:
+						break;
+	        		}
+	        	}
+	        	else {
+	        			switch(e.getCode()) {
+	        			case Z:
+	        				animation.stop();
+	        				game.ingame = false;
+	        				gc.clearRect(0, 0, 1000, 600);
+						default:
+							break;
+	        			}
+		        		game.touch(e.getCode());
+	        	}
+	        	
 	        }
-	   }.start();
-	   
+	    });
 	   		/* Affichage scene */
 	   stage.setScene(scene);
 	   stage.show();
