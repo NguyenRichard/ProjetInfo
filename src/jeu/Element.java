@@ -47,16 +47,13 @@ public abstract class Element {
 	
 	void render(GraphicsContext gc, int x, int y) {
 		// Avec x, y sont les coordonnees sur l'ecran calculees grace a la Map
-		for (int k = 0; k < images.length; k++) {
-			if (animcompteur<=(k+1)*maxcompteur/images.length && animcompteur >= k*maxcompteur/images.length ) {
-				Image sprite = images[k];
-				gc.drawImage(sprite, x, y);
-				animcompteur += 1;
-				if (animcompteur > maxcompteur) {
-					animcompteur=0;
-				}
+			int k = animcompteur / (maxcompteur/images.length);
+			if (k >= images.length) {
+				animcompteur = 0;
+				k=0;
 			}
-		}
-
+			Image sprite = images[k];
+			gc.drawImage(sprite, x, y);
+			animcompteur += 1;
 	}
 }
