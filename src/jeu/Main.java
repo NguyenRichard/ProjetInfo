@@ -26,7 +26,7 @@ public class Main extends Application { //Nouveau test
 	    int WIDTH = 1000;	// Taille la carte 600x600 et le menu 400x600 a droite
 	    int HEIGHT = 600;	// Taille carte affichee 12x12 case (une case 50x50)
 
-	    stage.setTitle("Projet info");
+	    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
 	    stage.setResizable(false);
 
 	    Group root = new Group();
@@ -35,32 +35,29 @@ public class Main extends Application { //Nouveau test
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 	   
-	    Image fond = new Image("wood.jpg", WIDTH, HEIGHT, false, false); //sert pour le fond du menu a droite
 	    
+	    Menuprinc menu = new Menuprinc(gc); //Creation du menu
 	    Jeu game = new Jeu(gc);	// Creation d'une partie
 	    game.map.map1(2); // Selection de la map
-	    gc.drawImage(fond, 0, 0);
-
+	    
 	    	/* Mouvement curseur */
 	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	        public void handle(KeyEvent e) {
 	        	game.touch(e.getCode());
 	        }
 	    });
-	    
 	    	/* Refresh animation */
 	    new AnimationTimer() {          
-	        public void handle(long arg0) {              
-	          
-
-	          game.update();
+	        public void handle(long arg0) {
+	  		menu.render();
+	          /*game.update();
 	          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
 	          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 	          gc.setFill(Color.BISQUE);
 	          gc.setStroke(Color.BLACK);
 	          gc.setLineWidth(1);
 	          gc.fillText(txt, 650, 50 );
-	          gc.strokeText(txt, 650, 50 ); 
+	          gc.strokeText(txt, 650, 50 ); */
 	        }
 	   }.start();
 	   
