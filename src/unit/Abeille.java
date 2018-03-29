@@ -1,5 +1,6 @@
 package unit;
 
+import javafx.scene.image.Image;
 import jeu.Unite;
 
 public class Abeille extends Unite{
@@ -7,10 +8,10 @@ public class Abeille extends Unite{
 	public Abeille(int taille, int joueur) {
 		super(taille);
 		this.joueur = joueur;
-		images = new String[2];
+		images = new Image[2];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;
-			images[k] = "abeille/abeille"+l+".png";
+			images[k] = new Image("abeille/abeille"+l+".png",taille, taille,false,false);
 		}
 		deplacement=15;
 		restdeplacement=deplacement;

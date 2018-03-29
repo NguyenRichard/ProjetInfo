@@ -26,6 +26,7 @@ public class Jeu {
 	Gestiondepl depl;
 	/**Objet contenant les methodes pour gerer la capture des batiments*/
 	Gestioncapture capt;
+	Image menucache;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -50,6 +51,7 @@ public class Jeu {
 		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map);
 		capt = new Gestioncapture(map);
+		menucache = new Image("wood.jpg",400,600,false,false);
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -182,7 +184,6 @@ public class Jeu {
 	 * 			
 	 */	
 	void menurender() {
-		Image menucache = new Image("wood.jpg",400,600,false,false);
 		gc.drawImage(menucache, 600, 0);
 	    switch(menu) {
 	    case 1:

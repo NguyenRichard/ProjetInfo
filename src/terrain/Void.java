@@ -1,5 +1,6 @@
 package terrain;
 
+import javafx.scene.image.Image;
 import jeu.Terrain;
 
 public class Void extends Terrain {
@@ -18,8 +19,8 @@ public class Void extends Terrain {
 	public Void(int taille){
 		super(taille);
 		maxcompteur = 1;
-		images = new String[1];
-		images[0]="terrains/Void.png";
+		images = new Image[1];
+		images[0]=new Image("terrains/Void.png",taille, taille,false,false);
 		deplacement=100;
 	}
 	public String toString() {

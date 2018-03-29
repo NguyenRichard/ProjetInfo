@@ -1,5 +1,6 @@
 package unit;
 
+import javafx.scene.image.Image;
 import jeu.Unite;
 
 public class Scarabe extends Unite {
@@ -7,10 +8,10 @@ public class Scarabe extends Unite {
 	public Scarabe(int taille, int joueur) {
 		super(taille);
 		this.joueur = joueur; 
-		images = new String[6];
+		images = new Image[6];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;
-			images[k] = "scarabe/scarabe-"+l+".png";
+			images[k] = new Image("scarabe/scarabe-"+l+".png",taille, taille,false,false);
 		}
 		deplacement=15;
 		restdeplacement=deplacement;

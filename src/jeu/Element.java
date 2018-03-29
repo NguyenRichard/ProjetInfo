@@ -7,7 +7,7 @@ public abstract class Element {
 	/* Classe qui regroupe batiment, terrain et unite. */
 	
 	/**Nom de l'image du terrain */
-	protected String[] images;
+	protected Image[] images;
 	/**Taille d'un element */
 	int taille;
 	/**Compteur des sprites qui s'affichent**/
@@ -49,7 +49,7 @@ public abstract class Element {
 		// Avec x, y sont les coordonnees sur l'ecran calculees grace a la Map
 		for (int k = 0; k < images.length; k++) {
 			if (animcompteur<=(k+1)*maxcompteur/images.length && animcompteur >= k*maxcompteur/images.length ) {
-				Image sprite = new Image(images[k], taille, taille, false, false);
+				Image sprite = images[k];
 				gc.drawImage(sprite, x, y);
 				animcompteur += 1;
 				if (animcompteur > maxcompteur) {
