@@ -1,7 +1,5 @@
 package jeu;
 
-import java.util.ArrayList;
-
 public class Gestioncapture {
 	
 	Map map;

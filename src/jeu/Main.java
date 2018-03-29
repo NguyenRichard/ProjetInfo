@@ -34,32 +34,57 @@ public class Main extends Application { //Nouveau test
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	   
-	    
-	    Menuprinc menu = new Menuprinc(gc); //Creation du menu
+	   	Menuprinc menu = new Menuprinc(gc); //Creation du menu
 	    Jeu game = new Jeu(gc);	// Creation d'une partie
-	    game.map.map1(2); // Selection de la map
+		game.map.map1(2); // Selection de la map
+		menu.render();
+
+    	/* Refresh animation */
+	   AnimationTimer animation = new AnimationTimer() {          
+	        public void handle(long arg0) {              
+	          
+
+		          game.update();
+		          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
+		          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+		          gc.setFill(Color.BISQUE);
+		          gc.setStroke(Color.BLACK);
+		          gc.setLineWidth(1);
+		          gc.fillText(txt, 650, 50 );
+		          gc.strokeText(txt, 650, 50 ); 
+	        	}
+	    };
 	    
+
 	    	/* Mouvement curseur */
 	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	        public void handle(KeyEvent e) {
-	        	game.touch(e.getCode());
+	        	if (game.ingame == false){
+	        		switch(e.getCode()) {
+	        		case ENTER:	
+	        		    	game.map.render(gc);
+	        		    	animation.start();
+	        		    	game.ingame = true;
+					default:
+						break;
+	        		}
+	        	}
+	        	else {
+	        			switch(e.getCode()) {
+	        			case Z:
+	        				animation.stop();
+	        				game.ingame = false;
+	        				gc.clearRect(0, 0, 1000, 600);
+	        				menu.render();
+						default:
+							break;
+	        			}
+		        		game.touch(e.getCode());
+	        	}
+	        	
 	        }
 	    });
-	    	/* Refresh animation */
-	    new AnimationTimer() {          
-	        public void handle(long arg0) {
-	  		menu.render();
-	          /*game.update();
-	          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
-	          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-	          gc.setFill(Color.BISQUE);
-	          gc.setStroke(Color.BLACK);
-	          gc.setLineWidth(1);
-	          gc.fillText(txt, 650, 50 );
-	          gc.strokeText(txt, 650, 50 ); */
-	        }
-	   }.start();
+
 	   
 	   		/* Affichage scene */
 	   stage.setScene(scene);

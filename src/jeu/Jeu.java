@@ -27,6 +27,9 @@ public class Jeu {
 	/**Objet contenant les methodes pour gerer la capture des batiments*/
 	Gestioncapture capt;
 	Image menucache;
+	boolean ingame;
+	/**MenuInfo */
+	MenuInfo menuinfo;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -52,6 +55,8 @@ public class Jeu {
 		depl = new Gestiondepl(map);
 		capt = new Gestioncapture(map);
 		menucache = new Image("wood.jpg",400,600,false,false);
+		ingame = false;
+		menuinfo = new MenuInfo(gc,map);
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -71,6 +76,7 @@ public class Jeu {
 	    		}
 	    }
 	    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+		menuinfo.MenuInforender();
 	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
 			
 	}
@@ -238,4 +244,5 @@ public class Jeu {
 			temp.restdeplacement=temp.deplacement;
 		}
 	}
+
 }

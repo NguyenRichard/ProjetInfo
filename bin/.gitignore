@@ -6,6 +6,7 @@
 /greencontour.png
 /greensquare.png
 /jeu/
+<<<<<<< HEAD
 /menu1(10x16).png
 /menu2(10x16).jpg
 /nuage.jpg
@@ -19,3 +20,15 @@
 /wood.jpg
 /Insect world war.png
 /InsectWorldWar.png
+=======
+/abeille/
+/abeillesamouraille/
+/papillonpsychique/
+/scarabe/
+/terrain/
+/terrains/
+/batiment.png
+/batiments/
+/unit/
+/MenuSelection.class
+>>>>>>> branch 'master' of https://github.com/NguyenRichard/ProjetInfo
