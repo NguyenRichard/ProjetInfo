@@ -28,7 +28,6 @@ public class MenuInfo {
 			int maxcompteur = selectionne.unite.maxcompteur;
 			this.images = selectionne.unite.images;
 			int k = animcompteur / (maxcompteur/images.length);
-			System.out.println(k);
 			if (k >= images.length) {
 				animcompteur = 0;
 				k=0;

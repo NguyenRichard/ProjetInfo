@@ -36,7 +36,6 @@ public class Main extends Application { //Nouveau test
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 	   	Menuprinc menu = new Menuprinc(gc); //Creation du menu
 	    Jeu game = new Jeu(gc);	// Creation d'une partie
-		game.map.map1(2); // Selection de la map
 		menu.render();
 
     	/* Refresh animation */
@@ -62,6 +61,7 @@ public class Main extends Application { //Nouveau test
 	        	if (game.ingame == false){
 	        		switch(e.getCode()) {
 	        		case ENTER:	
+	        				game.map.map1(2);
 	        		    	game.map.render(gc);
 	        		    	animation.start();
 	        		    	game.ingame = true;
@@ -73,7 +73,7 @@ public class Main extends Application { //Nouveau test
 	        			switch(e.getCode()) {
 	        			case Z:
 	        				animation.stop();
-	        				game.ingame = false;
+	        				game.fin();
 	        				gc.clearRect(0, 0, 1000, 600);
 	        				menu.render();
 						default:

@@ -244,5 +244,18 @@ public class Jeu {
 			temp.restdeplacement=temp.deplacement;
 		}
 	}
+	void fin() {
+		map = new Map();
+		tour = 0;
+		entrainjouer=0;
+		menu=0;
+		positioncurseur1 = 0;
+		update=true;
+		atq = new Gestionatq(map);
+		depl = new Gestiondepl(map);
+		capt = new Gestioncapture(map);
+		ingame = false;
+		menuinfo = new MenuInfo(gc,map);
+	}
 
 }
