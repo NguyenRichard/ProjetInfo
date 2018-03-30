@@ -14,14 +14,22 @@ public class Jeu {
 	Map map;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
-	/**Entier qui décrit si on est: 0 dans le jeu; 1 dans le menu1(déplacement/attaque); 2 dans le menu2(changertour) */
+	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour) */
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer et 1 : deplacer */
+	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer et 2 : capturer */
 	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
+	/**Objet contenant les methodes pour gerer l'attaque entre unites*/
 	Gestionatq atq;
+	/**Objet contenant les methodes pour gerer le deplacement des unites*/
 	Gestiondepl depl;
+	/**Objet contenant les methodes pour gerer la capture des batiments*/
+	Gestioncapture capt;
+	Image menucache;
+	boolean ingame;
+	/**MenuInfo */
+	MenuInfo menuinfo;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -45,6 +53,10 @@ public class Jeu {
 		update=true;
 		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map);
+		capt = new Gestioncapture(map);
+		menucache = new Image("wood.jpg",400,600,false,false);
+		ingame = false;
+		menuinfo = new MenuInfo(gc,map);
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -64,6 +76,7 @@ public class Jeu {
 	    		}
 	    }
 	    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+		menuinfo.MenuInforender();
 	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
 			
 	}
@@ -91,6 +104,11 @@ public class Jeu {
 		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
 		    					// gestion de deplacement
 		    					menu = depl.deplacement();
+		    					
+		    				}
+		    				else if (positioncurseur1==2) {
+		    					// gestion de la capture
+		    					menu = capt.capture();
 		    				}
 		    				update=true;
 		    				break;
@@ -172,7 +190,6 @@ public class Jeu {
 	 * 			
 	 */	
 	void menurender() {
-		Image menucache = new Image("wood.jpg",400,600,false,false);
 		gc.drawImage(menucache, 600, 0);
 	    switch(menu) {
 	    case 1:
@@ -190,13 +207,13 @@ public class Jeu {
 
 	    default:
 	    		break;
-		}
+		} 
 	}
 
 /*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
 	
 	void upcurseur1() {if (positioncurseur1 != 0) {positioncurseur1 -= 1;}}
-	void downcurseur1() {if (positioncurseur1 != 1){positioncurseur1 += 1;}}
+	void downcurseur1() {if (positioncurseur1 != 2){positioncurseur1 += 1;}}
 	
 	
 	/**
@@ -227,4 +244,18 @@ public class Jeu {
 			temp.restdeplacement=temp.deplacement;
 		}
 	}
+	void fin() {
+		map = new Map();
+		tour = 0;
+		entrainjouer=0;
+		menu=0;
+		positioncurseur1 = 0;
+		update=true;
+		atq = new Gestionatq(map);
+		depl = new Gestiondepl(map);
+		capt = new Gestioncapture(map);
+		ingame = false;
+		menuinfo = new MenuInfo(gc,map);
+	}
+
 }

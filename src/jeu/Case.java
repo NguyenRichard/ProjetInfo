@@ -46,7 +46,7 @@ public class Case {
 			affichage = affichage+"Unite: aucune"+"\n";
 		}
 		if (this.batiment !=null) {
-			affichage = affichage+"Batiment: "+this.batiment.toString()+"\n";
+			affichage = affichage+"Batiment: "+this.batiment.toString()+this.batiment.joueur+"\n";
 		}
 		else {
 			affichage = affichage+"Batiment: aucun"+"\n";
@@ -90,5 +90,6 @@ public class Case {
 		int distanceLin = Math.abs(this.rang/50-cible.rang/50);
 		return distanceCol + distanceLin;
 	}
+	//test mofification
 	
 }

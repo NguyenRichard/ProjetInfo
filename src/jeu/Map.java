@@ -3,6 +3,7 @@ package jeu;
 
 import java.util.ArrayList;
 
+import batiments.Carregris;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import terrain.Terre;
@@ -187,12 +188,30 @@ public class Map {
         plateau[rang].terrain=terrain;
     }
     
+    /**
+     * Fonction qui ajoute le batiment sur le rang "rang" de map.
+     */
+    void addbatiment(int rang, Batiment batiment) {
+    	plateau[rang].batiment=batiment;
+    }
+    
+    /**
+     * Fonction qui ajoute l'unite "unite" sur le rang "rang" de map.
+     * "joueur" sert a preciser a quelle equipe appartient l'unite.
+     * L'unite est ici ajoute a la liste des unites du joueur "joueur" 
+     */
     void addunite(int rang, Unite unite,int joueur) {
     		plateau[rang].unite=unite;
     		ArrayList<Unite> temp = equipe.get(joueur);
     		temp.add(unite);
     }
     
+    /**
+     * Fonction servant a generer la map utilisee pour nos test avec le nombre de joueur "nombrejoueur".
+     * Pour l'instant ce n'est pas tres optimal, on prevoit de pouvoir sauvegarder des maps sous un format 
+     * de fichier que l'on pourra generer a l'aide d'un editeur de map
+     * @param nombrejoueur
+     */
     void map1(int nombrejoueur) {
         int k = 1;
         this.nombrejoueur=nombrejoueur;
@@ -212,6 +231,7 @@ public class Map {
         addunite(105,new Scarabe(taillec,1),1);
         addunite(106,new Scarabe(taillec,1),1);
         addunite(107,new Scarabe(taillec,1),1);
+        addbatiment(157,new Carregris(taillec,0));
         this.affichageEquipe(0);
         this.affichageEquipe(1);
         
@@ -225,7 +245,7 @@ public class Map {
 		gc.drawImage(curseur, x, y);
     }
     
-    /*_Affichage equipe_______________________________________________________________________________________________________ */
+    /*_Affichage equipe dans le terminal______________________________________________________________________________________ */
     
     void affichageEquipe(int joueur) {
     	ArrayList<Unite> temp = equipe.get(joueur);
@@ -238,7 +258,7 @@ public class Map {
     /**
      * 
      * @param rang a tester
-     * @return vrai si dans affichage et faux sinon. Utilise kdefine et rangcorner
+     * @return vrai si le rang est compris dans la fenetre d'affichage et faux sinon. Utilise kdefine et rangcorner
      * 
      * @see #rangcorner
      * @see #kdefine(int)

@@ -29,16 +29,12 @@ public abstract class Unite extends Element{
 	 */
 	protected Unite(int taille){
 		super(taille);
-		/*joueur = 0; // Lorsque les types filles sont creees, mettre cette ligne dans le constructeur du type fille
-		image = "rond.png"; // Lorsque les types filles sont creees, mettre cette ligne dans le constructeur du type fille
-		deplacement=0; // Lorsque les types filles sont creees, mettre cette ligne dans le constructeur du type fille
-		*/
 		valable=false;
 	}
 	public abstract String toString() ;
 	
 	/**
-	 * Sert Ã  dire si l'unite appartient au joueur en train de jouer.
+	 * Sert a  dire si l'unite appartient au joueur en train de jouer.
 	 * 
 	 */
 	boolean goodplayer(int joueur) {

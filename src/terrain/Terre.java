@@ -1,5 +1,6 @@
 package terrain;
 
+import javafx.scene.image.Image;
 import jeu.Terrain;
 
 public class Terre extends Terrain{
@@ -7,8 +8,8 @@ public class Terre extends Terrain{
 	public Terre(int taille){
 		super(taille);
 		maxcompteur = 1;
-		images = new String[1];
-		images[0]="terre.jpg";
+		images = new Image[1];
+		images[0]=new Image("terrains/terre.jpg",taille, taille,false,false);
 		deplacement=1;
 	}
 	public String toString() {
