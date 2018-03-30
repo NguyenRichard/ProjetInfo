@@ -10,7 +10,7 @@ public abstract class Unite extends Element{
 	/**Entier qui decrit le nombre de case que l'unite peut encore parcourir (pour les déplacements en cours). */
 	protected int restdeplacement;
 	/**Entier representant la portee de l'unite */
-	protected int portee;
+	protected int[] portee;
 	/**Entier qui represente le nombre de vie*/
 	protected int pv;
 	/**Entier qui represente le nombre d'attaque*/

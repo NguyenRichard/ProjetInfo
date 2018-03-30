@@ -17,7 +17,7 @@ public class Scarabe extends Unite {
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 75;
-		portee = 2;
+		portee = new int[] {0,2};
 		pv=99;
 		dmg=1;
 		

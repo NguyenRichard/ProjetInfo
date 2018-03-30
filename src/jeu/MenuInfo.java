@@ -50,13 +50,24 @@ public class MenuInfo {
 	        gc.fillText(txt2, 750, 200);
 	        gc.strokeText(txt2, 750, 200);
 	        
-	        String txt3 = "portee : " + map.selectionne.unite.portee;
-	        gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-	        gc.setFill(Color.BISQUE);
-	        gc.setStroke(Color.BLACK);
-	        gc.setLineWidth(1);
-	        gc.fillText(txt3, 750, 250);
-	        gc.strokeText(txt3, 750, 250);
+	        if (map.selectionne.unite.portee[0] != 0) { //affichage dans menuinfo de la portee avec un minimum
+	        	String txt3 = "portee : " + map.selectionne.unite.portee[0] + "~" + map.selectionne.unite.portee[1];
+	        	gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+		        gc.setFill(Color.BISQUE);
+		        gc.setStroke(Color.BLACK);
+		        gc.setLineWidth(1);
+		        gc.fillText(txt3, 750, 250);
+		        gc.strokeText(txt3, 750, 250);
+	        } 
+	        else { //affichage dans menuinfo de la portee sans minimum
+	        	String txt3 = "portee : " + map.selectionne.unite.portee[1];
+	        	gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+		        gc.setFill(Color.BISQUE);
+		        gc.setStroke(Color.BLACK);
+		        gc.setLineWidth(1);
+		        gc.fillText(txt3, 750, 250);
+		        gc.strokeText(txt3, 750, 250);
+	        }
 	
 		} else if (selectionne.batiment!=null) {
 			this.images = selectionne.batiment.images;

@@ -17,7 +17,7 @@ public class AbeilleSamourai extends Unite{
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 50;
-		portee = 1;
+		portee = new int[] {0,1};
 		pv=99;
 		dmg=1;
 	}
