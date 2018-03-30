@@ -60,7 +60,7 @@ public class Main extends Application { //Nouveau test
 	        public void handle(KeyEvent e) {
 	        	if (game.ingame == false){
 	        		switch(e.getCode()) {
-	        		case ENTER:	
+	        		case ENTER:	               //Lorsqu'on appuye sur entree ca lance une partie avec la map1
 	        				game.map.map1(2);
 	        		    	game.map.render(gc);
 	        		    	animation.start();
@@ -71,7 +71,7 @@ public class Main extends Application { //Nouveau test
 	        	}
 	        	else {
 	        			switch(e.getCode()) {
-	        			case Z:
+	        			case Z: 				// Si on appuye sur Z pendant une partie, on arrete la partie et on reset jeu.
 	        				animation.stop();
 	        				game.fin();
 	        				gc.clearRect(0, 0, 1000, 600);

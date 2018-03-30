@@ -230,6 +230,10 @@ public class Jeu {
 		} return false;
 	}
 	
+	/**
+	 * Incremente le nombre de tour, change le joueur qui est entrain de jouee et reinitialisation du booleen valable
+	 * pour pouvoir rejouer les unites.
+	 */
 	void passertour() {
     	ArrayList<Unite> listeunit = map.equipe.get(entrainjouer);
 		entrainjouer++;	//Change de joueur
@@ -244,6 +248,9 @@ public class Jeu {
 			temp.restdeplacement=temp.deplacement;
 		}
 	}
+	/**
+	 * Reinitialise jeu lorsque l'on arrete la partie.
+	 */
 	void fin() {
 		map = new Map();
 		tour = 0;
