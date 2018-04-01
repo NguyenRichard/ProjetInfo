@@ -13,7 +13,7 @@ public class AbeilleSamourai extends Unite{
 			int l = k+1;
 			images[k] = new Image("abeillesamouraille/abeille-samouraille-"+l+".png",taille, taille,false,false);
 		}
-		deplacement=15;
+		deplacement=2;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 50;

@@ -16,7 +16,7 @@ public class Dijkstra {
 		this.sommetdepart =sommetdepart;
 		nbsommets = g.nbSommet();
 		sommets = new int[nbsommets][3];
-		
+		//System.out.println(nbsommets);
 		for (int k=0;k<nbsommets;k++) {
 			sommets[k][0] = INF;
 			sommets[k][2] = 1;
@@ -34,11 +34,11 @@ public class Dijkstra {
 	
 	int runDijkstra() {
 		int sommetenvisite = sommetdepart;
-		displaytot(sommets);
+		//displaytot(sommets);
 		while (sommets[sommetcible][2]==1) {
-			System.out.println(sommetenvisite);
+			//System.out.println(sommetenvisite);
 			visiteSommet(sommetenvisite);
-			displaytot(sommets);
+			//displaytot(sommets);
 			sommetenvisite = plusPetitNonVisité();
 			if (sommetenvisite==-1) {
 				return sommets[sommetcible][0];
@@ -105,6 +105,9 @@ public class Dijkstra {
 	
 	int[] chemin() {
 		int[] chemin = new int[sommets.length];
+		for (int i=0;i<sommets.length;i++) {
+			chemin[i]=-1;
+		}
 		int suiveurchemin = sommetcible;
 		chemin[0]=sommetcible;
 		int k = 1;

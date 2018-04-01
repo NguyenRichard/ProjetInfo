@@ -8,14 +8,16 @@ public class CreateGrapheDepl {
 	int centre;
 	int Nmatricedepl;
 	Map map;
+	int entraindejouer;
 	
-	public CreateGrapheDepl(int depl,int firstcase,int centre, int Nmatricedepl, Map map) {
+	public CreateGrapheDepl(int depl,int firstcase,int centre, int Nmatricedepl, Map map, int entraindejouer) {
 		this.depl=depl;
 		this.firstcase=firstcase;
 		this.centre=centre;
 		this.Nmatricedepl=Nmatricedepl;
 		this.map=map;
 		this.cases=transforme();
+		this.entraindejouer=entraindejouer;
 	}
 	
 	Graphe generate() {
@@ -57,13 +59,19 @@ public class CreateGrapheDepl {
 		int[][] res = new int[N][N];
 		for (int i=0;i<N;i++) {
 			for (int j=0;j<N;j++) {
-				res[i][j]=map.plateau[i*NN+j].terrain.deplacement;
+				if ((map.plateau[firstcase+i*NN+j].unite!=null)&&(map.plateau[firstcase+i*NN+j].unite.joueur!=entraindejouer)) {
+					res[i][j]=100;
+				}
+				else {
+					res[i][j]=map.plateau[firstcase+i*NN+j].terrain.deplacement;
+				}
 			}
 		}
+		cases=res;
 		return res;
 	}
 	
-	void reversechemin(int[] chemin) {
+	int[] reversechemin(int[] chemin) {
 		int longueur = 0;
 		int i=0;
 		while ((chemin[i]!=-1)&&(i<chemin.length)) {
@@ -71,11 +79,12 @@ public class CreateGrapheDepl {
 			i++;
 		}
 		int[] res = new int[longueur];
-		for (int j=0;j<longueur/2;j++) {
+		for (int j=0;j<=longueur/2;j++) {
 			res[j]=chemin[longueur-1-j];
 			res[longueur-1-j]=chemin[j];
 		}
-		chemin=res;
+	
+		return res;
 	}
 	
 	
