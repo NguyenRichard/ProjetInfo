@@ -63,7 +63,8 @@ public class Gestionatq {
 	 */
 	void listcaseaportee() {
 		int rang = map.selectionnemenu.rang;
-		int portee = map.selectionnemenu.unite.portee;
+		int portee = map.selectionnemenu.unite.portee[1];
+		int porteemin = map.selectionnemenu.unite.portee[0];
 		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
 		int col = rang%50;
 		int lign = rang/50;
@@ -82,7 +83,7 @@ public class Gestionatq {
 				k=coldeb + ((k/50)+1)*50; //si on atteint le bord droit du carre que l'on veut balayer on revient a la ligne
 			
 			} 
-			if ((map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) {
+			if ((map.selectionnemenu.distance(map.plateau[k]) > porteemin) && (map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) {
 				atqlist.add(map.plateau[k]);
 			}
 				

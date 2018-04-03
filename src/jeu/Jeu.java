@@ -52,7 +52,7 @@ public class Jeu {
 		positioncurseur1 = 0;
 		update=true;
 		atq = new Gestionatq(map);
-		depl = new Gestiondepl(map);
+		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menucache = new Image("wood.jpg",400,600,false,false);
 		ingame = false;
@@ -70,6 +70,7 @@ public class Jeu {
 	    if (menu==1) {
 	    		if (depl.deplacementencours) {
 	    			depl.render(this);
+	    			depl.arrowrender(this);
 	    		}
 	    		if (atq.attaqueencours) {
 	    			atq.render(this);
@@ -259,7 +260,7 @@ public class Jeu {
 		positioncurseur1 = 0;
 		update=true;
 		atq = new Gestionatq(map);
-		depl = new Gestiondepl(map);
+		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		ingame = false;
 		menuinfo = new MenuInfo(gc,map);
