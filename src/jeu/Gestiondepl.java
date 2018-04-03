@@ -78,16 +78,16 @@ public class Gestiondepl {
 				chemin[k]=(chemin[k]/(2*depl+1))*50+chemin[k]%(2*depl+1)+firstcase;
 			}
 			
-			Image basdroite = new Image("flèche/bas-droite.png", 50, 50, false, false);
-			Image basgauche = new Image("flèche/bas-gauche.png", 50, 50, false, false);
-			Image hautdroite = new Image("flèche/haut-droite.png", 50, 50, false, false);
-			Image hautgauche = new Image("flèche/bas-gauche.png", 50, 50, false, false);
-			Image flechebas = new Image("flèche/flèche-bas.png", 50, 50, false, false);
-			Image flechehaut = new Image("flèche/flèche-haut.png", 50, 50, false, false);
-			Image flechedroite = new Image("flèche/flèche-droite.png", 50, 50, false, false);
-			Image flechegauche = new Image("flèche/flèche-gauche.png", 50, 50, false, false);
-			Image droithoriz = new Image("flèche/droit-horiz.png", 50, 50, false, false);
-			Image droitverti = new Image("flèche/droit-verti.png", 50, 50, false, false);
+			Image basdroite = new Image("fleche/bas-droite.png", 50, 50, false, false);
+			Image basgauche = new Image("fleche/bas-gauche.png", 50, 50, false, false);
+			Image hautdroite = new Image("fleche/haut-droite.png", 50, 50, false, false);
+			Image hautgauche = new Image("fleche/bas-gauche.png", 50, 50, false, false);
+			Image flechebas = new Image("fleche/fleche-bas.png", 50, 50, false, false);
+			Image flechehaut = new Image("fleche/fleche-haut.png", 50, 50, false, false);
+			Image flechedroite = new Image("fleche/fleche-droite.png", 50, 50, false, false);
+			Image flechegauche = new Image("fleche/fleche-gauche.png", 50, 50, false, false);
+			Image droithoriz = new Image("fleche/droit-horiz.png", 50, 50, false, false);
+			Image droitverti = new Image("fleche/droit-verti.png", 50, 50, false, false);
 			
 			for (int i=1;i<chemin.length-1;i++) {
 				if (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+50))) {

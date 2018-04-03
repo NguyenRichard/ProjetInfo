@@ -39,7 +39,7 @@ public class Dijkstra {
 			//System.out.println(sommetenvisite);
 			visiteSommet(sommetenvisite);
 			//displaytot(sommets);
-			sommetenvisite = plusPetitNonVisité();
+			sommetenvisite = plusPetitNonVisite();
 			if (sommetenvisite==-1) {
 				return sommets[sommetcible][0];
 			}
@@ -73,7 +73,7 @@ public class Dijkstra {
 		sommets[sommet][2]=0;
 	}
 	
-	int plusPetitNonVisité() {
+	int plusPetitNonVisite() {
 		int res = INF;
 		int rang = -1;
 		for (int i = 0;i<sommets.length;i++) {
