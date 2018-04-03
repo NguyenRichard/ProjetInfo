@@ -23,25 +23,24 @@ public class Main extends Application { //Nouveau test
 	    launch(args);    
 	}
 	public void start(Stage stage){
-	    int WIDTH = 1000;	// Taille la carte 600x600 et le menu 400x600 a droite
-	    int HEIGHT = 600;	// Taille carte affichee 12x12 case (une case 50x50)
-
-	    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
-	    stage.setResizable(false);
-
-	    Group root = new Group();
-	    Scene scene = new Scene(root);
-	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
-	    root.getChildren().add(canvas);
-	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	   	Menuprinc menu = new Menuprinc(gc); //Creation du menu
-	    Jeu game = new Jeu(gc);	// Creation d'une partie
-		menu.render();
-
-    	/* Refresh animation */
-	   AnimationTimer animation = new AnimationTimer() {          
-	        public void handle(long arg0) {              
-	          
+		    int WIDTH = 1000;	// Taille la carte 600x600 et le menu 400x600 a droite
+		    int HEIGHT = 600;	// Taille carte affichee 12x12 case (une case 50x50)
+	
+		    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
+		    stage.setResizable(false);
+	
+		    Group root = new Group();
+		    Scene scene = new Scene(root);
+		    Canvas canvas = new Canvas(WIDTH, HEIGHT);
+		    root.getChildren().add(canvas);
+		    GraphicsContext gc = canvas.getGraphicsContext2D();
+		   	Menuprinc menu = new Menuprinc(gc); //Creation du menu
+		    Jeu game = new Jeu(gc);	// Creation d'une partie
+			menu.render();
+	
+	    	/* Refresh animation */
+		   AnimationTimer animation = new AnimationTimer() {          
+		        public void handle(long arg0) {              
 
 		          game.update();
 		          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
