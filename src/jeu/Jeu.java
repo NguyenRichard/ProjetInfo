@@ -43,8 +43,8 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc){
-		map = new Map();
+	Jeu(GraphicsContext gc, Map map){
+		this.map = map;
 		tour = 0;
 		entrainjouer=0;
 		this.gc=gc;
@@ -94,6 +94,7 @@ public class Jeu {
 	 * 
 	 */	
 	void touch(KeyCode code) {
+		if (ingame) {
 	    switch(code) {
 	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
 	    			switch(menu) {
@@ -184,6 +185,7 @@ public class Jeu {
 	    default:
 	    		break;
 	    }
+		}
 	}
 /*_Affichage du menu1_____________________________________________________________________________________________________________ */	
 	/**
@@ -252,8 +254,9 @@ public class Jeu {
 	/**
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
-	void fin() {
-		map = new Map();
+
+	void fin(Map map) {
+		this.map=map;
 		tour = 0;
 		entrainjouer=0;
 		menu=0;

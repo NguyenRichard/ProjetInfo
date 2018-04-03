@@ -9,6 +9,7 @@ public abstract class Batiment extends Element{
 	protected boolean entraincapture;
 	
 	
+	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
 	/**

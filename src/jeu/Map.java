@@ -1,8 +1,8 @@
 
 package jeu;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import batiments.Carregris;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -15,7 +15,6 @@ import unit.Scarabe;
 
 
 public class Map {
-	
 	/** Tableau de case qui represente la carte du jeu*/
 	Case[] plateau; 
 	/**Image du curseur */
@@ -44,12 +43,12 @@ public class Map {
 	 */	
 	Map(){
 		taillec=50;
-		Case[] plateau = new Case[2500];
+		Case[] plateau = new Case[2501];
         equipe = new ArrayList<ArrayList<Unite>>();
 		rangcorner=0;
 		for (int k = 0; k < plateau.length; k++) {
 			// Boucle qui initialise les cases du plateau
-			plateau[k] = new Case(rangcorner,taillec,k);
+			plateau[k] = new Case(taillec,k);
 		}
 		this.plateau = plateau;
 		curseur = new Image("cursor2.png", taillec, taillec,false,false);
@@ -206,6 +205,11 @@ public class Map {
     		temp.add(unite);
     }
     
+    void delunite(Unite unite,int joueur) {
+    	ArrayList<Unite> temp = equipe.get(joueur);
+    	temp.remove(unite);
+    }
+    
     /**
      * Fonction servant a generer la map utilisee pour nos test avec le nombre de joueur "nombrejoueur".
      * Pour l'instant ce n'est pas tres optimal, on prevoit de pouvoir sauvegarder des maps sous un format 
@@ -236,6 +240,7 @@ public class Map {
         this.affichageEquipe(1);
         
     }
+    
     
     /*_Affichage du curseur___________________________________________________________________________________________________ */
     

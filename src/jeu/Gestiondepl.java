@@ -81,7 +81,7 @@ public class Gestiondepl {
 			Image basdroite = new Image("fleche/bas-droite.png", 50, 50, false, false);
 			Image basgauche = new Image("fleche/bas-gauche.png", 50, 50, false, false);
 			Image hautdroite = new Image("fleche/haut-droite.png", 50, 50, false, false);
-			Image hautgauche = new Image("fleche/bas-gauche.png", 50, 50, false, false);
+			Image hautgauche = new Image("fleche/haut-gauche.png", 50, 50, false, false);
 			Image flechebas = new Image("fleche/fleche-bas.png", 50, 50, false, false);
 			Image flechehaut = new Image("fleche/fleche-haut.png", 50, 50, false, false);
 			Image flechedroite = new Image("fleche/fleche-droite.png", 50, 50, false, false);

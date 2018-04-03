@@ -20,8 +20,6 @@ public class Case {
 	 * 
 	 * Initialement, la case est creee sans unite et sans batiment.
 	 * 
-	 * @param rangcorner
-	 * 			Entier qui localise la position dans la matrice plateau ou l'on commence l'affichage du jeu.
 	 * @param taillec
 	 * 			Entier qui decrit la taille d'une case en pixel lors de l'affichage.
 	 * @param rang
@@ -31,7 +29,7 @@ public class Case {
 	 * L'ensemble de ses parametres sont determines ici
 	 * 			
 	 */
-	Case(int rangcorner, int taillec, int rang){
+	Case(int taillec, int rang){
 		this.unite=null;
 		this.terrain = new Void(taillec);
 		this.batiment=null;

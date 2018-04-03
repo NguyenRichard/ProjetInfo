@@ -20,7 +20,6 @@ public class Abeille extends Unite{
 		portee = new int[] {0,1};
 		pv=99;
 		dmg=1;
-		
 	}
 	
 	public String toString() {
