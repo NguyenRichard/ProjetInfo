@@ -92,6 +92,7 @@ public class Main extends Application { //Nouveau test
 	        				if (crea.increa) {
 	        					animation.stop();
 	        					crea.stop(txt);
+		        				game.fin(crea.map);
 	        					gc.clearRect(0, 0, 1000, 600);
 		        				menu.render();
 	        				}

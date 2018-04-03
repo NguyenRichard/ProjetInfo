@@ -15,5 +15,6 @@ public class Sauvegardemap implements Serializable {
 		}
 		grillemap[2500] = 1+50+125000;
 	}
+	
 
 }

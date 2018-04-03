@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 
 public class CreationMap {
 	Map map;
+	Case visualisation;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
@@ -60,7 +61,6 @@ public class CreationMap {
 				FileInputStream fis = new FileInputStream(txt);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				sauvegarde = (Sauvegardemap) ois.readObject();
-				sauvegarde.grillemap[2500] = 1+50+125000;
 				for(int k=0; k<2500; k++) {
 					int codeS = sauvegarde.grillemap[k];
 					remaketerrain(k,codeS);
@@ -86,6 +86,7 @@ public class CreationMap {
 		update=true;
 		
 	}
+	
 	
 	
 	/**ajoute le terrain correspondant au bon code au rang k
@@ -234,7 +235,7 @@ public class CreationMap {
 		    break;
 		case LEFT: 
 			if (menucrea.choix) {
-				menucrea.leftcurseur(nombretotunite(),nombretotbatiment());
+				menucrea.leftcurseur(referencecodeterrain.size(), nombretotunite(),nombretotbatiment());
 				actualiservisu();
 				
 			}
@@ -243,7 +244,7 @@ public class CreationMap {
 			break;
 		case RIGHT: 
 			if (menucrea.choix) {
-				menucrea.rightcurseur(nombretotunite(),nombretotbatiment());
+				menucrea.rightcurseur(referencecodeterrain.size(), nombretotunite(),nombretotbatiment());
 				actualiservisu();
 			}
 			else {map.rightcurseur();}
@@ -284,13 +285,11 @@ public class CreationMap {
 	
 	void stop(String txt) {
 		increa = false;
-		map = new Map();
 		map.selectionne = map.plateau[51];
 		try { // reconstruit la map a l'aide du code
 			FileInputStream fis = new FileInputStream(txt);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			sauvegarde = (Sauvegardemap) ois.readObject();
-			sauvegarde.grillemap[2500] = 1+50+125000;
 			for(int k=0; k<2500; k++) {
 				int codeS = sauvegarde.grillemap[k];
 				remaketerrain(k,codeS);

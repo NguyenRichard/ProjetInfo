@@ -27,8 +27,6 @@ public class Menucrea {
 	int choixtype;
 	/**numero du joueur auxquel apartiendra le batiment ou l'unite cree */
 	int numjoueur;
-	/**Tableau d'element permettant de faire le lien entre le code de l'element et le type de terrain */
-	ArrayList<Terrain> referencecodeterrain;
 	GraphicsContext gc;
 	Case visualisation;
 	
@@ -41,7 +39,6 @@ public class Menucrea {
 		choixtype=0;
 		numjoueur=0;
 		visualisation = visu;
-		this.referencecodeterrain = referencecodeterrain;
 		this.gc = gc;
 	}
 	
@@ -108,10 +105,11 @@ public class Menucrea {
 	}
 	
 	/**
+	 * @param j le nombre total de type de terrain
 	 * @param k le nombre total de type d'unite existante
 	 * @param l le nombre total de type de batiment existant
 	 */
-	void rightcurseur(int k, int l) {
+	void rightcurseur(int j, int k, int l) {
 		if(positioncurseurcrea==0) { //on change le type d'element (batiment/terrain/unite)
 			choixtype += 1;
 			if (choixtype == 3) {
@@ -128,10 +126,9 @@ public class Menucrea {
 		else if (positioncurseurcrea==1) { //on change au sein de la division interne
 			if (choixtype==0) {
 				codesave += 1;
-				if (codesave%50==referencecodeterrain.size()) { //on a depasse le nombre de type de terrain
+				if (codesave%50==j) { //on a depasse le nombre de type de terrain
 					codesave -= codesave%50 - 1; //donc on remet le dernier chiffre du code a 1
 				}
-				visualisation.terrain = referencecodeterrain.get(codesave%50);
 			}
 			else if (choixtype==1) {
 				codesave += 50;
@@ -147,22 +144,29 @@ public class Menucrea {
 			}
 		}
 		else if (positioncurseurcrea==2) { //on change l'appartenance au joueur
-			if (choixtype==1){ //on change le numjoueur correspondant a l'unite
-				numjoueur += 1; //pour l'affichage
+			if (choixtype==1){//on change le numjoueur correspondant a l'unite
+				if (numjoueur == 3) {
+					numjoueur = 0;
+				}
+				else {numjoueur += 1;} //pour l'affichage
 				codesave = codesave - ((codesave/(50*50))%50)*50*50 + numjoueur*50*50; 
 			}
-			else if(choixtype==2){ //on change le numjoueur correspondant au batiment
-				numjoueur += 1; //pour l'affichage
+			else if (choixtype==2){//on change le numjoueur correspondant au batiment
+				if (numjoueur == 3) {
+					numjoueur = 0;
+				}
+				else {numjoueur += 1;} //pour l'affichage
 				codesave = codesave - ((codesave/(6250000))%50)*6250000 + numjoueur*6250000; 
 			}
 		}
 	}
 	
 	/**
+	 * @param j le nombre total de type de terrain existant
 	 * @param k le nombre total de type d'unite existante
 	 * @param l le nombre total de type de batiment existant
 	 */
-	void leftcurseur(int k, int l) {
+	void leftcurseur(int j, int k, int l) {
 		if(positioncurseurcrea==0) { //on change le type d'element (batiment/terrain/unite)
 			choixtype -= 1;
 			if (choixtype == -1) {
@@ -182,9 +186,8 @@ public class Menucrea {
 					codesave -= 1;
 				}
 				else { //on revient au maximum au lieu d'arriver sur le terrain vide
-					codesave -= codesave%50 - referencecodeterrain.size() + 1;
+					codesave -= codesave%50 - j + 1;
 				}
-				visualisation.terrain = referencecodeterrain.get(codesave%50);
 			}
 			else if (choixtype==1) {
 				if ((codesave/50)%50==1) {
