@@ -75,7 +75,6 @@ public class Main extends Application { //Nouveau test
 		        				crea.map.render(gc);
 		        				animation.start();
 		        				crea.increa = true;
-		        				System.out.println("merde");
 		        				break;
 						default:
 								break;
