@@ -49,7 +49,7 @@ public class Main extends Application { //Nouveau test
 			          game.update();
 			          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
 			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-			          gc.setFill(Color.WHITE);
+			          gc.setFill(Color.BISQUE);
 			          gc.setStroke(Color.BLACK);
 			          gc.setLineWidth(1);
 			          gc.fillText(txt, 650, 50 );
@@ -59,24 +59,26 @@ public class Main extends Application { //Nouveau test
 		        	  crea.update();
 		          }
 		          if (menu.inmenuprin) {
-		        	  
-			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
-			          gc.setFill(Color.WHITE);
-			          gc.setStroke(Color.BLACK);
-			          gc.setLineWidth(1);
-		        	  if (menu.positioncurseur == 0) {
-		        			menu.render();
-		        			gc.fillText(start, 360, 400 );
-		        			gc.strokeText(start, 360, 400 );
-		        			gc.fillText(edit, 360, 450 );
+		        	  if (menu.update) {
+				          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
+				          gc.setFill(Color.WHITE);
+				          gc.setStroke(Color.BLACK);
+				          gc.setLineWidth(1);
+			        	  if (menu.positioncurseur == 0) {
+			        			menu.render();
+			        			gc.fillText(start, 360, 400 );
+			        			gc.strokeText(start, 360, 400 );
+			        			gc.fillText(edit, 360, 450 );
+			        	  }
+			        	  else if (menu.positioncurseur == 1) {
+			        			menu.render();
+			        			gc.fillText(start, 360, 400 );
+			        			gc.fillText(edit, 360, 450 );
+			        			gc.strokeText(edit, 360, 450 );
+			        	  }
+			        	  menu.update = false;
+	        		  
 		        	  }
-		        	  else if (menu.positioncurseur == 1) {
-		        			menu.render();
-		        			gc.fillText(start, 360, 400 );
-		        			gc.fillText(edit, 360, 450 );
-		        			gc.strokeText(edit, 360, 450 );
-		        	  }
-		        	  menu.update = false;
 		          }
 	        	}
 	   	}.start();

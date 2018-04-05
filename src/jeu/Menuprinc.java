@@ -26,6 +26,7 @@ public class Menuprinc {
 		this.game=game;
 		this.crea=crea;
 		this.inmenuprin = true;
+		update = true;
 	}
 	
 	void render() {
