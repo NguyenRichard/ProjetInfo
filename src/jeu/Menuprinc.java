@@ -17,7 +17,6 @@ public class Menuprinc {
 	int positioncurseur;
 	Jeu game;
 	CreationMap crea;
-   	String namesave = "creamap.ser"; //nom fichier sauvegarde
    	boolean update;
 	
 	/* Constructeur de Menu*/
@@ -70,7 +69,7 @@ public class Menuprinc {
 						this.render();
 					}
 					if (crea.increa) {
-						crea.stop(crea.txt);
+						crea.stop(crea.namesave);
 						gc.clearRect(0, 0, 1000, 600);
 						inmenuprin=true;
 						this.render();

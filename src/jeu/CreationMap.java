@@ -32,7 +32,7 @@ public class CreationMap {
 	Menucrea menucrea;
 	boolean increa;
 	Image menucache;
-   	String txt; //nom fichier sauvegarde
+   	String namesave; //nom fichier sauvegarde
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -49,16 +49,16 @@ public class CreationMap {
 		referencecodeterrain.add(new Terre(50)); // /!\laisser void en premier !
 		referencecodeterrain.add(new Marais(50));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
-		txt = "creamap.ser";
+		namesave = "creamap.ser";
 		increa = false;
 		menucache = new Image("wood.jpg",400,600,false,false);
 		map = new Map();
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
-		File f = new File(txt); // nom du fichier contenant la sauvegarde
+		File f = new File(namesave); // nom du fichier contenant la sauvegarde
 		if(f.exists()) { 
 			try { // si la sauvegarde existe on reconstruit la map a l'aide du code
-				FileInputStream fis = new FileInputStream(txt);
+				FileInputStream fis = new FileInputStream(namesave);
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				sauvegarde = (Sauvegardemap) ois.readObject();
 				sauvegarde.grillemap[2500] = 1+50+125000;
