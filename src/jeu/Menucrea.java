@@ -148,12 +148,24 @@ public class Menucrea {
 		}
 		else if (positioncurseurcrea==2) { //on change l'appartenance au joueur
 			if (choixtype==1){ //on change le numjoueur correspondant a l'unite
-				numjoueur += 1; //pour l'affichage
+				if (numjoueur == 3) {
+					numjoueur = 0;
+				}
+				else {
+					numjoueur += 1; //pour l'affichage
+				}
 				codesave = codesave - ((codesave/(50*50))%50)*50*50 + numjoueur*50*50; 
+				
 			}
 			else if(choixtype==2){ //on change le numjoueur correspondant au batiment
-				numjoueur += 1; //pour l'affichage
+				if (numjoueur == 4) {
+					numjoueur = 0;
+				}
+				else {
+					numjoueur += 1; //pour l'affichage
+				}
 				codesave = codesave - ((codesave/(6250000))%50)*6250000 + numjoueur*6250000; 
+				
 			}
 		}
 	}
@@ -204,12 +216,22 @@ public class Menucrea {
 			}
 		}
 		else if (positioncurseurcrea==2) { //on change l'appartenance au joueur
-			if ((choixtype==1)&&(numjoueur != 0)){ //on change le numjoueur correspondant a l'unite
-				numjoueur -= 1; //pour l'affichage
+			if ((choixtype==1)){ //on change le numjoueur correspondant a l'unite
+				if (numjoueur == 0) {
+					numjoueur = 3;
+				}
+				else {
+					numjoueur -= 1; //pour l'affichage
+				}
 				codesave = codesave - ((codesave/(50*50))%50)*50*50 + numjoueur*50*50; 
 			}
-			else if((choixtype==2)&&(numjoueur != 0)){ //on change le numjoueur correspondant au batiment
-				numjoueur -= 1; //pour l'affichage
+			else if((choixtype==2)){ //on change le numjoueur correspondant au batiment
+				if (numjoueur == 0) {
+					numjoueur = 4;
+				}
+				else {
+					numjoueur -= 1; //pour l'affichage
+				}
 				codesave = codesave - ((codesave/(6250000))%50)*6250000 + numjoueur*6250000; 
 			}
 		}

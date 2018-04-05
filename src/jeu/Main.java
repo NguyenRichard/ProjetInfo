@@ -34,8 +34,8 @@ public class Main extends Application { //Nouveau test
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	    CreationMap crea = new CreationMap(gc);	// Creation de l'editeur
-	    Jeu game = new Jeu(gc,crea.map);	// Creation d'une partie
+	    CreationMap crea = new CreationMap(gc, "creamap.ser");	// Creation de l'editeur
+	    Jeu game = new Jeu(gc);	// Creation d'une partie
 	   	Menuprinc menu = new Menuprinc(gc,game,crea); //Creation du menu
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";

@@ -43,8 +43,8 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc, Map map){
-		this.map = map;
+	Jeu(GraphicsContext gc){
+		this.map = new Map();
 		tour = 0;
 		entrainjouer=0;
 		this.gc=gc;
@@ -255,7 +255,7 @@ public class Jeu {
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
 
-	void fin() {
+	void debut() {
 		tour = 0;
 		entrainjouer=0;
 		menu=0;
@@ -264,8 +264,8 @@ public class Jeu {
 		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		ingame = false;
 		menuinfo = new MenuInfo(gc,map);
+		ingame=true;
 	}
 
 }

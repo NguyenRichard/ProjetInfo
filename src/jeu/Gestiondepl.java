@@ -178,6 +178,7 @@ public class Gestiondepl {
 	 * 	
 	 */
 	void listUpdate() {
+		
 		int depl = map.selectionne.unite.deplacement; 
 		int center = map.selectionne.rang;
 		deplist = new int[(2*depl+1)*(2*depl+1)];

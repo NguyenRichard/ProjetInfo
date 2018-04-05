@@ -52,6 +52,7 @@ public class Map {
 		}
 		this.plateau = plateau;
 		curseur = new Image("cursor2.png", taillec, taillec,false,false);
+		selectionne = plateau[51];
 	}
 /*_Affichager des sprites___________________________________________________________________________________________________________ */
 	
@@ -236,8 +237,7 @@ public class Map {
         addunite(106,new Scarabe(taillec,1),1);
         addunite(107,new Scarabe(taillec,1),1);
         addbatiment(157,new Carregris(taillec,0));
-        this.affichageEquipe(0);
-        this.affichageEquipe(1);
+        this.affichageEquipe();
         
     }
     
@@ -252,11 +252,14 @@ public class Map {
     
     /*_Affichage equipe dans le terminal______________________________________________________________________________________ */
     
-    void affichageEquipe(int joueur) {
-    	ArrayList<Unite> temp = equipe.get(joueur);
-    	System.out.println("Equipe "+joueur+": ");
-    	for(Unite cur: temp) {
-    		System.out.println(cur);
+    void affichageEquipe() {
+    	for (int k = 0; k < equipe.size(); k++) {
+	    	ArrayList<Unite> temp = equipe.get(k);
+	    	System.out.println("Equipe "+k+": ");
+	    	for(Unite cur: temp) {
+	    		System.out.println(cur);
+	    	}
+		
     	}
     }
 	    
