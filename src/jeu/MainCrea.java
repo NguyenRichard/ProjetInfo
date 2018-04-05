@@ -30,7 +30,7 @@ public class MainCrea extends Application { //Nouveau test
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	    CreationMap crea = new CreationMap(gc,"creamap.ser");	// Creation d'une partie
+	    CreationMap crea = new CreationMap(gc);	// Creation d'une partie
 		crea.map.render(gc);
 
     	/* Refresh animation */

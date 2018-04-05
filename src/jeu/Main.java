@@ -34,21 +34,22 @@ public class Main extends Application { //Nouveau test
 	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	   	Menuprinc menu = new Menuprinc(gc); //Creation du menu
-	   	String txt = "creamap.ser"; //nom fichier sauvegarde
-	    CreationMap crea = new CreationMap(gc,txt);	// Creation de l'editeur
+	    CreationMap crea = new CreationMap(gc);	// Creation de l'editeur
 	    Jeu game = new Jeu(gc,crea.map);	// Creation d'une partie
+	   	Menuprinc menu = new Menuprinc(gc,game,crea); //Creation du menu
+		String start = "Commencer la partie";
+		String edit = "Editer la carte";
 		menu.render();
-
     	/* Refresh animation */
-	   AnimationTimer animation = new AnimationTimer() {          
+		new AnimationTimer() {          
 	        public void handle(long arg0) {              
 	          
+	        	
 		          if (game.ingame) {
 			          game.update();
 			          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
 			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-			          gc.setFill(Color.BISQUE);
+			          gc.setFill(Color.WHITE);
 			          gc.setStroke(Color.BLACK);
 			          gc.setLineWidth(1);
 			          gc.fillText(txt, 650, 50 );
@@ -57,55 +58,40 @@ public class Main extends Application { //Nouveau test
 		          if (crea.increa) {
 		        	  crea.update();
 		          }
+		          if (menu.inmenuprin) {
+		        	  
+			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
+			          gc.setFill(Color.WHITE);
+			          gc.setStroke(Color.BLACK);
+			          gc.setLineWidth(1);
+		        	  if (menu.positioncurseur == 0) {
+		        			menu.render();
+		        			gc.fillText(start, 360, 400 );
+		        			gc.strokeText(start, 360, 400 );
+		        			gc.fillText(edit, 360, 450 );
+		        	  }
+		        	  else if (menu.positioncurseur == 1) {
+		        			menu.render();
+		        			gc.fillText(start, 360, 400 );
+		        			gc.fillText(edit, 360, 450 );
+		        			gc.strokeText(edit, 360, 450 );
+		        	  }
+		        	  menu.update = false;
+		          }
 	        	}
-	    };
+	   	}.start();
 	    
-
+		
 	    	/* Mouvement curseur */
 	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	        public void handle(KeyEvent e) {
-	        	if (!(game.ingame)&&!(crea.increa)){
-	        		switch(e.getCode()) {
-		        		case ENTER:
-		        		    	game.map.render(gc);
-		        		    	animation.start();
-		        		    	game.ingame = true;
-		        		    	break;
-		        		case C:
-		        				crea.map.render(gc);
-		        				animation.start();
-		        				crea.increa = true;
-		        				break;
-						default:
-								break;
-	        		}
-	        	}
-	        	else {
-	        			switch(e.getCode()) {
-	        			case Z:
-	        				if (game.ingame) {
-		        				animation.stop();
-		        				game.fin(crea.map);
-		        				gc.clearRect(0, 0, 1000, 600);
-		        				menu.render();
-	        				}
-	        				if (crea.increa) {
-	        					animation.stop();
-	        					crea.stop(txt);
-	        					gc.clearRect(0, 0, 1000, 600);
-		        				menu.render();
-	        				}
-	        				break;
-						default:
-							break;
-	        			}
-	        			if (game.ingame) {
-	        				game.touch(e.getCode());
-	        			}
-	        			if (crea.increa) {
-	        				crea.touch(e.getCode());
-	        			}
-	        	}
+	    			if (game.ingame) {
+	    				game.touch(e.getCode());
+	    			}
+	    			if (crea.increa) {
+	    				crea.touch(e.getCode());
+	    			}
+	        		menu.touch(e.getCode());
 	        	
 	        }
 	    });

@@ -32,6 +32,7 @@ public class CreationMap {
 	Menucrea menucrea;
 	boolean increa;
 	Image menucache;
+   	String txt; //nom fichier sauvegarde
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -40,7 +41,7 @@ public class CreationMap {
 	 * 
 	 * @param gc le contexte graphique
 	 */
-	CreationMap(GraphicsContext gc,String txt){
+	CreationMap(GraphicsContext gc){
 		
 	/*~~~~~~TABLE REFERENCE CODE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		referencecodeterrain = new ArrayList<Terrain>();
@@ -48,7 +49,7 @@ public class CreationMap {
 		referencecodeterrain.add(new Terre(50)); // /!\laisser void en premier !
 		referencecodeterrain.add(new Marais(50));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
-		
+		txt = "creamap.ser";
 		increa = false;
 		menucache = new Image("wood.jpg",400,600,false,false);
 		map = new Map();
