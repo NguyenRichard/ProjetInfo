@@ -267,7 +267,7 @@ public class CreationMap {
 		case ENTER:
 			// on cree l'objet
 			try {
-				FileOutputStream fos = new FileOutputStream("creamap.ser"); // nom du fichier contenant la sauvegarde
+				FileOutputStream fos = new FileOutputStream(namesave); // nom du fichier contenant la sauvegarde
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
 				oos.writeObject(this.sauvegarde);
 				oos.close();
@@ -283,12 +283,12 @@ public class CreationMap {
 		}
 	}
 	
-	void stop(String txt) {
+	void stop() {
 		increa = false;
 		map = new Map();
 		map.selectionne = map.plateau[51];
 		try { // reconstruit la map a l'aide du code
-			FileInputStream fis = new FileInputStream(txt);
+			FileInputStream fis = new FileInputStream(namesave);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			sauvegarde = (Sauvegardemap) ois.readObject();
 			sauvegarde.grillemap[2500] = 1+50+125000;

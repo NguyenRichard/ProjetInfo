@@ -255,8 +255,7 @@ public class Jeu {
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
 
-	void fin(Map map) {
-		this.map=map;
+	void fin() {
 		tour = 0;
 		entrainjouer=0;
 		menu=0;

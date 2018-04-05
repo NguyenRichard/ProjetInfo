@@ -66,15 +66,17 @@ public class Main extends Application { //Nouveau test
 				          gc.setLineWidth(1);
 			        	  if (menu.positioncurseur == 0) {
 			        			menu.render();
-			        			gc.fillText(start, 360, 400 );
-			        			gc.strokeText(start, 360, 400 );
+			        			gc.strokeText(edit, 360, 450 );
 			        			gc.fillText(edit, 360, 450 );
+						        gc.setFill(Color.YELLOW);
+			        			gc.fillText(start, 360, 400 );
 			        	  }
 			        	  else if (menu.positioncurseur == 1) {
 			        			menu.render();
 			        			gc.fillText(start, 360, 400 );
+			        			gc.strokeText(start, 360, 400 );
+						        gc.setFill(Color.YELLOW);
 			        			gc.fillText(edit, 360, 450 );
-			        			gc.strokeText(edit, 360, 450 );
 			        	  }
 			        	  menu.update = false;
 	        		  

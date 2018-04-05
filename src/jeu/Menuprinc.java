@@ -64,17 +64,19 @@ public class Menuprinc {
 				switch(code) {
 				case Z:
 					if (game.ingame) {
-						game.fin(crea.map);
+						game.fin();
 						gc.clearRect(0, 0, 1000, 600);
 						inmenuprin=true;
 						this.render();
 					}
 					if (crea.increa) {
-						crea.stop(crea.namesave);
+						crea.stop();
 						gc.clearRect(0, 0, 1000, 600);
 						inmenuprin=true;
 						this.render();
 					}
+					game.map=crea.map;
+					update=true;
 					break;
 				default:
 					break;
