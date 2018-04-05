@@ -18,4 +18,5 @@ public class Menuprinc {
 	void render() {
 		gc.drawImage(fond, 0, 0);
 	}
+	
 }
