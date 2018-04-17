@@ -10,6 +10,6 @@ public class Carregris extends Batiment {
 		this.joueur = joueur;
 		pv = 100;
 		images = new Image[1];
-		images[0] = new Image("batiment"+".png",taille, taille,false,false);
+		images[0] = new Image("test"+".png",taille, taille,false,false);
 	}
 }

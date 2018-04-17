@@ -84,10 +84,10 @@ public class Menuprinc {
 			    					Sauvegardemap sauvegarde = (Sauvegardemap) ois.readObject();
 			    					crea.mapcode = sauvegarde.grillemap;
 			    					for(int k=0; k<2500; k++) {
-			    						int codeS = crea.mapcode[k];
-			    						crea.remaketerrain(k,codeS,crea.map);
-			    						crea.remakebatiment(k,codeS,crea.map);
-			    						crea.remakeunite(k,codeS,crea.map);
+				    						int codeS = crea.mapcode[k];
+				    						crea.remaketerrain(k,codeS,crea.map);
+				    						crea.remakebatiment(k,codeS,crea.map);
+				    						crea.remakeunite(k,codeS,crea.map);
 			    					}
 			    					ois.close();
 			    				} catch (FileNotFoundException e) {

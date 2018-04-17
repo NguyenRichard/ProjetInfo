@@ -9,7 +9,7 @@ public class Terre extends Terrain{
 		super(taille);
 		maxcompteur = 1;
 		images = new Image[1];
-		images[0]=new Image("terrains/terre.jpg",taille, taille,false,false);
+		images[0]=new Image("terrains/terre.png",taille, taille,false,false);
 		deplacement=1;
 	}
 	public String toString() {

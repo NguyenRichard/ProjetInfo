@@ -67,6 +67,7 @@ public class CreationMap {
 	 * @param k
 	 */
 	void remaketerrain(int k, int codeS,Map map) {
+		map.plateau[k].terrain = referencecodeterrain.get(0);
 		for (int j =1; j<referencecodeterrain.size();j++) {
 			if (codeS%50 == j){
 				map.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
@@ -75,6 +76,7 @@ public class CreationMap {
 					
 				}
 			}
+
 		}
 	}
 	
@@ -133,6 +135,9 @@ public class CreationMap {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
 				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
 			}
+		}
+		else {
+			map.plateau[k].batiment = null;
 		}
 	}	
 	
@@ -271,6 +276,7 @@ public class CreationMap {
 	
 	void stop() {
 		increa = false;
+		map.selectionne = map.plateau[51];
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
 		actualiservisu(); //a faire apres Menucrea
 		map.nombrejoueur = map.equipe.size();
