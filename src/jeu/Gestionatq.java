@@ -44,10 +44,9 @@ public class Gestionatq {
 	}
 	/**
 	 * Verifie si l'attaque est en cours ou non et effectue l'attaque.
-	 * @param gc TODO
 	 * @return le boleen qui sera la prochaine valeur du menu.
 	 */
-	int attaque(GraphicsContext gc) {
+	int attaque() {
 		if(attaqueencours) {
 			prisedegat();//effectue l'attaque et rend l'unite non valable
 			attaqueencours=false;
