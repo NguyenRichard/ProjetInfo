@@ -55,6 +55,9 @@ public class Main extends Application { //Nouveau test
 			          gc.fillText(txt, 650, 50 );
 			          gc.strokeText(txt, 650, 50 );
 		          }
+		          if (game.atq.animatqencours) {
+		  			game.atq.animdegat(gc);
+		          }
 		          if (crea.increa) {
 		        	  crea.update();
 		          }

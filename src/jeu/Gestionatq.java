@@ -2,6 +2,7 @@ package jeu;
 
 import java.util.ArrayList;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import terrain.Void;
 
@@ -16,14 +17,23 @@ public class Gestionatq {
 	private int numenemi;
 	/**Determine si une attaque est en cours */
 	boolean attaqueencours;
+	/**Image qui s'affichera en flashs lors d'une attaque */
+	Image Im_deg;
+	boolean animatqencours;
+	int animatq;
 	
-	Gestionatq(Map map){
+	
+ 	Gestionatq(Map map){
 		attaqueencours=false;
 		this.map=map;
+		Im_deg = new Image("TestImpact.png",25,25,false,false);
+		animatqencours=false;
+		animatq=0;
 	}
 	
-	/**Applicationdes degats a l'unite selectionne. Suppression de l'unite en cas de degats lethaux */
+	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
+		animatqencours=true;
 		map.selectionne.unite.pv = map.selectionne.unite.pv - map.selectionnemenu.unite.dmg;
 		if (map.selectionne.unite.pv < 0) {
 	    	ArrayList<Unite> listeunit = map.equipe.get(map.selectionne.unite.joueur);
@@ -34,9 +44,10 @@ public class Gestionatq {
 	}
 	/**
 	 * Verifie si l'attaque est en cours ou non et effectue l'attaque.
+	 * @param gc TODO
 	 * @return le boleen qui sera la prochaine valeur du menu.
 	 */
-	int attaque() {
+	int attaque(GraphicsContext gc) {
 		if(attaqueencours) {
 			prisedegat();//effectue l'attaque et rend l'unite non valable
 			attaqueencours=false;
@@ -163,6 +174,20 @@ public class Gestionatq {
 			}
 			
 		}
+	}
+	
+	void animdegat(GraphicsContext gc) {
+		int x = (map.selectionne.rang%50 - map.rangcorner%50)*50;
+		int y = (map.selectionne.rang/50 - map.rangcorner/50)*50;
+		
+		if (animatq<4) {gc.drawImage(Im_deg, x+25, y);}
+		else if(animatq<8) {gc.drawImage(Im_deg, x, y+25);}
+		else if(animatq<12) {gc.drawImage(Im_deg, x, y);}
+		else if(animatq<16) {gc.drawImage(Im_deg, x+25, y+25);}
+		else if (animatq<30) {gc.drawImage(Im_deg, x, y, 50, 50);;}
+		
+		if (animatq>29) {animatq=0; animatqencours=false;}
+		else {animatq+=1;}
 	}
 	
 }
