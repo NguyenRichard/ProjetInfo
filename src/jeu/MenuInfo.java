@@ -71,7 +71,13 @@ public class MenuInfo {
 	        }
 	        gc.fillText(selectionne.unite.toString(), 640, 400);
 	        gc.strokeText(selectionne.unite.toString(), 640, 400);
-	
+	        
+	        int ratiopvpvmax = (int) 100*map.selectionne.unite.pv/map.selectionne.unite.pvmax;
+			gc.setFill(Color.LIMEGREEN);
+	        gc.fillRect(920, 450, 15, 100);
+	        gc.setFill(Color.RED);
+	        gc.fillRect(920, 450, 15, 100-ratiopvpvmax);
+	        
 		} else if (selectionne.batiment!=null) {
 			this.images = selectionne.batiment.images;
 			gc.drawImage(images[0],650,450);
@@ -86,5 +92,5 @@ public class MenuInfo {
 			
 		}
 	}
-
+	
 }

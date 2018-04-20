@@ -44,7 +44,6 @@ public class Main extends Application { //Nouveau test
 		new AnimationTimer() {          
 	        public void handle(long arg0) {              
 	          
-	        	
 		          if (game.ingame) {
 			          game.update();
 			          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
@@ -55,8 +54,29 @@ public class Main extends Application { //Nouveau test
 			          gc.fillText(txt, 650, 50 );
 			          gc.strokeText(txt, 650, 50 );
 		          }
-		          if (game.atq.animatqencours) {
-		  			game.atq.animdegat(gc);
+		          
+		          if(game.atq.animatqencours) { //Animation d'attaque
+		        	  game.atq.animdegat();
+		        	  if(game.atq.animatq<30) {game.atq.animatq++;}
+		        	  else {
+		        		  game.atq.animatq=0;
+		        		  game.atq.animatqencours=false;
+		        		  //On prépare la chute de pv :
+		        		  game.atq.pvfin =Integer.max(game.map.selectionne.unite.pv - game.map.selectionnemenu.unite.dmg,0);		
+		        		  game.atq.pvendiminution=true;
+		        	  }		
+		          }
+		          
+		          if(game.atq.pvendiminution) { //Animation de chute des pv
+		        	  if(game.map.selectionne.unite.pv>game.atq.pvfin) {
+		        		  game.map.selectionne.unite.pv--;
+		        		  game.menuinfo.MenuInforender();
+		        	  }
+		        	  else {
+		        		  game.atq.pvendiminution=false;
+		        		  game.menuinfo.MenuInforender();
+		        		  game.atq.prisedegat();
+		        		  }
 		          }
 		          if (crea.increa) {
 		        	  crea.update();

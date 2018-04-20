@@ -51,7 +51,7 @@ public class Jeu {
 		menu=0;
 		positioncurseur1 = 0;
 		update=true;
-		atq = new Gestionatq(map);
+		atq = new Gestionatq(map, gc);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menucache = new Image("wood.jpg",400,600,false,false);
@@ -61,7 +61,7 @@ public class Jeu {
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
 	void update() {
-		map.renderanim(gc); //animation des sprites
+		if (!atq.animatqencours) {	map.renderanim(gc);}//animation des sprites si pas de combat
 		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
 			 map.render(gc);
 			 update=false;
@@ -242,8 +242,8 @@ public class Jeu {
 		entrainjouer++;	//Change de joueur
 		if (entrainjouer == map.nombrejoueur) {
 			entrainjouer = 0;
+			tour++; //Change de tour
 		}
-		tour++; //Change de tour
 		menu=0;
 		for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
 			Unite temp = listeunit.get(k);
@@ -261,7 +261,7 @@ public class Jeu {
 		menu=0;
 		positioncurseur1 = 0;
 		update=true;
-		atq = new Gestionatq(map);
+		atq = new Gestionatq(map, gc);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menuinfo = new MenuInfo(gc,map);

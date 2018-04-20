@@ -19,26 +19,31 @@ public class Gestionatq {
 	boolean attaqueencours;
 	/**Image qui s'affichera en flashs lors d'une attaque */
 	Image Im_deg;
+	/**Le gc est necessaire pour les animations de degats et la barre de vie qui descend*/
+	GraphicsContext gc;
 	boolean animatqencours;
 	int animatq;
+	/**Booleen indiquant une évolution des pv lors d'une attaque*/
+	boolean pvendiminution;
+	/**Entier qui donne la fin de l'animation de diminution des pv*/
+	int pvfin;
 	
-	
- 	Gestionatq(Map map){
+ 	Gestionatq(Map map, GraphicsContext gc){
 		attaqueencours=false;
 		this.map=map;
 		Im_deg = new Image("TestImpact.png",25,25,false,false);
 		animatqencours=false;
 		animatq=0;
+		this.gc=gc;
 	}
 	
 	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
-		animatqencours=true;
-		map.selectionne.unite.pv = map.selectionne.unite.pv - map.selectionnemenu.unite.dmg;
-		if (map.selectionne.unite.pv < 0) {
+		if (pvfin <= 0) {
 	    	ArrayList<Unite> listeunit = map.equipe.get(map.selectionne.unite.joueur);
 	    	listeunit.remove(map.selectionne.unite);
 	    	map.selectionne.unite=null;
+  		  	map.render(gc);
 		}
 		map.selectionnemenu.unite.valable=false;
 	}
@@ -48,7 +53,10 @@ public class Gestionatq {
 	 */
 	int attaque() {
 		if(attaqueencours) {
-			prisedegat();//effectue l'attaque et rend l'unite non valable
+			if (map.selectionne!=map.selectionnemenu) {
+				animatqencours=true;
+				//prisedegat();//effectue l'attaque et rend l'unite non valable
+			}
 			attaqueencours=false;
 			return 0;
 		}
@@ -175,7 +183,7 @@ public class Gestionatq {
 		}
 	}
 	
-	void animdegat(GraphicsContext gc) {
+	void animdegat() {
 		int x = (map.selectionne.rang%50 - map.rangcorner%50)*50;
 		int y = (map.selectionne.rang/50 - map.rangcorner/50)*50;
 		
@@ -185,8 +193,6 @@ public class Gestionatq {
 		else if(animatq<16) {gc.drawImage(Im_deg, x+25, y+25);}
 		else if (animatq<30) {gc.drawImage(Im_deg, x, y, 50, 50);;}
 		
-		if (animatq>29) {animatq=0; animatqencours=false;}
-		else {animatq+=1;}
 	}
 	
 }
