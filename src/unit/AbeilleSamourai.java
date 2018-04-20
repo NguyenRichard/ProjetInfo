@@ -18,7 +18,8 @@ public class AbeilleSamourai extends Unite{
 		valable=true;
 		maxcompteur = 50;
 		portee = new int[] {0,1};
-		pv=99;
+		pvmax=99;
+		pv=pvmax;
 		dmg=1;
 	}
 		

@@ -18,7 +18,8 @@ public class Abeille extends Unite{
 		valable=true;
 		maxcompteur = 30;
 		portee = new int[] {0,1};
-		pv=99;
+		pvmax=99;
+		pv=pvmax;
 		dmg=1;
 	}
 	
