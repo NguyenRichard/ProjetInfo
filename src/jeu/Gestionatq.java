@@ -26,6 +26,7 @@ public class Gestionatq {
 	void prisedegat() {
 		map.selectionne.unite.pv = map.selectionne.unite.pv - map.selectionnemenu.unite.dmg;
 		if (map.selectionne.unite.pv < 0) {
+
 	    	ArrayList<Unite> listeunit = map.equipe.get(map.selectionne.unite.joueur);
 	    	listeunit.remove(map.selectionne.unite);
 	    	map.selectionne.unite=null;

@@ -240,7 +240,7 @@ public class Jeu {
 	void passertour() {
     	ArrayList<Unite> listeunit = map.equipe.get(entrainjouer);
 		entrainjouer++;	//Change de joueur
-		if (entrainjouer == map.nombrejoueur) {
+		if (entrainjouer == map.equipe.size()) {
 			entrainjouer = 0;
 		}
 		tour++; //Change de tour
@@ -255,7 +255,8 @@ public class Jeu {
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
 
-	void debut() {
+	void fin() {
+
 		tour = 0;
 		entrainjouer=0;
 		menu=0;
@@ -265,7 +266,7 @@ public class Jeu {
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menuinfo = new MenuInfo(gc,map);
-		ingame=true;
+		ingame=false;
 	}
 
 }

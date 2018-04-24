@@ -56,7 +56,6 @@ public class CreationMap {
 		this.gc=gc;
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
 		actualiservisu(); //a faire apres Menucrea
-		map.nombrejoueur = map.equipe.size();
 		map.affichageEquipe();
 		update=true;
 		
@@ -130,6 +129,9 @@ public class CreationMap {
 			if (codebatiment == 1) {
 				map.plateau[k].batiment= new Carregris(map.taillec,joueur);
 				}
+			else if (codebatiment == 2) {
+				map.plateau[k].batiment = new Portal(map.taillec,joueur);
+			}
 		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
@@ -144,7 +146,7 @@ public class CreationMap {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE DE BATIMENT
 	 */
-	int nombretotbatiment() {return 1;}
+	int nombretotbatiment() {return 2;}
 	
 	/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -279,7 +281,6 @@ public class CreationMap {
 		map.selectionne = map.plateau[51];
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
 		actualiservisu(); //a faire apres Menucrea
-		map.nombrejoueur = map.equipe.size();
 		map.affichageEquipe();
 		update=true;
 	}

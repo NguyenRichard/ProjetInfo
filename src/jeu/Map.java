@@ -19,7 +19,6 @@ public class Map {
 	Case[] plateau; 
 	/**Image du curseur */
 	Image curseur;
-	int nombrejoueur;
 	/**Taille de la carte affichee, en ordonnee */
 	int taillec;
 	/**Rang dans la matrice plateau du coin haut gauche du cadre 12x12 cases delimitant l'affichage du jeu */
@@ -209,36 +208,6 @@ public class Map {
     void delunite(Unite unite,int joueur) {
     	ArrayList<Unite> temp = equipe.get(joueur);
     	temp.remove(unite);
-    }
-    
-    /**
-     * Fonction servant a generer la map utilisee pour nos test avec le nombre de joueur "nombrejoueur".
-     * Pour l'instant ce n'est pas tres optimal, on prevoit de pouvoir sauvegarder des maps sous un format 
-     * de fichier que l'on pourra generer a l'aide d'un editeur de map
-     * @param nombrejoueur
-     */
-    void map1(int nombrejoueur) {
-        int k = 1;
-        this.nombrejoueur=nombrejoueur;
-    	for (int l = 0; l < nombrejoueur; l++) {
-    		equipe.add(new ArrayList<Unite>());
-    	}
-        this.selectionne = plateau[51];
-        while (k<=8) {
-            for (int l = 1; l <= 7;l++) {
-                addterrain(l+50*k,new Terre(taillec));
-            }
-            k++;
-        }
-        addunite(55,new Abeille(taillec,0),0);
-        addunite(51,new AbeilleSamourai(taillec,0),0);
-        addunite(103,new PapillonPsychique(taillec,0),0);
-        addunite(105,new Scarabe(taillec,1),1);
-        addunite(106,new Scarabe(taillec,1),1);
-        addunite(107,new Scarabe(taillec,1),1);
-        addbatiment(157,new Carregris(taillec,0));
-        this.affichageEquipe();
-        
     }
     
     

@@ -68,7 +68,7 @@ public class Menuprinc {
 			    				}
 			    				game.map.affichageEquipe();
 				    			game.map.selectionne = game.map.plateau[51];
-				    			game.debut();
+				    			game.ingame=true;
 			    				game.map.render(gc);
 			    				inmenuprin=false;
 			    				
@@ -99,7 +99,7 @@ public class Menuprinc {
 			    				}
 			    			
 			    			}else {Sauvegardemap sauvegarde = new Sauvegardemap(); crea.mapcode = sauvegarde.grillemap;} // si nouveau nom on cree une nouvelle map
-	        				crea.map.render(gc);
+			    			crea.map.render(gc);
 	        				crea.increa = true;
 	        				inmenuprin=false;
 			    		}
@@ -119,7 +119,7 @@ public class Menuprinc {
 				switch(code) {
 				case Z:
 					if (game.ingame) {
-						game.ingame = false;
+						game.fin();
 						gc.clearRect(0, 0, 1000, 600);
 						inmenuprin=true;
 						this.render();
@@ -130,7 +130,6 @@ public class Menuprinc {
 						inmenuprin=true;
 						this.render();
 					}
-					game.map=crea.map;
 					update=true;
 					break;
 				default:
