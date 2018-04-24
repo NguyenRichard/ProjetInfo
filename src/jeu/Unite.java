@@ -13,6 +13,8 @@ public abstract class Unite extends Element{
 	protected int[] portee;
 	/**Entier qui represente le nombre de vie*/
 	protected int pv;
+	/**Entier qui permet de connaitre la quantité de pt de vie pr affichage barre de vie*/
+	protected int pvmax; 
 	/**Entier qui represente le nombre d'attaque*/
 	protected int dmg;
 	
@@ -30,6 +32,7 @@ public abstract class Unite extends Element{
 	protected Unite(int taille){
 		super(taille);
 		valable=false;
+		pv=pvmax;
 	}
 	public abstract String toString() ;
 	
