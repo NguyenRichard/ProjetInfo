@@ -213,6 +213,8 @@ public class CreationMap {
 		    			map.delunite(map.selectionne.unite, map.selectionne.unite.joueur);
 		    			map.selectionne.unite = null; //on enleve l'unite visuellement et dans la sauvegarde
 		    			mapcode[map.selectionne.rang] -= ((mapcode[map.selectionne.rang]/50)%50)*50; 
+		    			mapcode[map.selectionne.rang] -= ((mapcode[map.selectionne.rang]/(50*50))%50)*50*50;
+		    			
 		    		}
 		    	}
 		    	else if (menucrea.choixtype == 2) {
@@ -277,6 +279,8 @@ public class CreationMap {
 	}
 	
 	void stop() {
+		map.affichageEquipe();
+        map.equipe = new ArrayList<ArrayList<Unite>>();
 		increa = false;
 		map.selectionne = map.plateau[51];
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);

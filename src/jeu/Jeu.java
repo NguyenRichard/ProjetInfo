@@ -256,7 +256,8 @@ public class Jeu {
 	 */
 
 	void fin() {
-
+		
+        map.equipe = new ArrayList<ArrayList<Unite>>();
 		tour = 0;
 		entrainjouer=0;
 		menu=0;
