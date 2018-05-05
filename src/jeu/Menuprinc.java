@@ -27,8 +27,8 @@ public class Menuprinc {
    	boolean update;
 	
 	/* Constructeur de Menu*/
-	Menuprinc(GraphicsContext gc,Jeu game,CreationMap crea){
-		fond = new Image("InsectWorldWar.png", 1000, 600, false, false);
+	Menuprinc(GraphicsContext gc,Jeu game,CreationMap crea,int width, int height){
+		fond = new Image("InsectWorldWar.png", width, height, false, false);
 		this.gc=gc;
 		this.game=game;
 		this.crea=crea;

@@ -26,10 +26,13 @@ public class Jeu {
 	Gestiondepl depl;
 	/**Objet contenant les methodes pour gerer la capture des batiments*/
 	Gestioncapture capt;
-	Image menucache;
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
+	/**Entier à partir du quel affiché le menu latéral droit**/
+    int positionxmenu;
+	/**Image de fond du menu latéral droit**/
+	Image menucache;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -43,7 +46,7 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc){
+	Jeu(GraphicsContext gc, int width, int height){
 		this.map = new Map();
 		tour = 0;
 		entrainjouer=0;
@@ -54,9 +57,10 @@ public class Jeu {
 		atq = new Gestionatq(map, gc);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menucache = new Image("wood.jpg",400,600,false,false);
+		menucache = new Image("wood.jpg", width-map.taillec*map.nombrecaseaffichee,height,false,false);
+		positionxmenu = map.taillec*map.nombrecaseaffichee;
 		ingame = false;
-		menuinfo = new MenuInfo(gc,map);
+		menuinfo = new MenuInfo(gc,map,positionxmenu);
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -193,19 +197,19 @@ public class Jeu {
 	 * 			
 	 */	
 	void menurender() {
-		gc.drawImage(menucache, 600, 0);
+		gc.drawImage(menucache, positionxmenu, 0);
 	    switch(menu) {
 	    case 1:
 				Image menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
 				Image curseur = new Image("curseurmenu1.png",200, 320, false, false);
-				gc.drawImage(menu1, 650, 50);
-				gc.drawImage(curseur, 650,50+positioncurseur1*52);
+				gc.drawImage(menu1, positionxmenu*1.05, 50);
+				gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
 				break;
 	    case 2:
     			Image menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
 	    		Image curseur2 = new Image("curseurmenu1.png", 200, 320, false, false);
-	    		gc.drawImage(menu2, 650, 50);
-	    		gc.drawImage(curseur2, 650,50+positioncurseur1*52);
+	    		gc.drawImage(menu2, positionxmenu*1.05, 50);
+	    		gc.drawImage(curseur2, positionxmenu*1.05,50+positioncurseur1*52);
 	    		break;
 
 	    default:
@@ -266,7 +270,7 @@ public class Jeu {
 		atq = new Gestionatq(map, gc);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menuinfo = new MenuInfo(gc,map);
+		menuinfo = new MenuInfo(gc,map,positionxmenu);
 		ingame=false;
 	}
 

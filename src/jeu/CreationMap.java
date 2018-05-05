@@ -42,16 +42,17 @@ public class CreationMap {
 	 */
 	CreationMap(GraphicsContext gc,String txt){
 		
+		map = new Map();
+		
 	/*~~~~~~TABLE REFERENCE CODE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		referencecodeterrain = new ArrayList<Terrain>();
-		referencecodeterrain.add(new Void(50)); //permet de faire le lien entre code et element
-		referencecodeterrain.add(new Terre(50)); // /!\laisser void en premier !
-		referencecodeterrain.add(new Marais(50));
+		referencecodeterrain.add(new Void(map.taillec)); //permet de faire le lien entre code et element
+		referencecodeterrain.add(new Terre(map.taillec)); // /!\laisser void en premier !
+		referencecodeterrain.add(new Marais(map.taillec));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		this.namesave = txt;
 		increa = false;
 		menucache = new Image("wood.jpg",400,600,false,false);
-		map = new Map();
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);

@@ -23,20 +23,20 @@ public class Main extends Application { //Nouveau test
 	}
 	
 	public void start(Stage stage){
-	    int WIDTH = 1000;	// Taille la carte 600x600 et le menu 400x600 a droite
-	    int HEIGHT = 600;	// Taille carte affichee 12x12 case (une case 50x50)
+	    int width = 1000;
+	    int height = 650;
 
 	    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
 	    stage.setResizable(false);
 
 	    Group root = new Group();
 	    Scene scene = new Scene(root);
-	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
+	    Canvas canvas = new Canvas(width, height);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 	    CreationMap crea = new CreationMap(gc, "creamap.ser");	// Creation de l'editeur
-	    Jeu game = new Jeu(gc);	// Creation d'une partie
-	   	Menuprinc menu = new Menuprinc(gc,game,crea); //Creation du menu
+	    Jeu game = new Jeu(gc,width,height);	// Creation d'une partie
+	   	Menuprinc menu = new Menuprinc(gc,game,crea,width,height); //Creation du menu
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";
 		menu.render();
@@ -51,8 +51,8 @@ public class Main extends Application { //Nouveau test
 			          gc.setFill(Color.BISQUE);
 			          gc.setStroke(Color.BLACK);
 			          gc.setLineWidth(1);
-			          gc.fillText(txt, 650, 50 );
-			          gc.strokeText(txt, 650, 50 );
+			          gc.fillText(txt, game.positionxmenu*1.05, 50 );
+			          gc.strokeText(txt, game.positionxmenu*1.05, 50 );
 		          }
 		          
 		          if(game.atq.animatqencours) { //Animation d'attaque

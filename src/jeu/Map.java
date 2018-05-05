@@ -28,6 +28,8 @@ public class Map {
 	ArrayList<ArrayList<Unite>> equipe;
 	/**Case selectionee avec l'unite lorsqu'on entre dans le menu */
 	Case selectionnemenu;
+	Image fond;
+	int nombrecaseaffichee;
 	
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -41,7 +43,9 @@ public class Map {
 	 *- (xcurseur ,ycurseur): initialises a (0,0)
 	 */	
 	Map(){
-		taillec=50;
+		taillec=65;
+		nombrecaseaffichee = 10;
+		fond = new Image("nuage.jpg",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
 		Case[] plateau = new Case[2501];
         equipe = new ArrayList<ArrayList<Unite>>();
 		rangcorner=0;
@@ -66,9 +70,8 @@ public class Map {
 	 *Pour cela on utilise kdefine
 	 */
 	void render(GraphicsContext gc) {
-		Image fond = new Image("nuage.jpg",600,600,false,false);
 		gc.drawImage(fond, 0, 0);
-		for (int k = rangcorner; k <= rangcorner+11*51; k++) {
+		for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
 			// Boucle qui affiche les cases du plateau de la carte affichee
 			plateau[k].render(gc,rangcorner);
 			k=kdefine(k);
@@ -80,7 +83,7 @@ public class Map {
 	 * @param gc le contexte graphique
 	 */
 	void renderanim(GraphicsContext gc) {
-		for (int k = rangcorner; k <= rangcorner+11*51; k++) {
+		for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
 			// Boucle qui affiche les cases du plateau de la carte affichee
 			if (plateau[k].unite != null) {
 				plateau[k].render(gc,rangcorner);
@@ -100,8 +103,8 @@ public class Map {
 	 * @see Map#render(GraphicsContext)
 	 */
 	int kdefine(int ko) {
-		if (ko%50-rangcorner%50==11) {
-			return ko-12+50;
+		if (ko%50-rangcorner%50==(nombrecaseaffichee-1)) {
+			return ko-nombrecaseaffichee+50;
 		} else {
 			return ko;
 		}
@@ -133,9 +136,9 @@ public class Map {
 	 * @see Map#rangcorner
 	 */
 	void rightcurseur() {
-		if (selectionne.rang%50 - rangcorner%50 != 11) 
+		if (selectionne.rang%50 - rangcorner%50 != (nombrecaseaffichee-1)) 
 			selectionne=plateau[selectionne.rang+1];
-		else if (rangcorner%50 < 38 ) {
+		else if (rangcorner%50 < 50-nombrecaseaffichee ) {
 			rangcorner+=1;
 			selectionne=plateau[selectionne.rang+1];
 		}
@@ -163,9 +166,9 @@ public class Map {
 	 * @see Map#rangcorner
 	 */
 	void downcurseur() {
-		if (selectionne.rang/50 - rangcorner/50 != 11)
+		if (selectionne.rang/50 - rangcorner/50 != 9)
 			selectionne=plateau[selectionne.rang+50];
-		else if (rangcorner/50 < 38 ) {
+		else if (rangcorner/50 < 50-nombrecaseaffichee ) {
 			rangcorner+=50;
 			selectionne=plateau[selectionne.rang+50];
 		}
@@ -214,8 +217,8 @@ public class Map {
     /*_Affichage du curseur___________________________________________________________________________________________________ */
     
     void curseurRender(GraphicsContext gc) {
-    	int x = (selectionne.rang%50 - rangcorner%50)*50;
-		int y = (selectionne.rang/50 - rangcorner/50)*50;
+    	int x = (selectionne.rang%50 - rangcorner%50)*taillec;
+		int y = (selectionne.rang/50 - rangcorner/50)*taillec;
 		gc.drawImage(curseur, x, y);
     }
     
@@ -241,7 +244,7 @@ public class Map {
      * @see #kdefine(int)
      */
     boolean isShown(int rang) {
-    	for (int k = rangcorner; k <= rangcorner+11*51; k++) {
+    	for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
     		// test pour chaque case affiche
 			if(k==rang) {
 				return true;
