@@ -29,10 +29,12 @@ public class Jeu {
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
-	/**Entier à partir du quel affiché le menu latéral droit**/
+	/**Entier ï¿½ partir du quel affichï¿½ le menu latï¿½ral droit**/
     int positionxmenu;
-	/**Image de fond du menu latéral droit**/
+	/**Image de fond du menu latï¿½ral droit**/
 	Image menucache;
+	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
+	boolean updatemenu;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -61,6 +63,7 @@ public class Jeu {
 		positionxmenu = map.taillec*map.nombrecaseaffichee;
 		ingame = false;
 		menuinfo = new MenuInfo(gc,map,positionxmenu);
+		updatemenu=false;
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -72,13 +75,17 @@ public class Jeu {
 		}
 	
 	    if (menu==1) {
-	    		if (depl.deplacementencours) {
+	    		if (depl.deplacementencours&&updatemenu) {
 	    			depl.render(this);
 	    			depl.arrowrender(this);
 	    		}
-	    		if (atq.attaqueencours) {
-	    			atq.render(this);
+	    		if (atq.attaqueencours&&updatemenu) {
+	    			atq.rendercase(this);
 	    		}
+	    		if (atq.attaqueencours) {
+	    			atq.rendercible(this);
+	    		}
+	    		updatemenu=false;
 	    }
 	    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
 		menuinfo.MenuInforender();
@@ -117,6 +124,7 @@ public class Jeu {
 		    					menu = capt.capture();
 		    				}
 		    				update=true;
+		    				updatemenu=true;
 		    				break;
 	    			case 0:
 			    			System.out.print(map.selectionne);
@@ -145,6 +153,7 @@ public class Jeu {
 								atq.downenemi(); //on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
+							updatemenu=true;
 							break;
 					default:
 							break;
@@ -160,6 +169,7 @@ public class Jeu {
 								atq.upenemi();//on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
+							updatemenu=true;
 							break;
 					default:
 							break;
@@ -170,6 +180,7 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-50,depl.deplist))) {
 								map.upcurseur();//on selectionne case pour deplacement
 							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {upcurseur1();} //on bouge curseur du menu
+							updatemenu=true;
 							break;
 					case 0: map.upcurseur(); break;//on bouge curseur de map
 					default:
@@ -181,6 +192,7 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+50,depl.deplist))) {
 								map.downcurseur();//on selectionne case pour deplacement
 							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {downcurseur1();}//on bouge curseur du menu
+							updatemenu=true;
 							break;
 					case 0: map.downcurseur(); break;//on bouge curseur de map
 					default:

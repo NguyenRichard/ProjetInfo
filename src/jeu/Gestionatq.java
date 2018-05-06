@@ -23,7 +23,7 @@ public class Gestionatq {
 	GraphicsContext gc;
 	boolean animatqencours;
 	int animatq;
-	/**Booleen indiquant une évolution des pv lors d'une attaque*/
+	/**Booleen indiquant une ï¿½volution des pv lors d'une attaque*/
 	boolean pvendiminution;
 	/**Entier qui donne la fin de l'animation de diminution des pv*/
 	int pvfin;
@@ -75,7 +75,7 @@ public class Gestionatq {
 	}
 
 	/**
-	 * Met à jour la atqlist pour la case selectionne
+	 * Met ï¿½ jour la atqlist pour la case selectionne
 	 * 
 	 * @see Map#selectionne
 	 * @see #atqlist	
@@ -140,17 +140,25 @@ public class Gestionatq {
 	 * @see #atqlist
 	 */
 	
-	void render(Jeu jeu) {
+	void rendercase(Jeu jeu) {
 		for(Case cible: atqlist) {
 			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				if(cible.unite == null){
-					jeu.gc.drawImage(red, x, y);
-				}else {jeu.gc.drawImage(viseur, x, y); //on est sur une unite ennemi
-				
+			if(cible.unite == null){
+				jeu.gc.drawImage(red, x, y);
 			}
 		}
 	}
+	
+	void rendercible(Jeu jeu) {
+		for(Case cible: atqlist) {
+			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+			if(!(cible.unite == null)) {jeu.gc.drawImage(viseur, x, y); //on est sur une unite ennemi	
+			}
+		}
+	}
+	
 	/**
 	 * changement de la cible dans la liste des ennemis a portee.
 	 * 
