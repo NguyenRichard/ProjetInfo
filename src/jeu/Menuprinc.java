@@ -27,8 +27,8 @@ public class Menuprinc {
    	boolean update;
 	
 	/* Constructeur de Menu*/
-	Menuprinc(GraphicsContext gc,Jeu game,CreationMap crea){
-		fond = new Image("InsectWorldWar.png", 1000, 600, false, false);
+	Menuprinc(GraphicsContext gc,Jeu game,CreationMap crea,int width, int height){
+		fond = new Image("InsectWorldWar.png", width, height, false, false);
 		this.gc=gc;
 		this.game=game;
 		this.crea=crea;
@@ -36,13 +36,16 @@ public class Menuprinc {
 		update = true;
 	}
 	
-	void render() {gc.drawImage(fond, 0, 0); }
+	void render() {
+		gc.drawImage(fond, 0, 0);
+		
+	}
 	
 	void touch(KeyCode code) {
 		if (inmenuprin) {
 			    switch(code) {
 			    case A:
-			    		if (positioncurseur == 0) { //On veut jouer
+			    		if (positioncurseur == 0) {
 			    			File f = new File(crea.namesave); // nom du fichier contenant la sauvegarde
 			    			if(f.exists()) { 
 			    				try { // si la sauvegarde existe on reconstruit la map a l'aide du code
@@ -63,7 +66,7 @@ public class Menuprinc {
 			    				}catch (ClassNotFoundException e) {
 			    					e.printStackTrace();
 			    				}
-			    				game.map.affichageJoueurs();
+			    				game.map.affichageEquipe();
 				    			game.map.selectionne = game.map.plateau[51];
 				    			game.ingame=true;
 			    				game.map.render(gc);
@@ -72,9 +75,9 @@ public class Menuprinc {
 			    			}else {System.out.println("Le fichier n'existe pas");}
 			    			
 			    		}
-			    		else if (positioncurseur == 1) { //On veut créer une map
+			    		else if (positioncurseur == 1) {
 			    			File f = new File(crea.namesave); // nom du fichier contenant la sauvegarde
-			    			if(f.exists()) {
+			    			if(f.exists()) { 
 			    				try { // si la sauvegarde existe on reconstruit la map a l'aide du code
 			    					FileInputStream fis = new FileInputStream(crea.namesave);
 			    					ObjectInputStream ois = new ObjectInputStream(fis);
@@ -136,9 +139,9 @@ public class Menuprinc {
 		}
 	}
 	    
-	/*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
+	    /*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
 		
-	void upcurseur() {if (positioncurseur != 0) {positioncurseur -= 1; update = true;}}
-	void downcurseur() {if (positioncurseur != 1){positioncurseur += 1; update = true;}}	    
+		void upcurseur() {if (positioncurseur != 0) {positioncurseur -= 1; update = true;}}
+		void downcurseur() {if (positioncurseur != 1){positioncurseur += 1; update = true;}}	    
 
 }

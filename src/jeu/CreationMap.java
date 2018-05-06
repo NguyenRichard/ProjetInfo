@@ -10,9 +10,12 @@ import unit.*;
 import batiments.*;
 
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class CreationMap {
@@ -39,21 +42,22 @@ public class CreationMap {
 	 */
 	CreationMap(GraphicsContext gc,String txt){
 		
+		map = new Map();
+		
 	/*~~~~~~TABLE REFERENCE CODE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		referencecodeterrain = new ArrayList<Terrain>();
-		referencecodeterrain.add(new Void(50)); //permet de faire le lien entre code et element
-		referencecodeterrain.add(new Terre(50)); // /!\laisser void en premier !
-		referencecodeterrain.add(new Marais(50));
+		referencecodeterrain.add(new Void(map.taillec)); //permet de faire le lien entre code et element
+		referencecodeterrain.add(new Terre(map.taillec)); // /!\laisser void en premier !
+		referencecodeterrain.add(new Marais(map.taillec));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		this.namesave = txt;
 		increa = false;
 		menucache = new Image("wood.jpg",400,600,false,false);
-		map = new Map();
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
 		actualiservisu(); //a faire apres Menucrea
-		//map.affichageJoueurs();
+		map.affichageEquipe();
 		update=true;
 		
 	}
@@ -69,51 +73,47 @@ public class CreationMap {
 				map.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
 				if (increa) {
 					mapcode[k] = mapcode[k] - (mapcode[k]%50) + j; //on change la sauvegarde
+					
 				}
 			}
+
 		}
 	}
 	
 	/**ajoute l'unite correspondant au bon code au rang k
-	 * @param rang
+	 * @param k
 	 */
-	void remakeunite(int rang, int codeS, Map map) throws IndexOutOfBoundsException{
+	void remakeunite(int k, int codeS, Map map) {
 		int codeunite = (codeS/50)%50;
-		int numérojoueur = codeS/(50*50)%50;
-		try {
-			map.joueurs.get(numérojoueur);
-		} catch(IndexOutOfBoundsException e) {
-			System.out.println(e+" car numérojoueur = "+numérojoueur);
-			while (numérojoueur>=map.joueurs.size()) {
-				map.joueurs.add(new Joueur(Integer.toString(numérojoueur)));
-			}
+		int joueur = (codeS/(50*50))%50;
+		while (joueur >= map.equipe.size()) {
+			map.equipe.add(new ArrayList<Unite>());
 		}
 		
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types d'unitees !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codeunite == 0) {
-				map.plateau[rang].unite = null;
+				map.plateau[k].unite = null;
 			}
 			else if (codeunite == 1) {
-				map.addunite(rang, new AbeilleSamourai(map.taillec,map.joueurs.get(numérojoueur)),map.joueurs.get(numérojoueur));
+				map.addunite(k, new AbeilleSamourai(map.taillec,joueur),joueur);
 				}
 			else if (codeunite == 2) {
-				map.addunite(rang, new PapillonPsychique(map.taillec,map.joueurs.get(numérojoueur)),map.joueurs.get(numérojoueur));
+				map.addunite(k, new PapillonPsychique(map.taillec,joueur),joueur);
 				}
 			else if (codeunite == 3) {
-				map.addunite(rang, new Scarabe(map.taillec,map.joueurs.get(numérojoueur)),map.joueurs.get(numérojoueur));
+				map.addunite(k, new Scarabe(map.taillec,joueur),joueur);
 				}
 			else if (codeunite == 4) {
-				map.addunite(rang, new Abeille(map.taillec,map.joueurs.get(numérojoueur)),map.joueurs.get(numérojoueur));
+				map.addunite(k, new Abeille(map.taillec,joueur),joueur);
 				}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
-				System.out.println("changement ds fichier sauvegarde");
-				mapcode[rang] = mapcode[rang] - ((mapcode[rang]/50)%50)*50 + codeunite*50; //on change l'unite dans la sauvegarde
-				mapcode[rang] = mapcode[rang] - ((mapcode[rang]/(50*50))%50)*50*50 + numérojoueur*50*50; //de meme pour le joueur
+				
+				mapcode[k] = mapcode[k] - ((mapcode[k]/50)%50)*50 + codeunite*50; //on change l'unite dans la sauvegarde
+				mapcode[k] = mapcode[k] - ((mapcode[k]/(50*50))%50)*50*50 + joueur*50*50; //de meme pour le joueur
 				
 			}
 		}
-
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
 	 */
@@ -122,30 +122,21 @@ public class CreationMap {
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
 	 */
-	void remakebatiment(int k, int codeS, Map map) throws IndexOutOfBoundsException{
+	void remakebatiment(int k, int codeS, Map map) {
 		int codebatiment = (codeS/(50*50*50))%50;
-		int numérojoueur = (codeS/(50*50*50*50))%50;
-		try {
-			map.joueurs.get(numérojoueur);
-		} catch(IndexOutOfBoundsException e) {
-			System.out.println(e);
-			while (numérojoueur>=map.joueurs.size()) {
-				map.joueurs.add(new Joueur(Integer.toString(numérojoueur)));
-			}
-		}
+		int joueur = (codeS/(50*50*50*50))%50;
 		if (codebatiment !=0) {
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types de batiments !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codebatiment == 1) {
-				map.plateau[k].batiment= new Carregris(map.taillec,map.joueurs.get(numérojoueur));
-			}
+				map.plateau[k].batiment= new Carregris(map.taillec,joueur);
+				}
 			else if (codebatiment == 2) {
-				map.plateau[k].batiment = new Portal(map.taillec,map.joueurs.get(numérojoueur));
+				map.plateau[k].batiment = new Portal(map.taillec,joueur);
 			}
-			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
-				System.out.println("Increa demandé");
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
-				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + numérojoueur*6250000; //de meme pour le joueur
+				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
 			}
 		}
 		else {
@@ -158,7 +149,7 @@ public class CreationMap {
 	 */
 	int nombretotbatiment() {return 2;}
 	
-	/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */
+	/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
 	void update() {
 		map.renderanim(gc); //animation des sprites
@@ -174,15 +165,12 @@ public class CreationMap {
 	
 	void actualiservisu() {
 		remaketerrain(2500,menucrea.codesave,map);
-		System.out.println("remaketerrain fait");
 		remakebatiment(2500,menucrea.codesave,map);
-		System.out.println("remakebatiment fait");
 		remakeunite(2500,menucrea.codesave,map);
-		//map.delunite(map.plateau[2500].unite, map.joueurs.get((menucrea.codesave/(50*50))%50));
-		System.out.println("delunite fait");
+		map.delunite(map.plateau[2500].unite, (menucrea.codesave/(50*50))%50);
 	}
 	
-	/*_Controle du clavier____________________________________________________________________________________________________________ */
+	/*_Controle du clavier____________________________________________________________________________________________________________ */	
 
 	/**
 	 * Controle du clavier:
@@ -202,7 +190,10 @@ public class CreationMap {
 	    case A:
 	    	if(!menucrea.choix) {
 		    	int codeS = menucrea.codesave;
-		    	if (menucrea.choixtype == 0) {remaketerrain(map.selectionne.rang,codeS,map); }
+		    	if (menucrea.choixtype == 0) {
+		    		remaketerrain(map.selectionne.rang,codeS,map);
+		    		
+		    	}
 		    	else if ((menucrea.choixtype == 2)&&(map.selectionne.batiment == null)&&!(map.selectionne.terrain instanceof Void)) {remakebatiment(map.selectionne.rang,codeS,map);}
 		    	else if ((menucrea.choixtype == 1)&&(map.selectionne.unite == null)&&!(map.selectionne.terrain instanceof Void)) {remakeunite(map.selectionne.rang,codeS,map);}
 	    	}
@@ -289,13 +280,13 @@ public class CreationMap {
 	}
 	
 	void stop() {
-		map.affichageJoueurs();
-        map.joueurs = new ArrayList<Joueur>();
+		map.affichageEquipe();
+        map.equipe = new ArrayList<ArrayList<Unite>>();
 		increa = false;
 		map.selectionne = map.plateau[51];
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
 		actualiservisu(); //a faire apres Menucrea
-		map.affichageJoueurs();
+		map.affichageEquipe();
 		update=true;
 	}
 	

@@ -64,7 +64,6 @@ public class Menucrea {
             gc.setLineWidth(1);
             gc.fillText(type, 700, 135);
             gc.strokeText(type, 700, 135);
-            System.out.println("Tu t'affiches !!!");
             visualisation.terrain.render(gc, 715, 200);
         }
         if (choixtype==1) {
@@ -75,13 +74,7 @@ public class Menucrea {
             gc.setLineWidth(1);
             gc.fillText(type, 700, 135);
             gc.strokeText(type, 700, 135);
-            try {visualisation.unite.render(gc, 715, 200); }
-            catch(NullPointerException e) {
-            	System.out.println(e);
-            	System.out.println("Unité render annulé");
-            	try {System.out.println(visualisation.toString()); }
-            	catch(NullPointerException f) {System.out.println(f); }
-            }
+            visualisation.unite.render(gc, 715, 200);
             
         }
         if (choixtype==2) {

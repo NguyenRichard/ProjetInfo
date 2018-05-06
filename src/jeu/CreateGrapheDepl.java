@@ -59,7 +59,7 @@ public class CreateGrapheDepl {
 		int[][] res = new int[N][N];
 		for (int i=0;i<N;i++) {
 			for (int j=0;j<N;j++) {
-				if ((map.plateau[firstcase+i*NN+j].unite!=null)&&(map.plateau[firstcase+i*NN+j].unite.joueur!=map.joueurs.get(entraindejouer))) {
+				if ((map.plateau[firstcase+i*NN+j].unite!=null)&&(map.plateau[firstcase+i*NN+j].unite.joueur!=entraindejouer)) {
 					res[i][j]=100;
 				}
 				else {

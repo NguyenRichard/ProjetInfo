@@ -2,10 +2,20 @@ package jeu;
 
 public class Graphe {
 	
+	/**Matrice des liaisons (matrice d'adjacence) */
 	public int [][] liaisons;
+	/**tableau des sommets valides*/
 	public boolean[] valid;
+	/**Entier fixe symbolisant le vide */
 	public final static int vide = -999;
 	
+	/**
+	 * Constructeur de Graphe.
+	 * 
+	 * @param Nmax 
+	 * 		Nombre de sommets maximum du graphe (tableau fixe)
+	 * 			
+	 */
 	Graphe(int Nmax) {
 		liaisons = new int [Nmax][Nmax];
 		valid = new boolean [Nmax];
@@ -17,6 +27,10 @@ public class Graphe {
 		}
 	}
 	
+	/**
+	 * Regarde si un sommet du graphe est valide
+	 * 			
+	 */
 	boolean valideSommet(int i) {
 		if ((i >= valid.length) || (i<0)) {
 			return false;
@@ -26,6 +40,9 @@ public class Graphe {
 		}
 	}
 	
+	/**
+	 * 	Donne le nombre de sommets	
+	 */
 	int nbSommet() {
 		int res = 0;
 		while ((res<valid.length) && (valid[res])) {
@@ -34,10 +51,18 @@ public class Graphe {
 		return res;
 	}
 	
+	/**
+	 * Regarde si une liaisons du graphe est valide
+	 * 			
+	 */
 	boolean valideLiaison(int i,int j) {
 		return (valideSommet(i)&&valideSommet(j))&&(liaisons[i][j]!=vide);
 	}
 	
+	/**
+	 * retourne le poids d'une liaison
+	 * 			
+	 */
 	int Poidliaison(int i, int j) {
 		if (!valideLiaison(i,j)) {
 			System.out.println("Liaison inexistante");
@@ -45,6 +70,7 @@ public class Graphe {
 		}
 			return liaisons[i][j];	
 	}
+	
 	
 	void ajouterSommet(int i) {
 		if (valideSommet(i)) {
