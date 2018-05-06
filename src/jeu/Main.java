@@ -61,7 +61,7 @@ public class Main extends Application { //Nouveau test
 		        	  else {
 		        		  game.atq.animatq=0;
 		        		  game.atq.animatqencours=false;
-		        		  //On prépare la chute de pv :
+		        		  //On prï¿½pare la chute de pv :
 		        		  game.atq.pvfin =Integer.max(game.map.selectionne.unite.pv - game.map.selectionnemenu.unite.dmg,0);		
 		        		  game.atq.pvendiminution=true;
 		        	  }		

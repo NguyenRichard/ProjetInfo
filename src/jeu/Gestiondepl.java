@@ -89,12 +89,12 @@ public class Gestiondepl {
 			// Plus court chemin entre curseur et centre
 			int depl = map.selectionnemenu.unite.deplacement;
 			cgd=new CreateGrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer);
-			int[][] matricedepl = cgd.transforme();
+			cgd.transforme();
 			int newcenter = (center/50-firstcase/50)*(2*depl+1)+(center%50-firstcase%50);
 			int newcursor = (cursor/50-firstcase/50)*(2*depl+1)+(cursor%50-firstcase%50);
 			graphe= cgd.generate();
 			dijkstra= new Dijkstra(graphe,newcenter,newcursor);
-			int dist = dijkstra.runDijkstra();
+			dijkstra.runDijkstra();
 			int[] chemin = dijkstra.chemin();
 			chemin= cgd.reversechemin(chemin);
 			
@@ -222,7 +222,7 @@ public class Gestiondepl {
 		}
 		
 		cgd=new CreateGrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer);
-		int[][] matricedepl = cgd.transforme();
+		cgd.transforme();
 		
 		
 		for (int j=0;j<deplist.length;j++) {
