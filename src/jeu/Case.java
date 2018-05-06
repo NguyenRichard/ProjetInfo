@@ -12,10 +12,8 @@ public class Case {
 	Batiment batiment;
 	/**Rang de la case, sert a la localiser par rapport a map */
 	int rang;
-	int taillec;
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
-	
 	/**
 	 * Constructeur de Case:
 	 * 
@@ -32,7 +30,6 @@ public class Case {
 	 */
 	Case(int taillec, int rang){
 		this.unite=null;
-		this.taillec=taillec;
 		this.terrain = new Void(taillec);
 		this.batiment=null;
 		this.rang = rang;
@@ -53,10 +50,10 @@ public class Case {
 		}
 		return affichage;
 	}
+
 /*_Affichager des sprites_________________________________________________________________________________________________________ */
-	
 		/**
-		 * <h3>Affichage du terrain, du batiment et de l'unite de la case.</h3>
+		* <h3>Affichage du terrain, du batiment et de l'unite de la case.</h3>
 		 * La position pixel est calculee ici, a partir du rang et du rangcorner
 		 * 
 		 * @param gc 
@@ -65,18 +62,17 @@ public class Case {
 		 * @see Map#rangcorner
 		 */
 	void render(GraphicsContext gc, int rangcorner) {
-		int x = (rang%50 - rangcorner%50)*taillec;
-		int y = (rang/50 - rangcorner/50)*taillec;
+		int x = (rang%50 - rangcorner%50)*50;
+		int y = (rang/50 - rangcorner/50)*50;
 		terrain.render(gc,x,y);
 		if (this.batiment !=null) {
 			batiment.render(gc,x,y);
 		}
 		if (this.unite !=null) {
-			unite.render(gc,x,y);	
+			unite.render(gc,x,y);
 		}
 	}
-	
-	
+
 /*_Utilitaire___________________________________________________________________________________________________________________ */
 	
 	/**

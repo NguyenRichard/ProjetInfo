@@ -23,111 +23,107 @@ public class Main extends Application { //Nouveau test
 	}
 	
 	public void start(Stage stage){
-	    int width = 1000;
-	    int height = 650;
+	    int WIDTH = 1000;	// Taille la carte 600x600 et le menu 400x600 a droite
+	    int HEIGHT = 600;	// Taille carte affichee 12x12 case (une case 50x50)
 
 	    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
 	    stage.setResizable(false);
 
 	    Group root = new Group();
 	    Scene scene = new Scene(root);
-	    Canvas canvas = new Canvas(width, height);
+	    Canvas canvas = new Canvas(WIDTH, HEIGHT);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 	    CreationMap crea = new CreationMap(gc, "creamap.ser");	// Creation de l'editeur
-	    Jeu game = new Jeu(gc,width,height);	// Creation d'une partie
-	   	Menuprinc menu = new Menuprinc(gc,game,crea,width,height); //Creation du menu
+	    Jeu game = new Jeu(gc);	// Creation d'une partie
+	   	Menuprinc menu = new Menuprinc(gc,game,crea); //Creation du menu
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";
 		menu.render();
     	/* Refresh animation */
-		new AnimationTimer() {          
-	        public void handle(long arg0) {              
-	          
-		          if (game.ingame) {
-			          game.update();
-			          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
-			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-			          gc.setFill(Color.BISQUE);
-			          gc.setStroke(Color.BLACK);
-			          gc.setLineWidth(1);
-			          gc.fillText(txt, game.positionxmenu*1.05, 50 );
-			          gc.strokeText(txt, game.positionxmenu*1.05, 50 );
-		          }
+		new AnimationTimer() {
+			public void handle(long arg0) {
+				
+				if (game.ingame) {
+					game.update();
+					String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
+					gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+					gc.setFill(Color.BISQUE);
+					gc.setStroke(Color.BLACK);
+					gc.setLineWidth(1);
+					gc.fillText(txt, 650, 50 );
+					gc.strokeText(txt, 650, 50 );
+				}
 		          
-		          if(game.atq.animatqencours) { //Animation d'attaque
-		        	  game.atq.animdegat();
-		        	  if(game.atq.animatq<30) {game.atq.animatq++;}
-		        	  else {
-		        		  game.atq.animatq=0;
-		        		  game.atq.animatqencours=false;
-		        		  //On prépare la chute de pv :
-		        		  game.atq.pvfin =Integer.max(game.map.selectionne.unite.pv - game.map.selectionnemenu.unite.dmg,0);		
-		        		  game.atq.pvendiminution=true;
-		        	  }		
-		          }
+				if(game.atq.animatqencours) { //Animation d'attaque
+					game.atq.animdegat();
+					if(game.atq.animatq<30) {game.atq.animatq++;}
+					else {
+						game.atq.animatq=0;
+						game.atq.animatqencours=false;
+						//On prépare la chute de pv :
+						game.atq.pvfin =Integer.max(game.map.selectionne.unite.pv - game.map.selectionnemenu.unite.dmg,0);		
+						game.atq.pvendiminution=true;
+					}
+				}
 		          
-		          if(game.atq.pvendiminution) { //Animation de chute des pv
-		        	  if(game.map.selectionne.unite.pv>game.atq.pvfin) {
-		        		  game.map.selectionne.unite.pv--;
-		        		  game.menuinfo.MenuInforender();
-		        	  }
-		        	  else {
-		        		  game.atq.pvendiminution=false;
-		        		  game.menuinfo.MenuInforender();
-		        		  game.atq.prisedegat();
-		        		  }
-		          }
-		          if (crea.increa) {
-		        	  crea.update();
-		          }
-		          if (menu.inmenuprin) {
-		        	  if (menu.update) {
-				          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
-				          gc.setFill(Color.WHITE);
-				          gc.setStroke(Color.BLACK);
-				          gc.setLineWidth(1);
-			        	  if (menu.positioncurseur == 0) {
-			        			menu.render();
-			        			gc.strokeText(edit, 360, 450 );
-			        			gc.fillText(edit, 360, 450 );
-						        gc.setFill(Color.YELLOW);
-			        			gc.fillText(start, 360, 400 );
-			        	  }
-			        	  else if (menu.positioncurseur == 1) {
-			        			menu.render();
-			        			gc.fillText(start, 360, 400 );
-			        			gc.strokeText(start, 360, 400 );
-						        gc.setFill(Color.YELLOW);
-			        			gc.fillText(edit, 360, 450 );
-			        	  }
-			        	  menu.update = false;
-	        		  
-		        	  }
-		          }
-	        	}
-	   	}.start();
-	    
+				if(game.atq.pvendiminution) { //Animation de chute des pv, venant après l'animation d'attaque
+					if(game.map.selectionne.unite.pv>game.atq.pvfin) {
+						game.map.selectionne.unite.pv--;
+						game.menuinfo.MenuInforender();
+					}
+					else {
+						game.atq.pvendiminution=false;
+						game.menuinfo.MenuInforender();
+						game.atq.prisedegat();
+					}
+				}
+				if (crea.increa) {
+					crea.update();
+				}
+				if (menu.inmenuprin) {
+					if (menu.update) {
+						gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
+						gc.setFill(Color.WHITE);
+						gc.setStroke(Color.BLACK);
+						gc.setLineWidth(1);
+						if (menu.positioncurseur == 0) {
+							menu.render();
+							gc.strokeText(edit, 360, 450 );
+							gc.fillText(edit, 360, 450 );
+							gc.setFill(Color.YELLOW);
+							gc.fillText(start, 360, 400 );
+			        	  	}
+						else if (menu.positioncurseur == 1) {
+							menu.render();
+							gc.fillText(start, 360, 400 );
+							gc.strokeText(start, 360, 400 );
+							gc.setFill(Color.YELLOW);
+							gc.fillText(edit, 360, 450 );
+						}
+						menu.update = false;
+						
+					}
+				}
+			}
+		}.start();
 		
-	    	/* Mouvement curseur */
-	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	        public void handle(KeyEvent e) {
-	    			if (game.ingame) {
-	    				game.touch(e.getCode());
-	    			}
-	    			if (crea.increa) {
-	    				crea.touch(e.getCode());
-	    			}
-	        		menu.touch(e.getCode());
-	        	
-	        }
-	    });
-
-	   
-	   		/* Affichage scene */
-	   stage.setScene(scene);
-	   stage.show();
-	}
-	
-	
+		/* Mouvement curseur */
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				if (game.ingame) {
+					game.touch(e.getCode());
+				}
+				if (crea.increa) {
+					crea.touch(e.getCode());
+				}
+				menu.touch(e.getCode());
+				
+			}
+		});
+			
+		/* Affichage scene */
+		stage.setScene(scene);
+		stage.show();
+	}	
 }
