@@ -26,17 +26,14 @@ public class Jeu {
 	Gestiondepl depl;
 	/**Objet contenant les methodes pour gerer la capture des batiments*/
 	Gestioncapture capt;
+	Image menucache;
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
-	/**Entier ï¿½ partir du quel affichï¿½ le menu latï¿½ral droit**/
-    int positionxmenu;
-	/**Image de fond du menu latï¿½ral droit**/
-	Image menucache;
-	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
-	boolean updatemenu;
-
+	/**Variable qui contient les joueurs vivants*/
+	ArrayList<Joueur> joueurs;
 	
+
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
 	/**
@@ -48,50 +45,47 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc, int width, int height){
+	Jeu(GraphicsContext gc){
 		this.map = new Map();
+		joueurs = new ArrayList<Joueur>();
+		map.joueurs=joueurs;
 		tour = 0;
-		entrainjouer=0;
-		this.gc=gc;
-		menu=0;
+		entrainjouer = 0;
+		this.gc = gc;
+		menu = 0;
 		positioncurseur1 = 0;
-		update=true;
+		update = true;
 		atq = new Gestionatq(map, gc);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menucache = new Image("wood.jpg", width-map.taillec*map.nombrecaseaffichee,height,false,false);
-		positionxmenu = map.taillec*map.nombrecaseaffichee;
+		menucache = new Image("wood.jpg",400,600,false,false);
 		ingame = false;
-		menuinfo = new MenuInfo(gc,map,positionxmenu);
-		updatemenu=false;
+		menuinfo = new MenuInfo(gc,map);
 	}
-/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
-	
+
+/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */
 	void update() {
-		if (!atq.animatqencours) {	map.renderanim(gc);}//animation des sprites si pas de combat
+		if (!atq.animatqencours) {map.renderanim(gc); }//animation des sprites si pas de combat
 		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
-			 map.render(gc);
-			 update=false;
+			map.render(gc);
+			update=false;
 		}
-	
-	    if (menu==1) {
-	    		if (depl.deplacementencours&&updatemenu) {
-	    			depl.render(this);
-	    			depl.arrowrender(this);
-	    		}
-	    		if (atq.attaqueencours&&updatemenu) {
-	    			atq.rendercase(this);
-	    		}
-	    		if (atq.attaqueencours) {
-	    			atq.rendercible(this);
-	    		}
-	    		updatemenu=false;
-	    }
-	    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+		
+		if (menu==1) {
+			if (depl.deplacementencours) {
+				depl.render(this);
+				depl.arrowrender(this);
+			}
+			if (atq.attaqueencours) {
+				atq.render(this);
+			}
+		}
+		menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
 		menuinfo.MenuInforender();
 	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
-			
+	    
 	}
+
 /*_Controle du clavier____________________________________________________________________________________________________________ */	
 	/**
 	 * Controle du clavier:
@@ -110,32 +104,31 @@ public class Jeu {
 	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
 	    			switch(menu) {
 	    			case 1:
-		    				if (positioncurseur1==0) {
-		    					// gestion de l'attaque
-		    					menu = atq.attaque();
-		    				}
-		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
-		    					// gestion de deplacement
-		    					menu = depl.deplacement();
-		    					
-		    				}
-		    				else if (positioncurseur1==2) {
-		    					// gestion de la capture
-		    					menu = capt.capture();
-		    				}
-		    				update=true;
-		    				updatemenu=true;
-		    				break;
+	    				if (positioncurseur1==0) {
+	    					// gestion de l'attaque
+	    					menu = atq.attaque();
+	    				}
+	    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restedeplacement!=0)) {
+	    					// gestion de deplacement
+	    					menu = depl.deplacement();
+	    					
+	    				}
+	    				else if (positioncurseur1==2) {
+	    					// gestion de la capture
+	    					menu = capt.capture();
+	    				}
+	    				update=true;
+	    				break;
 	    			case 0:
-			    			System.out.print(map.selectionne);
-			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
-			    			else {menu=2; positioncurseur1=0;};	 
-			    			break;
+	    				System.out.print(map.selectionne);
+	    				if (map.selectionne.unite!=null && map.selectionne.unite.joueur==joueurs.get(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
+	    				else {menu=2; positioncurseur1=0;};	 
+	    				break;
 	    			case 2:
-	    					passertour();
-	    					break;
+	    				passertour();
+	    				break;
 	    			default:
-	    					break;
+	    				break;
 	    			} 
 	    			break; 
 	    case B : 
@@ -153,7 +146,6 @@ public class Jeu {
 								atq.downenemi(); //on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
-							updatemenu=true;
 							break;
 					default:
 							break;
@@ -169,7 +161,6 @@ public class Jeu {
 								atq.upenemi();//on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
-							updatemenu=true;
 							break;
 					default:
 							break;
@@ -180,7 +171,6 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-50,depl.deplist))) {
 								map.upcurseur();//on selectionne case pour deplacement
 							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {upcurseur1();} //on bouge curseur du menu
-							updatemenu=true;
 							break;
 					case 0: map.upcurseur(); break;//on bouge curseur de map
 					default:
@@ -192,36 +182,40 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+50,depl.deplist))) {
 								map.downcurseur();//on selectionne case pour deplacement
 							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {downcurseur1();}//on bouge curseur du menu
-							updatemenu=true;
 							break;
 					case 0: map.downcurseur(); break;//on bouge curseur de map
 					default:
 							break;
 					} update=true; break;
+		case I : //demande affichage état du jeu
+			System.out.println("Liste joueurs : "+joueurs);
+			for (Joueur joueur : joueurs) {System.out.println("armée du joueur "+joueur+" : "+joueur.armée);}
+			System.out.println("la case Map.selectionné est : "+map.selectionne);
 	    default:
 	    		break;
 	    }
 		}
 	}
+
 /*_Affichage du menu1_____________________________________________________________________________________________________________ */	
 	/**
 	 * Affichage du menu de deplacement et d'attaque, true le montre en false le cache en recouvrant tout le coter(a adapter plus tard)
 	 * 			
 	 */	
 	void menurender() {
-		gc.drawImage(menucache, positionxmenu, 0);
+		gc.drawImage(menucache, 600, 0);
 	    switch(menu) {
 	    case 1:
 				Image menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
 				Image curseur = new Image("curseurmenu1.png",200, 320, false, false);
-				gc.drawImage(menu1, positionxmenu*1.05, 50);
-				gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
+				gc.drawImage(menu1, 650, 50);
+				gc.drawImage(curseur, 650,50+positioncurseur1*52);
 				break;
 	    case 2:
     			Image menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
 	    		Image curseur2 = new Image("curseurmenu1.png", 200, 320, false, false);
-	    		gc.drawImage(menu2, positionxmenu*1.05, 50);
-	    		gc.drawImage(curseur2, positionxmenu*1.05,50+positioncurseur1*52);
+	    		gc.drawImage(menu2, 650, 50);
+	    		gc.drawImage(curseur2, 650,50+positioncurseur1*52);
 	    		break;
 
 	    default:
@@ -249,41 +243,48 @@ public class Jeu {
 		} return false;
 	}
 	
+/*_Gestion des joueurs, de la création à la mort__________________________________________________________________________________ */
+	
 	/**
 	 * Incremente le nombre de tour, change le joueur qui est entrain de jouee et reinitialisation du booleen valable
 	 * pour pouvoir rejouer les unites.
 	 */
 	void passertour() {
-    	ArrayList<Unite> listeunit = map.equipe.get(entrainjouer);
-		entrainjouer++;	//Change de joueur
-		if (entrainjouer == map.equipe.size()) {
+		//Change de joueur 
+		entrainjouer++;
+		if (entrainjouer == joueurs.size()) {
 			entrainjouer = 0;
 			tour++; //Change de tour
 		}
 		menu=0;
-		for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
-			Unite temp = listeunit.get(k);
-			temp.valable=true;
-			temp.restdeplacement=temp.deplacement;
+		
+    	Joueur joueurencours = joueurs.get(entrainjouer);
+		for (Unite unite : joueurencours.armée) {
+			unite.valable=true;
+			unite.restedeplacement=unite.deplacement;
 		}
+		
+		/**for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
+			
+		}*/
 	}
+
 	/**
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
-
 	void fin() {
 		
-        map.equipe = new ArrayList<ArrayList<Unite>>();
+        joueurs = new ArrayList<Joueur>();
 		tour = 0;
-		entrainjouer=0;
-		menu=0;
+		entrainjouer = 0;
+		menu = 0;
 		positioncurseur1 = 0;
-		update=true;
+		update = true;
 		atq = new Gestionatq(map, gc);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menuinfo = new MenuInfo(gc,map,positionxmenu);
-		ingame=false;
+		menuinfo = new MenuInfo(gc,map);
+		ingame = false;
 	}
 
 }

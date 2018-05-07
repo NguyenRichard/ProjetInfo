@@ -2,28 +2,14 @@ package jeu;
 
 public class Dijkstra {
 	
-	/**Type Graphe le graphe sur lequel on utilise l'algorithme du plus chemin */
 	Graphe g;
-	/**Noeud de départ */
 	int sommetcible;
-	/**Noeud d'arrivee */
 	int sommetdepart;
-	/**Matrice semblable à celle d'adjacence avec plus d'informations : { {distance,provenance,visité (1 non ou 0 oui)},...} */
-	int[][] sommets;
-	/**Nombre de sommets du graphe */
+	int[][] sommets; // { {distance,provenance,visité (1 non ou 0 oui)},...}
 	int nbsommets;
-	/**entier static symbolisant INF */
 	static final int INF = 1000;
-	/**entier static symbolisant le vide */
 	public final static int vide = -999;
 	
-	/**
-	 * Constructeur de Dijkstra.
-	 * 
-	 * @param g 
-	 * 		Gaphe sur lequel on applique l'alorithme du plus court chemin
-	 * 			
-	 */
 	Dijkstra(Graphe g, int sommetdepart, int sommetcible) {
 		this.g = g;
 		this.sommetcible=sommetcible;
@@ -42,20 +28,10 @@ public class Dijkstra {
 		
 	}
 	
-	/**
-	 * Changer le graphe de la classe
-	 * 			
-	 */
 	void changeGrapheDij(Graphe g) {
 		this.g = g;
 	}
 	
-	/**
-	 * Algorithme trouvant le plus court chemin entre deux Noeuds
-	 * 
-	 * Renvoie le "poids" du chemin
-	 * 			
-	 */
 	int runDijkstra() {
 		int sommetenvisite = sommetdepart;
 		//displaytot(sommets);
@@ -71,10 +47,6 @@ public class Dijkstra {
 		return sommets[sommetcible][0];
 	}
 	
-	/**
-	 * Trouve le plus petit sommets (en distance) non visité
-	 * 			
-	 */
 	int pluspetitsommet() {
 		int res = INF;
 		int rang = sommetdepart;
@@ -87,11 +59,6 @@ public class Dijkstra {
 		return rang;
 	}
 	
-	/**
-	 * 
-	 * Visite tous les voisins d'un sommet
-	 * 			
-	 */
 	void visiteSommet(int sommet) {
 		int poids = sommets[sommet][0];
 		for (int i = 0; i<g.valid.length;i++) {
@@ -106,10 +73,6 @@ public class Dijkstra {
 		sommets[sommet][2]=0;
 	}
 	
-	/**
-	 * Trouve le plus petit sommets (en distance) non visité
-	 * 			
-	 */
 	int plusPetitNonVisite() {
 		int res = INF;
 		int rang = -1;
@@ -122,10 +85,6 @@ public class Dijkstra {
 		return rang;
 	}
 	
-	/**
-	 * Affichage tableau de tableau d'entier
-	 * 			
-	 */
 	void displaytot(int[][] tab) {
 		System.out.print("{");
 		display(tab[0]);
@@ -136,10 +95,6 @@ public class Dijkstra {
 		System.out.println("}");
 	}
 	
-	/**
-	 * affichage tableau d'entier
-	 * 			
-	 */
 	void display(int[] tab) {
 		System.out.print("{" + tab[0]);
 		for (int i = 1; i<tab.length;i++) {
@@ -148,10 +103,6 @@ public class Dijkstra {
 		System.out.print("}");
 	}
 	
-	/**
-	 * Renvoie le chemin le plus court entre le sommets de départ et celui d'arrivee en prenant la matrice final
-	 * 			
-	 */
 	int[] chemin() {
 		int[] chemin = new int[sommets.length];
 		for (int i=0;i<sommets.length;i++) {

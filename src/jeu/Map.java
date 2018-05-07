@@ -3,20 +3,14 @@ package jeu;
 
 
 import java.util.ArrayList;
-import batiments.Carregris;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import terrain.Terre;
-import unit.Abeille;
-import unit.AbeilleSamourai;
-import unit.PapillonPsychique;
-import unit.Scarabe;
 
 
 
 public class Map {
 	/** Tableau de case qui represente la carte du jeu*/
-	Case[] plateau; 
+	Case[] plateau;
 	/**Image du curseur */
 	Image curseur;
 	/**Taille de la carte affichee, en ordonnee */
@@ -25,15 +19,12 @@ public class Map {
 	int rangcorner;
 	/**Case selectionee par le curseur */
 	Case selectionne;
-	ArrayList<ArrayList<Unite>> equipe;
+	ArrayList<Joueur> joueurs;
 	/**Case selectionee avec l'unite lorsqu'on entre dans le menu */
 	Case selectionnemenu;
-	Image fond;
-	int nombrecaseaffichee;
 	
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
-	
 	/**
 	 * <h3> Constructeur de Map: </h3>
 	 *- (xcarte,ycarte) : La carte affichee est de 600x600pixels. <br/>
@@ -43,11 +34,9 @@ public class Map {
 	 *- (xcurseur ,ycurseur): initialises a (0,0)
 	 */	
 	Map(){
-		taillec=65;
-		nombrecaseaffichee = 10;
-		fond = new Image("nuage.jpg",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
+		taillec=50;
 		Case[] plateau = new Case[2501];
-        equipe = new ArrayList<ArrayList<Unite>>();
+		joueurs = new ArrayList<Joueur>();
 		rangcorner=0;
 		for (int k = 0; k < plateau.length; k++) {
 			// Boucle qui initialise les cases du plateau
@@ -57,8 +46,8 @@ public class Map {
 		curseur = new Image("cursor2.png", taillec, taillec,false,false);
 		selectionne = plateau[51];
 	}
+
 /*_Affichager des sprites___________________________________________________________________________________________________________ */
-	
 	/**
 	 * <h3>Affichage des cases du plateau</h3>
 	 * 
@@ -70,9 +59,9 @@ public class Map {
 	 *Pour cela on utilise kdefine
 	 */
 	void render(GraphicsContext gc) {
+		Image fond = new Image("nuage.jpg",600,600,false,false);
 		gc.drawImage(fond, 0, 0);
-		for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
-			// Boucle qui affiche les cases du plateau de la carte affichee
+		for (int k = rangcorner; k <= rangcorner+11*51; k++) {  // Boucle qui affiche les cases du plateau de la carte affichee
 			plateau[k].render(gc,rangcorner);
 			k=kdefine(k);
 		}
@@ -83,7 +72,7 @@ public class Map {
 	 * @param gc le contexte graphique
 	 */
 	void renderanim(GraphicsContext gc) {
-		for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
+		for (int k = rangcorner; k <= rangcorner+11*51; k++) {
 			// Boucle qui affiche les cases du plateau de la carte affichee
 			if (plateau[k].unite != null) {
 				plateau[k].render(gc,rangcorner);
@@ -94,7 +83,6 @@ public class Map {
 	}
 	
 /*_Rester dans la fenetre d'affichage_______________________________________________________________________________________________ */	
-	
 	/**
 	 * 
 	 * @param ko rang a controler
@@ -103,15 +91,14 @@ public class Map {
 	 * @see Map#render(GraphicsContext)
 	 */
 	int kdefine(int ko) {
-		if (ko%50-rangcorner%50==(nombrecaseaffichee-1)) {
-			return ko-nombrecaseaffichee+50;
+		if (ko%50-rangcorner%50==11) {
+			return ko-12+50;
 		} else {
 			return ko;
 		}
 	}
 
-/*_Mettre a jour la position du curseur______________________________________________________________________________________________ */
-	
+/*_Mettre a jour la position du curseur______________________________________________________________________________________________*/
 	/**
 	 * A utiliser pour changer l'affichage du curseur d'un rang vers la gauche. Modifie rangcorner plutot que xcurseur si on est a la limite de l'affichage.
 	 * 
@@ -136,9 +123,9 @@ public class Map {
 	 * @see Map#rangcorner
 	 */
 	void rightcurseur() {
-		if (selectionne.rang%50 - rangcorner%50 != (nombrecaseaffichee-1)) 
+		if (selectionne.rang%50 - rangcorner%50 != 11) 
 			selectionne=plateau[selectionne.rang+1];
-		else if (rangcorner%50 < 50-nombrecaseaffichee ) {
+		else if (rangcorner%50 < 38 ) {
 			rangcorner+=1;
 			selectionne=plateau[selectionne.rang+1];
 		}
@@ -166,9 +153,9 @@ public class Map {
 	 * @see Map#rangcorner
 	 */
 	void downcurseur() {
-		if (selectionne.rang/50 - rangcorner/50 != 9)
+		if (selectionne.rang/50 - rangcorner/50 != 11)
 			selectionne=plateau[selectionne.rang+50];
-		else if (rangcorner/50 < 50-nombrecaseaffichee ) {
+		else if (rangcorner/50 < 38 ) {
 			rangcorner+=50;
 			selectionne=plateau[selectionne.rang+50];
 		}
@@ -192,9 +179,12 @@ public class Map {
     
     /**
      * Fonction qui ajoute le batiment sur le rang "rang" de map.
+     * @param joueur TODO
      */
-    void addbatiment(int rang, Batiment batiment) {
+    void addbatiment(int rang, Batiment batiment, Joueur joueur) {
+    	joueur.add(batiment);
     	plateau[rang].batiment=batiment;
+    	verifjoueurs(batiment);
     }
     
     /**
@@ -202,39 +192,63 @@ public class Map {
      * "joueur" sert a preciser a quelle equipe appartient l'unite.
      * L'unite est ici ajoute a la liste des unites du joueur "joueur" 
      */
-    void addunite(int rang, Unite unite,int joueur) {
-    		plateau[rang].unite=unite;
-    		ArrayList<Unite> temp = equipe.get(joueur);
-    		temp.add(unite);
+    void addunite(int rang, Unite unite,Joueur joueur) {
+    	joueur.add(unite);
+    	plateau[rang].unite=unite;
+    	verifjoueurs(unite);
     }
     
-    void delunite(Unite unite,int joueur) {
-    	ArrayList<Unite> temp = equipe.get(joueur);
-    	temp.remove(unite);
-    }
+    void delunite(Unite unite,Joueur joueur) {
+    	System.out.println("Delunite "+unite+" demandée");
+    	joueur.armée.remove(unite);
+    	}
     
     
     /*_Affichage du curseur___________________________________________________________________________________________________ */
-    
     void curseurRender(GraphicsContext gc) {
-    	int x = (selectionne.rang%50 - rangcorner%50)*taillec;
-		int y = (selectionne.rang/50 - rangcorner/50)*taillec;
+    	int x = (selectionne.rang%50 - rangcorner%50)*50;
+		int y = (selectionne.rang/50 - rangcorner/50)*50;
 		gc.drawImage(curseur, x, y);
     }
-    
-    /*_Affichage equipe dans le terminal______________________________________________________________________________________ */
-    
-    void affichageEquipe() {
-    	for (int k = 0; k < equipe.size(); k++) {
+
+    /*_Affichage equipe dans le terminal______________________________________________________________________________________ */ 
+    void affichageJoueurs() {
+		for (Joueur joueur : joueurs) {
+			System.out.println("Armée de " + joueur.toString() + ": ");
+    		for(Unite unite : joueur.armée) {
+    			System.out.println(unite);
+	    	}
+    		//joueur.armée.toString(); A TESTER SI CA PASSE A LA PLACE DE LA BOUCLE FOR
+    	}
+    	
+    	/*for (int k = 0; k < .size(); k++) {
 	    	ArrayList<Unite> temp = equipe.get(k);
 	    	System.out.println("Equipe "+k+": ");
 	    	for(Unite cur: temp) {
 	    		System.out.println(cur);
 	    	}
 		
+    	}*/
+    }
+	
+    /**
+     * Verifie si le joueur de l'unité ou du batiment est dans la liste joueurs
+	 */
+    void verifjoueurs(Unite unite) {
+    	if (!joueurs.contains(unite.joueur)) {
+    		joueurs.add(unite.joueur);
+    		System.out.println("Joueur "+unite.joueur+" ajouté");
+    	}			
+    }
+    
+    void verifjoueurs(Batiment batiment) {
+    	if (!joueurs.contains(batiment.joueur)) {
+    		joueurs.add(batiment.joueur);
+    		System.out.println("Joueur "+batiment.joueur+" ajouté");
     	}
     }
-	    
+    
+    
     /**
      * 
      * @param rang a tester
@@ -244,7 +258,7 @@ public class Map {
      * @see #kdefine(int)
      */
     boolean isShown(int rang) {
-    	for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
+    	for (int k = rangcorner; k <= rangcorner+11*51; k++) {
     		// test pour chaque case affiche
 			if(k==rang) {
 				return true;

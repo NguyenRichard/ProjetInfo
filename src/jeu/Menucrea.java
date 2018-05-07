@@ -74,7 +74,13 @@ public class Menucrea {
             gc.setLineWidth(1);
             gc.fillText(type, 700, 135);
             gc.strokeText(type, 700, 135);
-            visualisation.unite.render(gc, 715, 200);
+            try {visualisation.unite.render(gc, 715, 200); }
+            catch(NullPointerException e) {
+            	System.out.println(e);
+            	System.out.println("Unité render annulé");
+            	try {System.out.println(visualisation.toString()); }
+            	catch(NullPointerException f) {System.out.println(f); }
+            }
             
         }
         if (choixtype==2) {
@@ -124,7 +130,6 @@ public class Menucrea {
 				numjoueur = (codesave/(50*50*50*50))%50;
 			}
 		}
-		
 		else if (positioncurseurcrea==1) { //on change au sein de la division interne
 			if (choixtype==0) {
 				codesave += 1;
@@ -168,6 +173,7 @@ public class Menucrea {
 				
 			}
 		}
+		
 	}
 	
 	/**

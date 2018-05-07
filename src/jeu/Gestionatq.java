@@ -23,12 +23,10 @@ public class Gestionatq {
 	GraphicsContext gc;
 	boolean animatqencours;
 	int animatq;
-	/**Booleen indiquant une ï¿½volution des pv lors d'une attaque*/
+	/**Booleen indiquant une évolution des pv lors d'une attaque*/
 	boolean pvendiminution;
 	/**Entier qui donne la fin de l'animation de diminution des pv*/
 	int pvfin;
-	Image red;
-	Image viseur;
 	
  	Gestionatq(Map map, GraphicsContext gc){
 		attaqueencours=false;
@@ -37,15 +35,12 @@ public class Gestionatq {
 		animatqencours=false;
 		animatq=0;
 		this.gc=gc;
-		red = new Image("redsquare.png", map.taillec, map.taillec, false, false);
-		viseur = new Image("viseur.png", map.taillec, map.taillec,false,false);
 	}
 	
 	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
 		if (pvfin <= 0) {
-	    	ArrayList<Unite> listeunit = map.equipe.get(map.selectionne.unite.joueur);
-	    	listeunit.remove(map.selectionne.unite);
+	    	map.selectionne.unite.joueur.armée.remove(map.selectionne.unite);
 	    	map.selectionne.unite=null;
   		  	map.render(gc);
 		}
@@ -75,7 +70,7 @@ public class Gestionatq {
 	}
 
 	/**
-	 * Met ï¿½ jour la atqlist pour la case selectionne
+	 * Met à jour la atqlist pour la case selectionne
 	 * 
 	 * @see Map#selectionne
 	 * @see #atqlist	
@@ -84,7 +79,6 @@ public class Gestionatq {
 	 * 	
 	 */
 	void listcaseaportee() {
-		
 		int rang = map.selectionnemenu.rang;
 		int portee = map.selectionnemenu.unite.portee[1];
 		int porteemin = map.selectionnemenu.unite.portee[0];
@@ -140,25 +134,19 @@ public class Gestionatq {
 	 * @see #atqlist
 	 */
 	
-	void rendercase(Jeu jeu) {
+	void render(Jeu jeu) {
+		Image red = new Image("redsquare.png", 50, 50, false, false);
+		Image viseur = new Image("viseur.png",50,50,false,false);
 		for(Case cible: atqlist) {
-			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-			if(cible.unite == null){
-				jeu.gc.drawImage(red, x, y);
+			int x = (cible.rang%50)*50-(jeu.map.rangcorner%50)*50;
+			int y = (cible.rang/50)*50-(jeu.map.rangcorner/50)*50;
+				if(cible.unite == null){
+					jeu.gc.drawImage(red, x, y);
+				}else {jeu.gc.drawImage(viseur, x, y); //on est sur une unite ennemi
+				
 			}
 		}
 	}
-	
-	void rendercible(Jeu jeu) {
-		for(Case cible: atqlist) {
-			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-			if(!(cible.unite == null)) {jeu.gc.drawImage(viseur, x, y); //on est sur une unite ennemi	
-			}
-		}
-	}
-	
 	/**
 	 * changement de la cible dans la liste des ennemis a portee.
 	 * 
@@ -195,8 +183,8 @@ public class Gestionatq {
 	}
 	
 	void animdegat() {
-		int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
-		int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
+		int x = (map.selectionne.rang%50 - map.rangcorner%50)*50;
+		int y = (map.selectionne.rang/50 - map.rangcorner/50)*50;
 		
 		if (animatq<4) {gc.drawImage(Im_deg, x+25, y);}
 		else if(animatq<8) {gc.drawImage(Im_deg, x, y+25);}

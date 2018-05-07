@@ -14,14 +14,10 @@ public class MenuInfo {
 	Map map;
 	/**Image */
 	Image[] images;
-	int positionxmenuinfo;
-	int positionymenuinfo;
 	
-	MenuInfo(GraphicsContext gc, Map map, int positionxmenu) {
+	MenuInfo(GraphicsContext gc, Map map) {
 		this.gc = gc;
 		this.map = map;
-		this.positionxmenuinfo=positionxmenu+10;
-		positionymenuinfo=400;
 	}
 	
 	void MenuInforender() {
@@ -36,23 +32,23 @@ public class MenuInfo {
 				animcompteur = 0;
 				k=0;
 			}
-			gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
+			gc.drawImage(images[k],650,450);
 			
 			String txt = "attaque : " + map.selectionne.unite.dmg;
 	        gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 	        gc.setFill(Color.BISQUE);
 	        gc.setStroke(Color.BLACK);
 	        gc.setLineWidth(1);
-	        gc.fillText(txt, positionxmenuinfo*1.15, positionymenuinfo+50);
-	        gc.strokeText(txt, positionxmenuinfo*1.15, positionymenuinfo+50);
+	        gc.fillText(txt, 750, 450);
+	        gc.strokeText(txt, 750, 450);
 	        
 	        String txt2 = "vie : " + map.selectionne.unite.pv;
 	        gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 	        gc.setFill(Color.BISQUE);
 	        gc.setStroke(Color.BLACK);
 	        gc.setLineWidth(1);
-	        gc.fillText(txt2, positionxmenuinfo*1.15, positionymenuinfo+100);
-	        gc.strokeText(txt2, positionxmenuinfo*1.15, positionymenuinfo+100);
+	        gc.fillText(txt2, 750, 500);
+	        gc.strokeText(txt2, 750, 500);
 	        
 	        int porteemin = map.selectionne.unite.portee[0] + 1;
 	        if (porteemin != 1) { //affichage dans menuinfo de la portee avec un minimum
@@ -61,8 +57,8 @@ public class MenuInfo {
 		        gc.setFill(Color.BISQUE);
 		        gc.setStroke(Color.BLACK);
 		        gc.setLineWidth(1);
-		        gc.fillText(txt3, positionxmenuinfo*1.15, positionymenuinfo+150);
-		        gc.strokeText(txt3, positionxmenuinfo*1.15, positionymenuinfo+150);
+		        gc.fillText(txt3, 750, 550);
+		        gc.strokeText(txt3, 750, 550);
 	        } 
 	        else { //affichage dans menuinfo de la portee sans minimum
 	        	String txt3 = "portee : " + map.selectionne.unite.portee[1];
@@ -70,28 +66,28 @@ public class MenuInfo {
 		        gc.setFill(Color.BISQUE);
 		        gc.setStroke(Color.BLACK);
 		        gc.setLineWidth(1);
-		        gc.fillText(txt3, positionxmenuinfo*1.15, positionymenuinfo+150);
-		        gc.strokeText(txt3, positionxmenuinfo*1.15, positionymenuinfo+150);
+		        gc.fillText(txt3, 750, 550);
+		        gc.strokeText(txt3, 750, 550);
 	        }
-	        gc.fillText(selectionne.unite.toString(), positionxmenuinfo*1.03, positionymenuinfo);
-	        gc.strokeText(selectionne.unite.toString(), positionxmenuinfo*1.03, positionymenuinfo);
+	        gc.fillText(selectionne.unite.toString(), 640, 400);
+	        gc.strokeText(selectionne.unite.toString(), 640, 400);
 	        
 	        int ratiopvpvmax = (int) 100*map.selectionne.unite.pv/map.selectionne.unite.pvmax;
 			gc.setFill(Color.LIMEGREEN);
-	        gc.fillRect(positionxmenuinfo*1.4, positionymenuinfo+50, 15, 100);
+	        gc.fillRect(920, 450, 15, 100);
 	        gc.setFill(Color.RED);
-	        gc.fillRect(positionxmenuinfo*1.4, positionymenuinfo+50, 15, 100-ratiopvpvmax);
+	        gc.fillRect(920, 450, 15, 100-ratiopvpvmax);
 	        
 		} else if (selectionne.batiment!=null) {
 			this.images = selectionne.batiment.images;
-			gc.drawImage(images[0],positionxmenuinfo*1.04,positionymenuinfo+50);
-	        gc.fillText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
-	        gc.strokeText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
+			gc.drawImage(images[0],650,450);
+	        gc.fillText(selectionne.batiment.toString(), 640, 400);
+	        gc.strokeText(selectionne.batiment.toString(), 640, 400);
 		} else {
 			this.images = selectionne.terrain.images;
-			gc.drawImage(images[0],positionxmenuinfo*1.04,positionymenuinfo+50);
-	        gc.fillText(selectionne.terrain.toString(), positionxmenuinfo*1.03, positionymenuinfo);
-	        gc.strokeText(selectionne.terrain.toString(), positionxmenuinfo*1.03, positionymenuinfo);
+			gc.drawImage(images[0],650,450);
+	        gc.fillText(selectionne.terrain.toString(), 640, 400);
+	        gc.strokeText(selectionne.terrain.toString(), 640, 400);
 		}
 			
 		}

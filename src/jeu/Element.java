@@ -52,18 +52,6 @@ public abstract class Element {
 				animcompteur = 0;
 				k=0;
 			}
-			if (this instanceof Batiment) {
-				Batiment bat = (Batiment)this;
-				String txt = "cerclejoueur" + bat.joueur+".png";
-				Image cercle = new Image(txt,taille, taille,false,false);
-				gc.drawImage(cercle, x, y);
-			}
-			else if (this instanceof Unite) {
-				Unite uni = (Unite)this;
-				String txt = "cerclejoueur" + uni.joueur+".png";
-				Image cercle = new Image(txt,taille, taille,false,false);
-				gc.drawImage(cercle, x, y);
-			}
 			Image sprite = images[k];
 			gc.drawImage(sprite, x, y);
 			animcompteur += 1;
