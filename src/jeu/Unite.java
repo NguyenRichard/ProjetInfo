@@ -32,7 +32,6 @@ public abstract class Unite extends Element{
 	protected Unite(int taille){
 		super(taille);
 		valable=false;
-		pv=pvmax;
 	}
 	public abstract String toString() ;
 	
