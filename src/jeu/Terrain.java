@@ -18,6 +18,7 @@ public abstract class Terrain extends Element{
     protected Terrain(int taille){
         super(taille);
     }
+    
     public abstract String toString();
 
 

@@ -46,7 +46,7 @@ public class Jeu {
 	 * 			
 	 */	
 	Jeu(GraphicsContext gc){
-		this.map = new Map();
+		this.map = new Map(gc);
 		joueurs = new ArrayList<Joueur>();
 		map.joueurs=joueurs;
 		tour = 0;
@@ -61,11 +61,12 @@ public class Jeu {
 		menucache = new Image("wood.jpg",400,600,false,false);
 		ingame = false;
 		menuinfo = new MenuInfo(gc,map);
+		map.verifjoueursvivants();
 	}
 
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */
 	void update() {
-		if (!atq.animatqencours) {map.renderanim(gc); }//animation des sprites si pas de combat
+		if (!atq.animatqencours || !map.messagemortencours) {map.renderanim(gc); }//animation des sprites si pas de combat
 		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
 			map.render(gc);
 			update=false;
@@ -137,7 +138,7 @@ public class Jeu {
 		    	update=true; break;
 		case LEFT:  
 					switch(menu) {
-					case 0: map.leftcurseur(); break;//on bouge sur la map
+					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.leftcurseur(); break; }//on bouge sur la map
 					case 1:
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-1,depl.deplist))) {
 								map.leftcurseur(); //on selectionne case pour deplacement
@@ -152,7 +153,7 @@ public class Jeu {
 					} update=true; break;
 		case RIGHT: 
 					switch(menu) {
-					case 0: map.rightcurseur(); break;
+					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.rightcurseur(); break; }
 					case 1:
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+1,depl.deplist))) {
 								map.rightcurseur(); //on selectionne case pour deplacement
@@ -167,30 +168,32 @@ public class Jeu {
 					} update=true;break;
 		case UP:  
 					switch(menu) {
+					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.upcurseur(); break; }//on bouge curseur de map
 					case 1:
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-50,depl.deplist))) {
 								map.upcurseur();//on selectionne case pour deplacement
 							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {upcurseur1();} //on bouge curseur du menu
 							break;
-					case 0: map.upcurseur(); break;//on bouge curseur de map
 					default:
 							break;
 					} update=true; break; 
 		case DOWN: 
 					switch(menu) {
+					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.downcurseur(); break; }//on bouge curseur de map
 					case 1:
 							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+50,depl.deplist))) {
 								map.downcurseur();//on selectionne case pour deplacement
 							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {downcurseur1();}//on bouge curseur du menu
 							break;
-					case 0: map.downcurseur(); break;//on bouge curseur de map
 					default:
 							break;
 					} update=true; break;
 		case I : //demande affichage état du jeu
-			System.out.println("Liste joueurs : "+joueurs);
-			for (Joueur joueur : joueurs) {System.out.println("armée du joueur "+joueur+" : "+joueur.armée);}
-			System.out.println("la case Map.selectionné est : "+map.selectionne);
+			map.verifjoueursvivants();
+			System.out.println("\n" + "Liste joueurs : " + joueurs + "\n");
+			map.affichageSituationJoueurs();
+			System.out.println("la case Map.selectionné est : ");
+			System.out.println(map.selectionne);
 	    default:
 	    		break;
 	    }
@@ -250,19 +253,16 @@ public class Jeu {
 	 * pour pouvoir rejouer les unites.
 	 */
 	void passertour() {
-		//Change de joueur 
+		//Change de joueur
 		entrainjouer++;
-		if (entrainjouer == joueurs.size()) {
+		if (entrainjouer >= joueurs.size()) {
 			entrainjouer = 0;
 			tour++; //Change de tour
 		}
 		menu=0;
 		
-    	Joueur joueurencours = joueurs.get(entrainjouer);
-		for (Unite unite : joueurencours.armée) {
-			unite.valable=true;
-			unite.restedeplacement=unite.deplacement;
-		}
+    	joueurs.get(entrainjouer).rendreValable();
+		
 		
 		/**for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
 			

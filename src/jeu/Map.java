@@ -5,6 +5,9 @@ package jeu;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 
@@ -22,6 +25,11 @@ public class Map {
 	ArrayList<Joueur> joueurs;
 	/**Case selectionee avec l'unite lorsqu'on entre dans le menu */
 	Case selectionnemenu;
+	GraphicsContext gc;
+	/**Entier qui fait office de compteur pour le message de mort*/
+	int comptmort;
+	boolean messagemortencours;
+	Joueur joueurmort;
 	
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -32,12 +40,16 @@ public class Map {
 	 *- La taille du plateau est fixee a 2500 cases. <br/>
 	 *- Le rangcorner est initialise a 0. <br/>
 	 *- (xcurseur ,ycurseur): initialises a (0,0)
+	 * @param gc TODO
 	 */	
-	Map(){
+	Map(GraphicsContext gc){
 		taillec=50;
 		Case[] plateau = new Case[2501];
 		joueurs = new ArrayList<Joueur>();
 		rangcorner=0;
+		comptmort=0;
+		this.gc=gc;
+		messagemortencours=false;
 		for (int k = 0; k < plateau.length; k++) {
 			// Boucle qui initialise les cases du plateau
 			plateau[k] = new Case(taillec,k);
@@ -168,7 +180,7 @@ public class Map {
 		}
 	}
 	
-	/*_Creation de la carte du jeu___________________________________________________________________________________________________ */
+/*_Creation de la carte du jeu___________________________________________________________________________________________________ */
 	/**
 	 * Associe le terrain a la case de la map reperee par le rang.
 	 */
@@ -199,27 +211,21 @@ public class Map {
     }
     
     void delunite(Unite unite,Joueur joueur) {
-    	System.out.println("Delunite "+unite+" demandée");
-    	joueur.armée.remove(unite);
+    	joueur.remove(unite);
     	}
     
     
-    /*_Affichage du curseur___________________________________________________________________________________________________ */
+ /*_Affichage du curseur___________________________________________________________________________________________________ */
     void curseurRender(GraphicsContext gc) {
     	int x = (selectionne.rang%50 - rangcorner%50)*50;
 		int y = (selectionne.rang/50 - rangcorner/50)*50;
 		gc.drawImage(curseur, x, y);
     }
 
-    /*_Affichage equipe dans le terminal______________________________________________________________________________________ */ 
-    void affichageJoueurs() {
-		for (Joueur joueur : joueurs) {
-			System.out.println("Armée de " + joueur.toString() + ": ");
-    		for(Unite unite : joueur.armée) {
-    			System.out.println(unite);
-	    	}
+/*_Affichage equipe dans le terminal______________________________________________________________________________________ */ 
+    void affichageSituationJoueurs() {
+		for (Joueur joueur : joueurs) {joueur.printSituation(); }
     		//joueur.armée.toString(); A TESTER SI CA PASSE A LA PLACE DE LA BOUCLE FOR
-    	}
     	
     	/*for (int k = 0; k < .size(); k++) {
 	    	ArrayList<Unite> temp = equipe.get(k);
@@ -247,7 +253,27 @@ public class Map {
     		System.out.println("Joueur "+batiment.joueur+" ajouté");
     	}
     }
+
+/*_Affichage d'un message de game over lors de la mort d'un joueur*/
+    void verifjoueursvivants() {
+    	for (Joueur joueur : joueurs) {
+    		if (!joueur.verifvivant()) {
+    			joueurs.remove(joueur);
+    			messagemortencours=true;
+    			joueurmort=joueur;
+    		}
+    	}
+    }
     
+    void affichmessmort() {
+    	String txt = "Le joueur " + joueurmort + " est mort." + "\n" + "Merci d'avoir joué LOL MDR";
+        gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+        gc.setFill(Color.BISQUE);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2);
+        gc.fillText(txt, 50, 300);
+        gc.strokeText(txt, 50, 300);
+    }
     
     /**
      * 

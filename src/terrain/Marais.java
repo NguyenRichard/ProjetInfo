@@ -2,6 +2,7 @@ package terrain;
 
 
 import javafx.scene.image.Image;
+import jeu.Joueur;
 import jeu.Terrain;
 
 public class Marais extends Terrain {
@@ -14,6 +15,6 @@ public class Marais extends Terrain {
 		deplacement=2;
 	}
 	public String toString() {
-		return "Marais";
+		return ("Marais du joueur ");
 	}
 }

@@ -43,7 +43,7 @@ public class Case {
 			affichage = affichage+"Unite: aucune"+"\n";
 		}
 		if (this.batiment !=null) {
-			affichage = affichage+"Batiment: "+this.batiment.toString()+this.batiment.joueur+"\n";
+			affichage = affichage+"Batiment: "+this.batiment.toString()+"\n";
 		}
 		else {
 			affichage = affichage+"Batiment: aucun"+"\n";

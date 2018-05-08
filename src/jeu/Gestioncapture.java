@@ -15,13 +15,17 @@ public class Gestioncapture {
 	
 	public int capture(){
 		if (this.verifCase()) {
-			map.selectionnemenu.batiment.pv -=50;
-			map.selectionne.batiment.entraincapture=true;
-			if ( map.selectionnemenu.batiment.pv == 0) {
-				map.selectionnemenu.batiment.joueur = map.selectionnemenu.unite.joueur;
-				map.selectionnemenu.batiment.pv = 100;
-				map.selectionne.batiment.entraincapture=false;
-				
+			Batiment batimentencapture = map.selectionnemenu.batiment;
+			batimentencapture.pv -=50;
+			batimentencapture.entraincapture=true;
+			if ( batimentencapture.pv == 0) {
+				//Nouveau code :
+				batimentencapture.joueur.remove(map.selectionnemenu.batiment);
+				map.verifjoueursvivants();
+				batimentencapture.changejoueur(map.selectionne.unite.joueur);
+				map.selectionne.unite.joueur.add(map.selectionnemenu.batiment);
+				batimentencapture.pv = 100;
+				batimentencapture.entraincapture=false;
 			}
 			map.selectionnemenu.unite.valable=false;
 			return 0;

@@ -29,8 +29,8 @@ public abstract class Batiment extends Element{
 		this.joueur=joueur;
 		entraincapture=false;
 	}
-	public String toString() {
-		return "batiment"; // A changer en methode abstraite avec le bon nom selon le type de batiment fille
-	}
 	
+	void changejoueur(Joueur joueur) {this.joueur=joueur; }
+	
+	public abstract String toString();
 }

@@ -78,6 +78,9 @@ public class Main extends Application { //Nouveau test
 						game.atq.prisedegat();
 					}
 				}
+				
+				
+								
 				if (crea.increa) {
 					crea.update();
 				}
@@ -103,6 +106,15 @@ public class Main extends Application { //Nouveau test
 						}
 						menu.update = false;
 						
+					}
+				}
+				if(game.map.messagemortencours) {
+					game.map.affichmessmort();
+					if(game.map.comptmort<50) {game.map.comptmort++;}
+					else {
+						game.map.comptmort=0;
+						game.map.messagemortencours=false;
+						game.map.render(gc);
 					}
 				}
 			}

@@ -48,7 +48,7 @@ public class CreationMap {
 		this.namesave = txt;
 		increa = false;
 		menucache = new Image("wood.jpg",400,600,false,false);
-		map = new Map();
+		map = new Map(gc);
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
@@ -87,7 +87,6 @@ public class CreationMap {
 			while (numérojoueur>=map.joueurs.size()) {
 				map.joueurs.add(new Joueur(Integer.toString(map.joueurs.size())));
 			}
-			map.joueurs.get(numérojoueur);
 		}
 		Joueur joueur = map.joueurs.get(numérojoueur);
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types d'unitees !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
@@ -119,9 +118,9 @@ public class CreationMap {
 	int nombretotunite() {return 4;}
 	
 	/**ajoute le batiment correspondant au bon code au rang k
-	 * @param k
+	 * @param rang
 	 */
-	void remakebatiment(int k, int codeS, Map map) throws IndexOutOfBoundsException{
+	void remakebatiment(int rang, int codeS, Map map) throws IndexOutOfBoundsException{
 		int codebatiment = (codeS/(50*50*50))%50;
 		int numérojoueur = (codeS/(50*50*50*50))%50;
 		try {
@@ -132,23 +131,25 @@ public class CreationMap {
 				map.joueurs.add(new Joueur(Integer.toString(map.joueurs.size())));
 			}
 		}
+		Joueur joueur = map.joueurs.get(numérojoueur);
+		
 		if (codebatiment !=0) {
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types de batiments !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codebatiment == 1) {
-				map.plateau[k].batiment= new Carregris(map.taillec,map.joueurs.get(numérojoueur));
+				map.addbatiment(rang, new Carregris(map.taillec,map.joueurs.get(numérojoueur)), joueur);
 			}
 			else if (codebatiment == 2) {
-				map.plateau[k].batiment = new Portal(map.taillec,map.joueurs.get(numérojoueur));
+				map.addbatiment(rang,new Portal(map.taillec,map.joueurs.get(numérojoueur)),joueur);
 			}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
 				System.out.println("Increa demandé");
-				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
-				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + numérojoueur*6250000; //de meme pour le joueur
+				mapcode[rang] = mapcode[rang] - ((mapcode[rang]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
+				mapcode[rang] = mapcode[rang] - ((mapcode[rang]/(6250000))%50)*50*50 + numérojoueur*6250000; //de meme pour le joueur
 			}
 		}
 		else {
-			map.plateau[k].batiment = null;
+			map.plateau[rang].batiment = null;
 		}
 	}	
 	
@@ -172,14 +173,10 @@ public class CreationMap {
 	}
 	
 	void actualiservisu() {
-		System.out.println("Codesave demandé d'être affiché "+menucrea.codesave);
 		remaketerrain(2500,menucrea.codesave,map);
-		System.out.println("remaketerrain fait");
 		remakebatiment(2500,menucrea.codesave,map);
-		System.out.println("remakebatiment fait");
 		remakeunite(2500,menucrea.codesave,map);
 		//map.delunite(map.plateau[2500].unite, map.joueurs.get((menucrea.codesave/(50*50))%50));
-		System.out.println("delunite fait");
 	}
 	
 	/*_Controle du clavier____________________________________________________________________________________________________________ */

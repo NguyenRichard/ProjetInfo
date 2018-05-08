@@ -63,7 +63,7 @@ public class Menuprinc {
 			    				}catch (ClassNotFoundException e) {
 			    					e.printStackTrace();
 			    				}
-			    				game.map.affichageJoueurs();
+			    				game.map.affichageSituationJoueurs();
 				    			game.map.selectionne = game.map.plateau[51];
 				    			game.ingame=true;
 			    				game.map.render(gc);

@@ -22,6 +22,7 @@ public class Gestionatq {
 	/**Le gc est necessaire pour les animations de degats et la barre de vie qui descend*/
 	GraphicsContext gc;
 	boolean animatqencours;
+	/**Entier faisant office de compteur de l'animation d'attaque*/
 	int animatq;
 	/**Booleen indiquant une évolution des pv lors d'une attaque*/
 	boolean pvendiminution;
@@ -40,7 +41,7 @@ public class Gestionatq {
 	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
 		if (pvfin <= 0) {
-	    	map.selectionne.unite.joueur.armée.remove(map.selectionne.unite);
+	    	map.selectionne.unite.joueur.remove(map.selectionne.unite);
 	    	map.selectionne.unite=null;
   		  	map.render(gc);
 		}
