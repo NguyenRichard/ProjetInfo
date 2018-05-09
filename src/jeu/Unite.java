@@ -17,6 +17,8 @@ public abstract class Unite extends Element{
 	protected int pvmax; 
 	/**Entier qui represente le nombre d'attaque*/
 	protected int dmg;
+	/**Represente le type de l'unite*/
+	protected String type;
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	/**

@@ -19,38 +19,43 @@ public class Gestionatq {
 	boolean attaqueencours;
 	/**Image qui s'affichera en flashs lors d'une attaque */
 	Image Im_deg;
-	/**Le gc est necessaire pour les animations de degats et la barre de vie qui descend*/
-	GraphicsContext gc;
+	/**Image qui s'affichera en flashs lors d'un heal */
+	Image Im_hea;
 	boolean animatqencours;
 	int animatq;
-	/**Booleen indiquant une ï¿½volution des pv lors d'une attaque*/
+	/**Booleen indiquant une evolution des pvs lors d'une attaque*/
 	boolean pvendiminution;
 	/**Entier qui donne la fin de l'animation de diminution des pv*/
 	int pvfin;
 	Image red;
 	Image viseur;
+	Image viseursoin;
 	
- 	Gestionatq(Map map, GraphicsContext gc){
+ 	Gestionatq(Map map){
 		attaqueencours=false;
 		this.map=map;
 		Im_deg = new Image("TestImpact.png",25,25,false,false);
+		Im_hea = new Image("Heal.png",25,25,false,false);
 		animatqencours=false;
 		animatq=0;
-		this.gc=gc;
 		red = new Image("redsquare.png", map.taillec, map.taillec, false, false);
 		viseur = new Image("viseur.png", map.taillec, map.taillec,false,false);
+		viseursoin = new Image("viseursoin.png",map.taillec, map.taillec,false,false);
 	}
 	
 	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux */
 	void prisedegat() {
-		if (pvfin <= 0) {
+		map.selectionne.unite.pv--;
+
+		if (map.selectionne.unite.pv <= 0) {
 	    	ArrayList<Unite> listeunit = map.equipe.get(map.selectionne.unite.joueur);
 	    	listeunit.remove(map.selectionne.unite);
 	    	map.selectionne.unite=null;
-  		  	map.render(gc);
+	    	pvendiminution = false;
 		}
-		map.selectionnemenu.unite.valable=false;
 	}
+	
+	
 	/**
 	 * Verifie si l'attaque est en cours ou non et effectue l'attaque.
 	 * @return le boleen qui sera la prochaine valeur du menu.
@@ -59,7 +64,6 @@ public class Gestionatq {
 		if(attaqueencours) {
 			if (map.selectionne!=map.selectionnemenu) {
 				animatqencours=true;
-				//prisedegat();//effectue l'attaque et rend l'unite non valable
 			}
 			attaqueencours=false;
 			return 0;
@@ -75,7 +79,7 @@ public class Gestionatq {
 	}
 
 	/**
-	 * Met ï¿½ jour la atqlist pour la case selectionne
+	 * Met a jour la atqlist pour la case selectionne
 	 * 
 	 * @see Map#selectionne
 	 * @see #atqlist	
@@ -101,7 +105,7 @@ public class Gestionatq {
 		if(lignfin>49) {lignfin=49;};
 	
 		atqlist = new ArrayList<Case>();
-		for (int k = coldeb + 50*ligndeb; k <= colfin + 50*colfin; k++) { //on balaye du debut a la fin
+		for (int k = coldeb + 50*ligndeb; k <= colfin + 50*lignfin; k++) { //on balaye du debut a la fin
 			if(k%50==colfin) {
 				k=coldeb + ((k/50)+1)*50; //si on atteint le bord droit du carre que l'on veut balayer on revient a la ligne
 			
@@ -126,10 +130,19 @@ public class Gestionatq {
 	 * @return un boolean, vrai si on peut afficher le rouge d'attaque sur la case carre
 	 */
 	 boolean verifCase(Case carre) {
-		System.out.print(map.selectionne+"\n");
-		if (map.selectionne.unite == null || (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) )){
-			return false;
-		}
+		 if (map.selectionne.unite == null) {
+			 return false;
+		 }
+		 else if (map.selectionne.unite.type == null) { //cas pour les unités sans types
+			 if (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) ){ 
+				return false;
+			}
+		 }
+		 else if (map.selectionne.unite.type.compareTo("healer") == 0){ //si l'unité est un healer il faut cibler les alliés et non les ennemis
+			 	if (carre.unite != null && (map.selectionne.unite.joueur != carre.unite.joueur) ){
+					return false;
+				}
+			 }
 		return (! (carre.terrain instanceof Void)); //Pour pour enlever le vide
 	}
 
@@ -154,7 +167,11 @@ public class Gestionatq {
 		for(Case cible: atqlist) {
 			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-			if(!(cible.unite == null)) {jeu.gc.drawImage(viseur, x, y); //on est sur une unite ennemi	
+			//si on est sur une unite ennemi :
+			if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) {jeu.gc.drawImage(viseur, x, y);
+			}
+			//si on est sur une unite alliée :
+			else if(!(cible.unite == null)) {jeu.gc.drawImage(viseursoin, x, y); 
 			}
 		}
 	}
@@ -194,16 +211,57 @@ public class Gestionatq {
 		}
 	}
 	
-	void animdegat() {
+	
+	
+	void animdegat(String type, GraphicsContext gc) {
 		int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
 		int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
+		if ((type==null)||(type.compareTo("healer")!= 0)){ //cas ou le type n'est pas healer, a changer si animation différente pour d'autres types que healer
+			if (animatq<4) {gc.drawImage(Im_deg, x+(map.taillec/2), y);}
+			else if(animatq<8) {gc.drawImage(Im_deg, x, y+(map.taillec/2));}
+			else if(animatq<12) {gc.drawImage(Im_deg, x, y);}
+			else if(animatq<16) {gc.drawImage(Im_deg, x+(map.taillec/2), y+(map.taillec/2));}
+			else if (animatq<30) {gc.drawImage(Im_deg, x, y, map.taillec, map.taillec);;}
+		}
+		else if (type.compareTo("healer")== 0) { //cas ou le type est un healer
+			if (animatq<4) {gc.drawImage(Im_hea, x+(map.taillec/2), y);}
+			else if(animatq<8) {gc.drawImage(Im_hea, x, y+(map.taillec/2));}
+			else if(animatq<12) {gc.drawImage(Im_hea, x, y);}
+			else if(animatq<16) {gc.drawImage(Im_hea, x+(map.taillec/2), y+(map.taillec/2));}
+			else if (animatq<30) {gc.drawImage(Im_hea, x, y, map.taillec, map.taillec);;}
+		}
 		
-		if (animatq<4) {gc.drawImage(Im_deg, x+25, y);}
-		else if(animatq<8) {gc.drawImage(Im_deg, x, y+25);}
-		else if(animatq<12) {gc.drawImage(Im_deg, x, y);}
-		else if(animatq<16) {gc.drawImage(Im_deg, x+25, y+25);}
-		else if (animatq<30) {gc.drawImage(Im_deg, x, y, 50, 50);;}
-		
+	}
+	
+	void renderanim(GraphicsContext gc) {
+		if(animatqencours) { //Animation d'attaque
+	  	  animdegat(map.selectionnemenu.unite.type, gc);
+	  	  if(animatq<30) {animatq++;}
+	  	  else {
+	  		//On prepare la chute de pv :
+	  		  pvfin =Integer.min(Integer.max(map.selectionne.unite.pv - map.selectionnemenu.unite.dmg,0),map.selectionne.unite.pvmax); //le max c'est pour la mort, le min c'est pour le cas du heal ne pas overheal
+	  		  animatq=0;
+	  		  pvendiminution=true;
+	  		  animatqencours=false;		
+	  	  }		
+	    }
+	    
+	    if(pvendiminution) { //Animation de chute des pv (ou augmentation pour healer)
+	    	if (map.selectionnemenu.unite.dmg < 0) { //cas du healer
+	    		map.selectionne.unite.pv ++;
+	    		if(map.selectionne.unite.pv>=pvfin) {
+		  	  		pvendiminution=false;
+		  	  	}
+	    	}
+	    	else {
+		    	prisedegat();
+		  	  	if ((pvfin !=0) && (map.selectionne.unite.pv<=pvfin)) {
+		  	  		pvendiminution=false;
+		  	  	}
+	    	}
+			map.selectionnemenu.unite.valable=false; //après l'animation d'attaque l'unité n'est plus valable
+	  	  	map.render(gc);
+	    }
 	}
 	
 }

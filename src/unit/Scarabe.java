@@ -13,7 +13,7 @@ public class Scarabe extends Unite {
 			int l = k+1;
 			images[k] = new Image("scarabe/scarabe-"+l+".png",taille, taille,false,false);
 		}
-		deplacement=1;
+		deplacement=5;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 75;

@@ -13,14 +13,15 @@ public class Moustique extends Unite{
 			int l = k+1;
 			images[k] = new Image("moustique/moustique_"+l+".png",taille, taille,false,false);
 		}
-		deplacement=1;
+		deplacement=5;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 60;
 		portee = new int[] {0,1};
 		pvmax=99;
 		pv=pvmax;
-		dmg=1;
+		dmg=-30;
+		type = "healer";
 	}
 	
 	public String toString() {
