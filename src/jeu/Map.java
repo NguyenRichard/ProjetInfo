@@ -43,7 +43,7 @@ public class Map {
 	 *- (xcurseur ,ycurseur): initialises a (0,0)
 	 */	
 	Map(){
-		taillec=65;
+		taillec=75;
 		nombrecaseaffichee = 10;
 		fond = new Image("nuage.jpg",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
 		Case[] plateau = new Case[2501];

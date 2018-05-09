@@ -29,9 +29,9 @@ public class Jeu {
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
-	/**Entier � partir du quel affich� le menu lat�ral droit**/
+	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
-	/**Image de fond du menu lat�ral droit**/
+	/**Image de fond du menu lateral droit**/
 	Image menucache;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
 	boolean updatemenu;

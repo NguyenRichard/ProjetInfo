@@ -32,6 +32,8 @@ public class CreationMap {
 	Image menucache;
 	String namesave;
 	int[] mapcode;
+	/**Entier a partir du quel affiche le menu lateral droit**/
+    int positionxmenu;
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -40,7 +42,7 @@ public class CreationMap {
 	 * 
 	 * @param gc le contexte graphique
 	 */
-	CreationMap(GraphicsContext gc,String txt){
+	CreationMap(GraphicsContext gc,String txt,int width,int height){
 		
 		map = new Map();
 		
@@ -51,11 +53,12 @@ public class CreationMap {
 		referencecodeterrain.add(new Marais(map.taillec));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		this.namesave = txt;
+		positionxmenu=map.taillec*map.nombrecaseaffichee;
 		increa = false;
-		menucache = new Image("wood.jpg",400,600,false,false);
+		menucache = new Image("wood.jpg",width-map.taillec*map.nombrecaseaffichee,height,false,false);
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
-		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
+		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		map.affichageEquipe();
 		update=true;
@@ -106,6 +109,12 @@ public class CreationMap {
 			else if (codeunite == 4) {
 				map.addunite(k, new Abeille(map.taillec,joueur),joueur);
 				}
+			else if (codeunite == 5) {
+				map.addunite(k, new Fourmis(map.taillec,joueur), joueur);
+			}
+			else if (codeunite == 6) {
+				map.addunite(k, new Moustique(map.taillec,joueur), joueur);
+			}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
 				
@@ -117,7 +126,7 @@ public class CreationMap {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
 	 */
-	int nombretotunite() {return 4;}
+	int nombretotunite() {return 6;}
 	
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
@@ -154,7 +163,7 @@ public class CreationMap {
 	void update() {
 		map.renderanim(gc); //animation des sprites
 		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
-			gc.drawImage(menucache, 600, 0); 
+			gc.drawImage(menucache, positionxmenu, 0); 
 			map.render(gc);
 			menucrea.render();
 			update=false;
@@ -284,7 +293,7 @@ public class CreationMap {
         map.equipe = new ArrayList<ArrayList<Unite>>();
 		increa = false;
 		map.selectionne = map.plateau[51];
-		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500]);
+		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		map.affichageEquipe();
 		update=true;

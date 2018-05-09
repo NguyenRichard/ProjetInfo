@@ -23,8 +23,8 @@ public class Main extends Application { //Nouveau test
 	}
 	
 	public void start(Stage stage){
-	    int width = 1000;
-	    int height = 650;
+	    int width = 1100;
+	    int height = 750;
 
 	    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
 	    stage.setResizable(false);
@@ -34,7 +34,7 @@ public class Main extends Application { //Nouveau test
 	    Canvas canvas = new Canvas(width, height);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	    CreationMap crea = new CreationMap(gc, "creamap.ser");	// Creation de l'editeur
+	    CreationMap crea = new CreationMap(gc, "creamap.ser",width,height);	// Creation de l'editeur
 	    Jeu game = new Jeu(gc,width,height);	// Creation d'une partie
 	   	Menuprinc menu = new Menuprinc(gc,game,crea,width,height); //Creation du menu
 		String start = "Commencer la partie";
