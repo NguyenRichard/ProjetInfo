@@ -56,7 +56,7 @@ public class Jeu {
 		menu=0;
 		positioncurseur1 = 0;
 		update=true;
-		atq = new Gestionatq(map, gc);
+		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menucache = new Image("wood.jpg", width-map.taillec*map.nombrecaseaffichee,height,false,false);
@@ -68,7 +68,10 @@ public class Jeu {
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
 	void update() {
-		if (!atq.animatqencours) {	map.renderanim(gc);}//animation des sprites si pas de combat
+		if (atq.animatqencours||atq.pvendiminution) {
+			atq.renderanim(gc);
+		}
+		else {	map.renderanim(gc);}//animation des sprites si pas de combat
 		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
 			 map.render(gc);
 			 update=false;
@@ -105,7 +108,7 @@ public class Jeu {
 	 * 
 	 */	
 	void touch(KeyCode code) {
-		if (ingame) {
+		if (ingame && !(atq.animatqencours||atq.pvendiminution)) {
 	    switch(code) {
 	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
 	    			switch(menu) {
@@ -279,7 +282,7 @@ public class Jeu {
 		menu=0;
 		positioncurseur1 = 0;
 		update=true;
-		atq = new Gestionatq(map, gc);
+		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menuinfo = new MenuInfo(gc,map,positionxmenu);
