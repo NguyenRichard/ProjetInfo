@@ -138,6 +138,9 @@ public class CreationMap {
 				else if (codeunite == 6) {
 					map.addunite(k, new Moustique(map.taillec,joueur));
 				}
+				else if (codeunite == 7) {
+					map.addunite(k,new EpeisteVolant(map.taillec,joueur));
+				}
 				if (ingame) {
 					map.joueurs.get(joueur).add(map.plateau[k].unite); //on ajoute l'unité à la liste d'unités du bon joueur si on est en jeu
 				}
@@ -153,7 +156,7 @@ public class CreationMap {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
 	 */
-	int nombretotunite() {return 6;}
+	int nombretotunite() {return 7;}
 	
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
