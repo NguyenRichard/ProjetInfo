@@ -2,6 +2,7 @@ package jeu;
 
 import java.util.ArrayList;
 
+import batiments.Crystal;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -11,7 +12,7 @@ public class Joueur {
 	boolean isalive;
 	private ArrayList<Unite> armee;
 	private ArrayList<Batiment> possessions;
-
+	int ressources;
 	
 /*_Creation du joueur de base________________________________________________________________________*/
 	Joueur(String name) {
@@ -19,6 +20,7 @@ public class Joueur {
 		isalive=false; //on met les bon joueurs en vie lors de la recréation de la map ingame
 		armee= new ArrayList<Unite>();
 		possessions=new ArrayList<Batiment>();
+		ressources = 100;
 	}
 	
 /*_Personalisation et infos du joueur________________________________________________________________*/
@@ -65,5 +67,16 @@ public class Joueur {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * a chaque tour cette fonction effectue les actions des batiments du joueur
+	 */
+	public void actiondesbatiments() {
+		for (Batiment cur : possessions) {
+			if (cur instanceof Crystal) {
+				ressources+=50;
+			}
+		}
 	}
 }

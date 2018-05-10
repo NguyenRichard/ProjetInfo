@@ -71,6 +71,7 @@ public class Menuprinc {
 			    				game.map.affichageEquipe();
 				    			game.map.selectionne = game.map.plateau[51];
 			    				game.map.render(gc);
+			    				game.map.joueurs.get(game.entrainjouer).actiondesbatiments();
 			    				inmenuprin=false;
 			    				
 			    			}else {System.out.println("Le fichier n'existe pas");}

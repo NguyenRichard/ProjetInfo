@@ -21,7 +21,7 @@ public class MenuInfo {
 		this.gc = gc;
 		this.map = map;
 		this.positionxmenuinfo=positionxmenu+10;
-		positionymenuinfo=400;
+		positionymenuinfo=500;
 	}
 	
 	void MenuInforender() {

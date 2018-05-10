@@ -46,13 +46,32 @@ public class Main extends Application { //Nouveau test
 	          
 		          if (game.ingame) {
 			          game.update();
-			          String txt = "Tour: " + game.tour+"	"+"Joueur: "+game.entrainjouer;
+			          Joueur entrainjouer = game.map.joueurs.get(game.entrainjouer);
+			          String infojoueur = "Joueur: "+entrainjouer+"; Ressources: "+entrainjouer.ressources;
+			          String tour = "Tour: "+game.tour;
 			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+			          gc.setLineWidth(1);
+					  switch(game.entrainjouer) {
+					    	case 0: 
+					    			gc.setFill(Color.WHITE);
+					    			break;
+					    	case 1:
+					    			gc.setFill(Color.BLUE);
+					    			break;
+					    	case 2:
+				    				gc.setFill(Color.RED);
+				    				break;
+					    	case 3:
+					    			gc.setFill(Color.GREEN);
+					    			break;
+					  }
+					    	
+			          gc.fillText(infojoueur, game.positionxmenu*1.05, 50 );
+			          gc.strokeText(infojoueur, game.positionxmenu*1.05, 50 );
 			          gc.setFill(Color.BISQUE);
 			          gc.setStroke(Color.BLACK);
-			          gc.setLineWidth(1);
-			          gc.fillText(txt, game.positionxmenu*1.05, 50 );
-			          gc.strokeText(txt, game.positionxmenu*1.05, 50 );
+			          gc.fillText(tour, game.positionxmenu+50, height-50);
+			          gc.strokeText(tour, game.positionxmenu+50, height-50 );
 		          }
 		          if (crea.increa) {
 		        	  crea.update();

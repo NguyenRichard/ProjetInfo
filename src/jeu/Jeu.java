@@ -272,9 +272,11 @@ public class Jeu {
 		map.joueurs.get(entrainjouer).rendreValable();
 		map.joueurs.get(entrainjouer).printSituation();
 		menu=0;
+		map.joueurs.get(entrainjouer).actiondesbatiments();
 		
 	}
 	
+
 	/**
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */

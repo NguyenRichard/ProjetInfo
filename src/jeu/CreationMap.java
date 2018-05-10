@@ -169,6 +169,9 @@ public class CreationMap {
 			else if (codebatiment == 2) {
 				map.plateau[k].batiment = new Portal(map.taillec,joueur);
 			}
+			else if (codebatiment == 3) {
+				map.plateau[k].batiment = new Crystal(map.taillec,joueur);
+			}
 		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
@@ -186,7 +189,7 @@ public class CreationMap {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE DE BATIMENT
 	 */
-	int nombretotbatiment() {return 2;}
+	int nombretotbatiment() {return 3;}
 	
 	/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
