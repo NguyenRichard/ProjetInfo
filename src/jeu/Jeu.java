@@ -115,7 +115,7 @@ public class Jeu {
 	    			case 1:
 		    				if (positioncurseur1==0) {
 		    					// gestion de l'attaque
-		    					menu = atq.attaque();
+		    					menu = atq.attaque(map.selectionnemenu.unite.type);
 		    				}
 		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
 		    					// gestion de deplacement
@@ -267,7 +267,7 @@ public class Jeu {
 			}
 		}while(!(map.joueurs.get(entrainjouer).isalive));
 		if (i==4) {
-			System.out.println(map.joueurs.get(entrainjouer) + " a gagné !");
+			System.out.println(map.joueurs.get(entrainjouer) + " a gagnï¿½ !");
 		}
 		map.joueurs.get(entrainjouer).rendreValable();
 		map.joueurs.get(entrainjouer).printSituation();
@@ -283,7 +283,7 @@ public class Jeu {
     
 	void fin() {
 		
-		//réinitialisation des joueurs :
+		//rï¿½initialisation des joueurs :
 		map.joueurs = new ArrayList<Joueur>();
 		for (int i = 0; i <= 3;i++) {
 			map.joueurs.add(new Joueur("sansnom")); 

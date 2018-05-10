@@ -211,7 +211,7 @@ public class Menucrea {
 			}
 			else if (choixtype==2) {
 				if ((codesave/125000)%50==1) {
-					codesave += 50*(l-1); //on remet le second chiffre au maximum de batiment
+					codesave += 125000*(l-1); //on remet le second chiffre au maximum de batiment
 				}
 				else { 
 					codesave -= 125000;
