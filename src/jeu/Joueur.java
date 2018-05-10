@@ -3,6 +3,7 @@ package jeu;
 import java.util.ArrayList;
 
 import batiments.Crystal;
+import batiments.Portal;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -60,11 +61,14 @@ public class Joueur {
 	 * renvoie true si le jeu ne savait pas que le joueur était mort
 	 */
 	public boolean verifvivant() {
-		if (possessions.size()==0) {
-			if (isalive) {
-				isalive=false;
-				return true;
+		for (Batiment cur : possessions) {
+			if (cur instanceof Portal) {
+				return false;
 			}
+		}
+		if (isalive) {
+			isalive=false;
+			return true;
 		}
 		return false;
 	}
