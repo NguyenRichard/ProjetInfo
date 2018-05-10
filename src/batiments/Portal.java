@@ -12,4 +12,8 @@ public class Portal extends Batiment {
 		images = new Image[1];
 		images[0] = new Image("portal"+".png",taille, taille,false,false);
 	}
+	
+	public String toString() {
+		return "Portail";
+	}
 }

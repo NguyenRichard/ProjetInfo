@@ -257,26 +257,35 @@ public class Jeu {
 	 * pour pouvoir rejouer les unites.
 	 */
 	void passertour() {
-    	ArrayList<Unite> listeunit = map.equipe.get(entrainjouer);
-		entrainjouer++;	//Change de joueur
-		if (entrainjouer == map.equipe.size()) {
-			entrainjouer = 0;
-			tour++; //Change de tour
+		int i = 0;
+		do{
+			i++;
+			entrainjouer++;	//on passe au prochain joueur en vie
+			if (entrainjouer == 4) {
+				entrainjouer = 0;
+				tour++; //Change de tour
+			}
+		}while(!(map.joueurs.get(entrainjouer).isalive));
+		if (i==4) {
+			System.out.println(map.joueurs.get(entrainjouer) + " a gagné !");
 		}
+		map.joueurs.get(entrainjouer).rendreValable();
+		map.joueurs.get(entrainjouer).printSituation();
 		menu=0;
-		for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
-			Unite temp = listeunit.get(k);
-			temp.valable=true;
-			temp.restdeplacement=temp.deplacement;
-		}
+		
 	}
+	
 	/**
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
-
+    
 	void fin() {
 		
-        map.equipe = new ArrayList<ArrayList<Unite>>();
+		//réinitialisation des joueurs :
+		map.joueurs = new ArrayList<Joueur>();
+		for (int i = 0; i <= 3;i++) {
+			map.joueurs.add(new Joueur("sansnom")); 
+		}
 		tour = 0;
 		entrainjouer=0;
 		menu=0;

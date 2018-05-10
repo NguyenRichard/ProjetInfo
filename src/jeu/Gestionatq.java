@@ -48,8 +48,7 @@ public class Gestionatq {
 		map.selectionne.unite.pv--;
 
 		if (map.selectionne.unite.pv <= 0) {
-	    	ArrayList<Unite> listeunit = map.equipe.get(map.selectionne.unite.joueur);
-	    	listeunit.remove(map.selectionne.unite);
+	    	map.joueurs.get(map.selectionne.unite.joueur).remove(map.selectionne.unite); //on enleve l'unite de la liste d'unite du joueur
 	    	map.selectionne.unite=null;
 	    	pvendiminution = false;
 		}

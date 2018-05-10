@@ -54,9 +54,10 @@ public class Menuprinc {
 			    					Sauvegardemap sauvegarde = (Sauvegardemap) ois.readObject();
 			    					for(int k=0; k<2500; k++) {
 			    						int codeS = sauvegarde.grillemap[k];
+			    						crea.remakejoueur(k,codeS,game.map);
 			    						crea.remaketerrain(k,codeS,game.map);
-			    						crea.remakebatiment(k,codeS,game.map);
-			    						crea.remakeunite(k,codeS,game.map);
+			    						crea.remakebatiment(k,codeS,game.map,true);
+			    						crea.remakeunite(k,codeS,game.map,true);
 			    					}
 			    					ois.close();
 			    				} catch (FileNotFoundException e) {
@@ -66,9 +67,9 @@ public class Menuprinc {
 			    				}catch (ClassNotFoundException e) {
 			    					e.printStackTrace();
 			    				}
+			    				game.ingame=true;
 			    				game.map.affichageEquipe();
 				    			game.map.selectionne = game.map.plateau[51];
-				    			game.ingame=true;
 			    				game.map.render(gc);
 			    				inmenuprin=false;
 			    				
@@ -86,8 +87,8 @@ public class Menuprinc {
 			    					for(int k=0; k<2500; k++) {
 				    						int codeS = crea.mapcode[k];
 				    						crea.remaketerrain(k,codeS,crea.map);
-				    						crea.remakebatiment(k,codeS,crea.map);
-				    						crea.remakeunite(k,codeS,crea.map);
+				    						crea.remakebatiment(k,codeS,crea.map,false);
+				    						crea.remakeunite(k,codeS,crea.map,false);
 			    					}
 			    					ois.close();
 			    				} catch (FileNotFoundException e) {

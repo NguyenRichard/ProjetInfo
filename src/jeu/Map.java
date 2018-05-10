@@ -25,11 +25,12 @@ public class Map {
 	int rangcorner;
 	/**Case selectionee par le curseur */
 	Case selectionne;
-	ArrayList<ArrayList<Unite>> equipe;
 	/**Case selectionee avec l'unite lorsqu'on entre dans le menu */
 	Case selectionnemenu;
 	Image fond;
 	int nombrecaseaffichee;
+	/**Liste des joueurs avec leurs unités, batiments etc... */
+	ArrayList<Joueur> joueurs;
 	
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -47,7 +48,6 @@ public class Map {
 		nombrecaseaffichee = 10;
 		fond = new Image("nuage.jpg",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
 		Case[] plateau = new Case[2501];
-        equipe = new ArrayList<ArrayList<Unite>>();
 		rangcorner=0;
 		for (int k = 0; k < plateau.length; k++) {
 			// Boucle qui initialise les cases du plateau
@@ -56,6 +56,11 @@ public class Map {
 		this.plateau = plateau;
 		curseur = new Image("cursor2.png", taillec, taillec,false,false);
 		selectionne = plateau[51];
+		//initialisation des joueurs :
+		joueurs = new ArrayList<Joueur>();
+        for (int i = 0; i <= 3;i++) {
+        	joueurs.add(new Joueur("sansnom"));
+        }
 	}
 /*_Affichager des sprites___________________________________________________________________________________________________________ */
 	
@@ -198,20 +203,12 @@ public class Map {
     }
     
     /**
-     * Fonction qui ajoute l'unite "unite" sur le rang "rang" de map.
-     * "joueur" sert a preciser a quelle equipe appartient l'unite.
-     * L'unite est ici ajoute a la liste des unites du joueur "joueur" 
+     * Fonction qui ajoute l'unite "unite" sur le rang "rang" de map. 
      */
-    void addunite(int rang, Unite unite,int joueur) {
+    void addunite(int rang, Unite unite) {
     		plateau[rang].unite=unite;
-    		ArrayList<Unite> temp = equipe.get(joueur);
-    		temp.add(unite);
     }
     
-    void delunite(Unite unite,int joueur) {
-    	ArrayList<Unite> temp = equipe.get(joueur);
-    	temp.remove(unite);
-    }
     
     
     /*_Affichage du curseur___________________________________________________________________________________________________ */
@@ -225,15 +222,12 @@ public class Map {
     /*_Affichage equipe dans le terminal______________________________________________________________________________________ */
     
     void affichageEquipe() {
-    	for (int k = 0; k < equipe.size(); k++) {
-	    	ArrayList<Unite> temp = equipe.get(k);
-	    	System.out.println("Equipe "+k+": ");
-	    	for(Unite cur: temp) {
-	    		System.out.println(cur);
-	    	}
+    	for (int k = 0; k < joueurs.size(); k++) {
+	    	joueurs.get(k).printSituation();
+	    }
 		
-    	}
     }
+    
 	    
     /**
      * 
@@ -275,6 +269,15 @@ public class Map {
     	if(!isShown(rang)){
     		centre(rang);
     	}
+    }
+    
+    /**
+     * On retire l'unité de la liste d'unite du joueur indiqué
+     * @param unite
+     * @param joueur
+     */
+    void delunite(Unite unite,int joueur) {
+	    joueurs.get(joueur).remove(unite);
     }
 	   
 }
