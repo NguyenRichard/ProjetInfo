@@ -1,6 +1,6 @@
 package jeu;
 
-
+import Sounds.Sound;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javax.sound.sampled.Clip;
 
 public class Main extends Application { //Nouveau test
 
@@ -40,6 +41,11 @@ public class Main extends Application { //Nouveau test
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";
 		menu.render();
+		
+		// Pour l'instant je le mets ici mais on peut le changer de place ensuite
+		Sound sd = new Sound();
+		Clip clip = sd.boucle();
+		
     	/* Refresh animation */
 		new AnimationTimer() {          
 	        public void handle(long arg0) {              

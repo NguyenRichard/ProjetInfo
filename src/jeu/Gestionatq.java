@@ -2,6 +2,9 @@ package jeu;
 
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
+
+import Sounds.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import terrain.Void;
@@ -59,9 +62,19 @@ public class Gestionatq {
 	 * Verifie si l'attaque est en cours ou non et effectue l'attaque.
 	 * @return le boleen qui sera la prochaine valeur du menu.
 	 */
-	int attaque() {
+	int attaque(String type) {
 		if(attaqueencours) {
 			if (map.selectionne!=map.selectionnemenu) {
+				if ((type==null)||(type.compareTo("healer")!= 0)){
+					// Son d'attaque
+					Sound sd = new Sound();
+					sd.runSoundattack();
+				}
+				else if (type.compareTo("healer")== 0) {
+					// Son de soin
+					Sound sd = new Sound();
+					sd.runSoundheal();
+				}
 				animatqencours=true;
 			}
 			attaqueencours=false;
@@ -132,12 +145,12 @@ public class Gestionatq {
 		 if (map.selectionne.unite == null) {
 			 return false;
 		 }
-		 else if (map.selectionne.unite.type == null) { //cas pour les unités sans types
+		 else if (map.selectionne.unite.type == null) { //cas pour les unitï¿½s sans types
 			 if (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) ){ 
 				return false;
 			}
 		 }
-		 else if (map.selectionne.unite.type.compareTo("healer") == 0){ //si l'unité est un healer il faut cibler les alliés et non les ennemis
+		 else if (map.selectionne.unite.type.compareTo("healer") == 0){ //si l'unitï¿½ est un healer il faut cibler les alliï¿½s et non les ennemis
 			 	if (carre.unite != null && (map.selectionne.unite.joueur != carre.unite.joueur) ){
 					return false;
 				}
@@ -169,7 +182,7 @@ public class Gestionatq {
 			//si on est sur une unite ennemi :
 			if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) {jeu.gc.drawImage(viseur, x, y);
 			}
-			//si on est sur une unite alliée :
+			//si on est sur une unite alliï¿½e :
 			else if(!(cible.unite == null)) {jeu.gc.drawImage(viseursoin, x, y); 
 			}
 		}
@@ -215,7 +228,7 @@ public class Gestionatq {
 	void animdegat(String type, GraphicsContext gc) {
 		int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
 		int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
-		if ((type==null)||(type.compareTo("healer")!= 0)){ //cas ou le type n'est pas healer, a changer si animation différente pour d'autres types que healer
+		if ((type==null)||(type.compareTo("healer")!= 0)){ //cas ou le type n'est pas healer, a changer si animation differente pour d'autres types que healer
 			if (animatq<4) {gc.drawImage(Im_deg, x+(map.taillec/2), y);}
 			else if(animatq<8) {gc.drawImage(Im_deg, x, y+(map.taillec/2));}
 			else if(animatq<12) {gc.drawImage(Im_deg, x, y);}
@@ -253,12 +266,13 @@ public class Gestionatq {
 		  	  	}
 	    	}
 	    	else {
+			
 		    	prisedegat();
 		  	  	if ((pvfin !=0) && (map.selectionne.unite.pv<=pvfin)) {
 		  	  		pvendiminution=false;
 		  	  	}
 	    	}
-			map.selectionnemenu.unite.valable=false; //après l'animation d'attaque l'unité n'est plus valable
+			map.selectionnemenu.unite.valable=false; //aprï¿½s l'animation d'attaque l'unitï¿½ n'est plus valable
 	  	  	map.render(gc);
 	    }
 	}

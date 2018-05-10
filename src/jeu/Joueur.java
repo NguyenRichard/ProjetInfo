@@ -1,5 +1,6 @@
 package jeu;
 
+import batiments.Portal;
 import java.util.ArrayList;
 
 import batiments.Crystal;
@@ -17,7 +18,7 @@ public class Joueur {
 /*_Creation du joueur de base________________________________________________________________________*/
 	Joueur(String name) {
 		this.name = name;
-		isalive=false; //on met les bon joueurs en vie lors de la recréation de la map ingame
+		isalive=false; //on met les bon joueurs en vie lors de la recrï¿½ation de la map ingame
 		armee= new ArrayList<Unite>();
 		possessions=new ArrayList<Batiment>();
 		ressources = 100;
@@ -30,11 +31,11 @@ public class Joueur {
 	
 	public void printSituation() {
 		if (isalive) {
-			System.out.println("Situation Joueur " + name + " : " + "\n" + "armée : " + armee + "\n" + "possessions : " + possessions + "\n");
+			System.out.println("Situation Joueur " + name + " : " + "\n" + "armee : " + armee + "\n" + "possessions : " + possessions + "\n");
 		}
 	}
 	
-/*Gestion unités et batiments du joueur______________________________________________________________*/
+/*Gestion unites et batiments du joueur______________________________________________________________*/
 	boolean add(Unite unite) {return armee.add(unite); }
 	
 	boolean remove(Unite unite) {return armee.remove(unite); }
@@ -56,15 +57,18 @@ public class Joueur {
 	}
 
 	/**
-	 * verifie si isalive est à jour
-	 * renvoie true si le jeu ne savait pas que le joueur était mort
+	 * verifie si isalive est a jour
+	 * renvoie true si le jeu ne savait pas que le joueur etait mort
 	 */
 	public boolean verifvivant() {
-		if (possessions.size()==0) {
-			if (isalive) {
-				isalive=false;
-				return true;
+		for (Batiment cur : possessions) {
+			if (cur instanceof Portal) {
+				return false;
 			}
+		}
+		if (isalive) {
+			isalive=false;
+			return true;
 		}
 		return false;
 	}
