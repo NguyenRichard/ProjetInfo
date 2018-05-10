@@ -8,6 +8,7 @@ import terrain.*;
 import terrain.Void;
 import unit.*;
 import batiments.*;
+import java.util.Scanner; 
 
 
 import java.io.File;
@@ -42,7 +43,7 @@ public class CreationMap {
 	 * 
 	 * @param gc le contexte graphique
 	 */
-	CreationMap(GraphicsContext gc,String txt,int width,int height){
+	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame){
 		
 		map = new Map();
 		
@@ -65,12 +66,35 @@ public class CreationMap {
 		
 	}
 	
+	/**gestion de la creation d'un joueur si le code du rang k contient un numero
+	 * de joueur encore non rencontre
+	 * IL FAUT TOUJOURS LE FAIRE AVANT remakeunite et remaketerrain !
+	 */
+	void remakejoueur(int k, int codeS, Map map) {
+		int joueurunite = (codeS/(50*50))%50;
+		if (!(map.joueurs.get(joueurunite).isalive)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+			map.joueurs.get(joueurunite).isalive = true;
+			Scanner saisieUtilisateur = new Scanner(System.in); 
+			System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
+			String str = saisieUtilisateur.next();
+			map.joueurs.get(joueurunite).changename(str);
+		}
+		int joueurbatiment = (codeS/(50*50*50*50))%50;
+		if (!(map.joueurs.get(joueurbatiment).isalive)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+			map.joueurs.get(joueurbatiment).isalive = true;
+			Scanner saisieUtilisateur = new Scanner(System.in); 
+			System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
+			String str = saisieUtilisateur.next();
+			map.joueurs.get(joueurbatiment).changename(str);
+		}
+	}
+	
 	
 	/**ajoute le terrain correspondant au bon code au rang k
 	 * @param k
 	 */
 	void remaketerrain(int k, int codeS,Map map) {
-		map.plateau[k].terrain = referencecodeterrain.get(0);
+		map.plateau[k].terrain = referencecodeterrain.get(0); //le vide par défaut
 		for (int j =1; j<referencecodeterrain.size();j++) {
 			if (codeS%50 == j){
 				map.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
@@ -78,6 +102,7 @@ public class CreationMap {
 					mapcode[k] = mapcode[k] - (mapcode[k]%50) + j; //on change la sauvegarde
 					
 				}
+			break; //on aura une seule correspondance, pas besoin de faire plus de tests
 			}
 
 		}
@@ -86,34 +111,36 @@ public class CreationMap {
 	/**ajoute l'unite correspondant au bon code au rang k
 	 * @param k
 	 */
-	void remakeunite(int k, int codeS, Map map) {
+	void remakeunite(int k, int codeS, Map map,boolean ingame) {
 		int codeunite = (codeS/50)%50;
 		int joueur = (codeS/(50*50))%50;
-		while (joueur >= map.equipe.size()) {
-			map.equipe.add(new ArrayList<Unite>());
-		}
 		
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types d'unitees !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codeunite == 0) {
 				map.plateau[k].unite = null;
 			}
-			else if (codeunite == 1) {
-				map.addunite(k, new AbeilleSamourai(map.taillec,joueur),joueur);
+			else {
+				if (codeunite == 1) {
+					map.addunite(k, new AbeilleSamourai(map.taillec,joueur)); //on ajoute l'unite sur la map
 				}
-			else if (codeunite == 2) {
-				map.addunite(k, new PapillonPsychique(map.taillec,joueur),joueur);
+				else if (codeunite == 2) {
+					map.addunite(k, new PapillonPsychique(map.taillec,joueur));
+					}
+				else if (codeunite == 3) {
+					map.addunite(k, new Scarabe(map.taillec,joueur));
+					}
+				else if (codeunite == 4) {
+					map.addunite(k, new Abeille(map.taillec,joueur));
+					}
+				else if (codeunite == 5) {
+					map.addunite(k, new Fourmis(map.taillec,joueur));
 				}
-			else if (codeunite == 3) {
-				map.addunite(k, new Scarabe(map.taillec,joueur),joueur);
+				else if (codeunite == 6) {
+					map.addunite(k, new Moustique(map.taillec,joueur));
 				}
-			else if (codeunite == 4) {
-				map.addunite(k, new Abeille(map.taillec,joueur),joueur);
+				if (ingame) {
+					map.joueurs.get(joueur).add(map.plateau[k].unite); //on ajoute l'unité à la liste d'unités du bon joueur si on est en jeu
 				}
-			else if (codeunite == 5) {
-				map.addunite(k, new Fourmis(map.taillec,joueur), joueur);
-			}
-			else if (codeunite == 6) {
-				map.addunite(k, new Moustique(map.taillec,joueur), joueur);
 			}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
@@ -131,7 +158,7 @@ public class CreationMap {
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
 	 */
-	void remakebatiment(int k, int codeS, Map map) {
+	void remakebatiment(int k, int codeS, Map map,boolean ingame) {
 		int codebatiment = (codeS/(50*50*50))%50;
 		int joueur = (codeS/(50*50*50*50))%50;
 		if (codebatiment !=0) {
@@ -146,6 +173,9 @@ public class CreationMap {
 			if (increa) {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
 				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
+			}
+			if (ingame&&(joueur < 4)) {
+				map.joueurs.get(joueur).add(map.plateau[k].batiment); //on ajoute le batiment à la liste d'unités du bon joueur si on est en jeu et que le batiment n'est pas neutre
 			}
 		}
 		else {
@@ -174,9 +204,8 @@ public class CreationMap {
 	
 	void actualiservisu() {
 		remaketerrain(2500,menucrea.codesave,map);
-		remakebatiment(2500,menucrea.codesave,map);
-		remakeunite(2500,menucrea.codesave,map);
-		map.delunite(map.plateau[2500].unite, (menucrea.codesave/(50*50))%50);
+		remakebatiment(2500,menucrea.codesave,map,false);
+		remakeunite(2500,menucrea.codesave,map,false);
 	}
 	
 	/*_Controle du clavier____________________________________________________________________________________________________________ */	
@@ -203,8 +232,8 @@ public class CreationMap {
 		    		remaketerrain(map.selectionne.rang,codeS,map);
 		    		
 		    	}
-		    	else if ((menucrea.choixtype == 2)&&(map.selectionne.batiment == null)&&!(map.selectionne.terrain instanceof Void)) {remakebatiment(map.selectionne.rang,codeS,map);}
-		    	else if ((menucrea.choixtype == 1)&&(map.selectionne.unite == null)&&!(map.selectionne.terrain instanceof Void)) {remakeunite(map.selectionne.rang,codeS,map);}
+		    	else if ((menucrea.choixtype == 2)&&(map.selectionne.batiment == null)&&!(map.selectionne.terrain instanceof Void)) {remakebatiment(map.selectionne.rang,codeS,map,false);}
+		    	else if ((menucrea.choixtype == 1)&&(map.selectionne.unite == null)&&!(map.selectionne.terrain instanceof Void)) {remakeunite(map.selectionne.rang,codeS,map,false);}
 	    	}
 		    update=true;
 	   		break;
@@ -289,13 +318,10 @@ public class CreationMap {
 	}
 	
 	void stop() {
-		map.affichageEquipe();
-        map.equipe = new ArrayList<ArrayList<Unite>>();
 		increa = false;
 		map.selectionne = map.plateau[51];
 		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
-		map.affichageEquipe();
 		update=true;
 	}
 	

@@ -27,8 +27,6 @@ public abstract class Batiment extends Element{
 		maxcompteur = 1;
 		entraincapture=false;
 	}
-	public String toString() {
-		return "batiment"; // A changer en methode abstraite avec le bon nom selon le type de batiment fille
-	}
+	public abstract String toString();
 	
 }

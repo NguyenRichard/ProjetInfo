@@ -12,4 +12,8 @@ public class Carregris extends Batiment {
 		images = new Image[1];
 		images[0] = new Image("test"+".png",taille, taille,false,false);
 	}
+	
+	public String toString() {
+		return "Carregris";
+	}
 }
