@@ -33,6 +33,8 @@ public class Menucrea {
 	Case visualisation;
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
+    /**Cache les options qui ne sont pas valide */
+	Image cache;
 	
 	Menucrea(GraphicsContext gc,ArrayList<Terrain> referencecodeterrain, Case visu,int positionxmenu){
 		fond = new Image("menucrea.png", 200, 320, false, false);
@@ -46,6 +48,7 @@ public class Menucrea {
 		visualisation = visu;
 		this.referencecodeterrain = referencecodeterrain;
 		this.gc = gc;
+		cache = new Image("cache.png",200, 320, false, false);
 	}
 	
 	void render() {
@@ -67,6 +70,7 @@ public class Menucrea {
             gc.setLineWidth(1);
             gc.fillText(type, positionxmenu+50, 135);
             gc.strokeText(type, positionxmenu+50, 135);
+            gc.drawImage(cache, positionxmenu,270);
             visualisation.terrain.render(gc, positionxmenu+65, 200);
         }
         if (choixtype==1) {

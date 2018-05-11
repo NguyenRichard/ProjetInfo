@@ -38,6 +38,14 @@ public class Jeu {
     int positionxmenu;
 	/**Image de fond du menu lateral droit**/
 	Image menucache;
+	/**Image de fond du menu deplacement, attaque etc**/
+	Image menu1;
+	/**Image de fond du menu changer tour**/
+	Image menu2;
+	/**Image du curseur pour les menu**/
+	Image curseur;
+	/**Cache des options qui ne sont plus valide */
+	Image cache;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
 	boolean updatemenu;
 	Menuinvocation menuinvoc;
@@ -66,6 +74,10 @@ public class Jeu {
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menucache = new Image("wood.jpg", width-map.taillec*map.nombrecaseaffichee,height,false,false);
+		menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
+		curseur = new Image("curseurmenu1.png",200, 320, false, false);
+		menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
+		cache = new Image("cache.png",200, 320, false, false);
 		positionxmenu = map.taillec*map.nombrecaseaffichee;
 		ingame = false;
 		menuinfo = new MenuInfo(gc,map,positionxmenu);
@@ -246,16 +258,18 @@ public class Jeu {
 		gc.drawImage(menucache, positionxmenu, 0);
 	    switch(menu) {
 	    case 1:
-				Image menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
-				Image curseur = new Image("curseurmenu1.png",200, 320, false, false);
 				gc.drawImage(menu1, positionxmenu*1.05, 50);
+				if (map.selectionnemenu.unite.restdeplacement == 0) {
+	    			gc.drawImage(cache, positionxmenu*1.05,50+1*52);
+	    		}
+				if ((map.selectionnemenu.batiment == null)||(map.selectionnemenu.batiment.joueur == map.selectionnemenu.unite.joueur)) {
+					gc.drawImage(cache, positionxmenu*1.05,50+2*52);
+				}
 				gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
 				break;
 	    case 2:
-    			Image menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
-	    		Image curseur2 = new Image("curseurmenu1.png", 200, 320, false, false);
 	    		gc.drawImage(menu2, positionxmenu*1.05, 50);
-	    		gc.drawImage(curseur2, positionxmenu*1.05,50+positioncurseur1*52);
+	    		gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
 	    		break;
 
 	    default:
