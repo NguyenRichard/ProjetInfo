@@ -152,7 +152,7 @@ public class Jeu {
 	    			case 0:
 			    			System.out.print(map.selectionne);
 			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
-			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) { menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
+			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) {menuinvoc.positioncurseur=0; menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
 			    			else {menu=2; positioncurseur1=0;};	 
 			    			break;
 	    			case 2:
@@ -166,8 +166,9 @@ public class Jeu {
 	    			} 
 	    			break; 
 	    case B : 
-		    	depl.deplacementencours=false;menu=0;
-		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;} //pour faire revenir le curseur a l'unite qui attaque
+		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
+		    	else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
+		    	else {menu=0;}
 		    	update=true; break;
 		case LEFT:  
 					switch(menu) {

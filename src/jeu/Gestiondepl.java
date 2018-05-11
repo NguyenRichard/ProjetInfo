@@ -169,9 +169,8 @@ public class Gestiondepl {
 				map.moveUnite(map.selectionnemenu,map.selectionne);
 				map.selectionnemenu = map.selectionne;
 				listUpdate();
-				if (map.selectionnemenu.unite.restdeplacement == 0) { // on arrive a� 0 deplacements
+				if (map.selectionnemenu.unite.restdeplacement == 0) { // on arrive a 0 deplacements
 					deplacementencours=false;
-					return 0;
 				}
 			}
 		}
