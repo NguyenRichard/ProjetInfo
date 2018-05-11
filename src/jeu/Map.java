@@ -3,7 +3,6 @@ package jeu;
 
 
 import java.util.ArrayList;
-import batiments.Carregris;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import terrain.Terre;

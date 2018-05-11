@@ -16,4 +16,8 @@ public class Crystal extends Batiment{
 	public String toString() {
 		return "Crystal";
 	}
+	
+	public void reset(int typearmee) {
+		//ne fait rien (utile pour les portails)
+	}
 }

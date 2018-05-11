@@ -28,5 +28,6 @@ public abstract class Batiment extends Element{
 		entraincapture=false;
 	}
 	public abstract String toString();
+	public abstract void reset(int typearmee);
 	
 }

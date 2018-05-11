@@ -1,9 +1,14 @@
 package jeu;
 
 import java.util.ArrayList;
+
+import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class Jeu {
 	/**Entier qui indique quel joueur est en train de jouer */
@@ -16,7 +21,7 @@ public class Jeu {
 	GraphicsContext gc;
 	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour) */
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer et 2 : capturer */
+	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer et 3 : invoquer*/
 	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
@@ -35,6 +40,7 @@ public class Jeu {
 	Image menucache;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
 	boolean updatemenu;
+	Menuinvocation menuinvoc;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -64,36 +70,49 @@ public class Jeu {
 		ingame = false;
 		menuinfo = new MenuInfo(gc,map,positionxmenu);
 		updatemenu=false;
+		menuinvoc = new Menuinvocation(gc,new Portal(75,0,0));
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
 	void update() {
-		if (atq.animatqencours||atq.pvendiminution) {
-			atq.renderanim(gc);
-		}
-		else {	map.renderanim(gc);}//animation des sprites si pas de combat
-		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
-			 map.render(gc);
-			 update=false;
-		}
-	
-	    if (menu==1) {
-	    		if (depl.deplacementencours&&updatemenu) {
-	    			depl.render(this);
-	    			depl.arrowrender(this);
-	    		}
-	    		if (atq.attaqueencours&&updatemenu) {
-	    			atq.rendercase(this);
-	    		}
-	    		if (atq.attaqueencours) {
-	    			atq.rendercible(this);
-	    		}
-	    		updatemenu=false;
-	    }
-	    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
-		menuinfo.MenuInforender();
-	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
+		if (menu!=3) {
 			
+			if (atq.animatqencours||atq.pvendiminution) {
+				atq.renderanim(gc);
+			}
+			else {	map.renderanim(gc);}//animation des sprites si pas de combat
+			if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
+		         String tour = "Tour: "+this.tour;
+		         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+		         gc.setLineWidth(1);
+		         gc.setFill(Color.BISQUE);
+		         gc.setStroke(Color.BLACK);
+				 map.render(gc);
+				 update=false;
+		         gc.fillText(tour, positionxmenu-120, 730);
+		         gc.strokeText(tour, positionxmenu-120, 730 );
+			}
+		
+		    if (menu==1) {
+		    		if (depl.deplacementencours&&updatemenu) {
+		    			depl.render(this);
+		    			depl.arrowrender(this);
+		    		}
+		    		if (atq.attaqueencours&&updatemenu) {
+		    			atq.rendercase(this);
+		    		}
+		    		if (atq.attaqueencours) {
+		    			atq.rendercible(this);
+		    		}
+		    		updatemenu=false;
+		    }
+		    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+			menuinfo.MenuInforender();
+		    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
+		}
+		else {
+			menuinvoc.render();
+		}
 	}
 /*_Controle du clavier____________________________________________________________________________________________________________ */	
 	/**
@@ -105,9 +124,10 @@ public class Jeu {
 	 * 
 	 *@param code
 	 *		Code de la touche appuyee.
+	 * @throws CloneNotSupportedException 
 	 * 
 	 */	
-	void touch(KeyCode code) {
+	void touch(KeyCode code) throws CloneNotSupportedException {
 		if (ingame && !(atq.animatqencours||atq.pvendiminution)) {
 	    switch(code) {
 	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
@@ -132,10 +152,14 @@ public class Jeu {
 	    			case 0:
 			    			System.out.print(map.selectionne);
 			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
+			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) { menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
 			    			else {menu=2; positioncurseur1=0;};	 
 			    			break;
 	    			case 2:
 	    					passertour();
+	    					break;
+	    			case 3:
+	    					menuinvoc.changeinvoque();
 	    					break;
 	    			default:
 	    					break;
@@ -186,6 +210,9 @@ public class Jeu {
 							updatemenu=true;
 							break;
 					case 0: map.upcurseur(); break;//on bouge curseur de map
+					case 3:
+							menuinvoc.upcurseur();
+							break;
 					default:
 							break;
 					} update=true; break; 
@@ -198,6 +225,9 @@ public class Jeu {
 							updatemenu=true;
 							break;
 					case 0: map.downcurseur(); break;//on bouge curseur de map
+					case 3:
+							menuinvoc.downcurseur();
+							break;
 					default:
 							break;
 					} update=true; break;
@@ -255,8 +285,9 @@ public class Jeu {
 	/**
 	 * Incremente le nombre de tour, change le joueur qui est entrain de jouee et reinitialisation du booleen valable
 	 * pour pouvoir rejouer les unites.
+	 * @throws CloneNotSupportedException 
 	 */
-	void passertour() {
+	void passertour() throws CloneNotSupportedException {
 		int i = 0;
 		do{
 			i++;
@@ -267,7 +298,7 @@ public class Jeu {
 			}
 		}while(!(map.joueurs.get(entrainjouer).isalive));
 		if (i==4) {
-			System.out.println(map.joueurs.get(entrainjouer) + " a gagn� !");
+			System.out.println(map.joueurs.get(entrainjouer) + " a gagne !");
 		}
 		map.joueurs.get(entrainjouer).rendreValable();
 		map.joueurs.get(entrainjouer).printSituation();
@@ -283,7 +314,7 @@ public class Jeu {
     
 	void fin() {
 		
-		//r�initialisation des joueurs :
+		//reinitialisation des joueurs :
 		map.joueurs = new ArrayList<Joueur>();
 		for (int i = 0; i <= 3;i++) {
 			map.joueurs.add(new Joueur("sansnom")); 

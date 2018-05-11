@@ -13,15 +13,16 @@ public class Joueur {
 	private String name;
 	boolean isalive;
 	private ArrayList<Unite> armee;
-	private ArrayList<Batiment> possessions;
+	private ArrayList<Case> possessions;
 	int ressources;
+	int typearmee;
 	
 /*_Creation du joueur de base________________________________________________________________________*/
 	Joueur(String name) {
 		this.name = name;
-		isalive=false; //on met les bon joueurs en vie lors de la recr�ation de la map ingame
+		isalive=false; //on met les bon joueurs en vie lors de la recreation de la map ingame
 		armee= new ArrayList<Unite>();
-		possessions=new ArrayList<Batiment>();
+		possessions=new ArrayList<Case>();
 		ressources = 100;
 	}
 	
@@ -41,9 +42,9 @@ public class Joueur {
 	
 	boolean remove(Unite unite) {return armee.remove(unite); }
 	
-	boolean add(Batiment batiment) {return possessions.add(batiment); }
+	boolean add(Case casebatiment) {return possessions.add(casebatiment); }
 
-	boolean remove(Batiment batiment) {return possessions.remove(batiment);	}
+	boolean remove(Case casebatiment) {return possessions.remove(casebatiment);	}
 	
 	/**
 	 * retourne vrai si le joueur possede au moins une unite
@@ -62,8 +63,8 @@ public class Joueur {
 	 * renvoie true si le jeu ne savait pas que le joueur etait mort
 	 */
 	public boolean verifvivant() {
-		for (Batiment cur : possessions) {
-			if (cur instanceof Portal) {
+		for (Case cur : possessions) {
+			if (cur.batiment instanceof Portal) {
 				return false;
 			}
 		}
@@ -76,11 +77,22 @@ public class Joueur {
 	
 	/**
 	 * a chaque tour cette fonction effectue les actions des batiments du joueur
+	 * @throws CloneNotSupportedException 
 	 */
-	public void actiondesbatiments() {
-		for (Batiment cur : possessions) {
-			if (cur instanceof Crystal) {
+	public void actiondesbatiments() throws CloneNotSupportedException {
+		for (Case cur : possessions) {
+			if (cur.batiment instanceof Crystal) {
 				ressources+=50;
+			}
+			if (cur.batiment instanceof Portal) {
+				if (cur.unite==null) {
+					Portal portail = (Portal) cur.batiment;
+					if (portail.uniteainvoque!=null) {
+						cur.unite = portail.uniteainvoque.clone();
+						armee.add(cur.unite);
+					}
+
+				}
 			}
 		}
 	}

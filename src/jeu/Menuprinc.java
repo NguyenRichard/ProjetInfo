@@ -41,7 +41,7 @@ public class Menuprinc {
 		
 	}
 	
-	void touch(KeyCode code) {
+	void touch(KeyCode code) throws CloneNotSupportedException {
 		if (inmenuprin) {
 			    switch(code) {
 			    case A:

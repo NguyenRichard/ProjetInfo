@@ -1,5 +1,7 @@
 package jeu;
 
+import batiments.Portal;
+
 public class Gestioncapture {
 	
 	Map map;
@@ -23,8 +25,8 @@ public class Gestioncapture {
 				int joueurcapture = map.selectionnemenu.batiment.joueur;
 				int joueurquicapture = map.selectionnemenu.unite.joueur;
 				map.selectionnemenu.batiment.joueur = joueurquicapture;
-				map.joueurs.get(joueurquicapture).add(map.selectionnemenu.batiment); //on ajoute le batiment a la liste du joueur qui a capture
-				map.joueurs.get(joueurcapture).remove(map.selectionnemenu.batiment); //on enleve le batiment de la liste du joueur capture
+				map.joueurs.get(joueurquicapture).add(map.selectionnemenu); //on ajoute le batiment a la liste du joueur qui a capture
+				map.joueurs.get(joueurcapture).remove(map.selectionnemenu); //on enleve le batiment de la liste du joueur capture
 		    	if (map.joueurs.get(joueurcapture).verifvivant()) {//on verifie que le joueur qui a perdu son batiment est encore vivant
 		    	//si le joueur a perdu on le signal comme tel et on tue toutes ses unitées :
 		    		if (map.joueurs.get(joueurcapture).possedeunite()) {
@@ -39,6 +41,7 @@ public class Gestioncapture {
 		    		}
 		    	}
 				map.selectionnemenu.batiment.pv = 100;
+				map.selectionnemenu.batiment.reset(map.joueurs.get(joueurquicapture).typearmee);
 				map.selectionne.batiment.entraincapture=false;
 				
 			}

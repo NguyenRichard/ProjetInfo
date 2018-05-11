@@ -78,6 +78,8 @@ public class CreationMap {
 			System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
 			String str = saisieUtilisateur.next();
 			map.joueurs.get(joueurunite).changename(str);
+			System.out.println("Veuillez saisir une armee de "+map.joueurs.get(joueurunite)+ " :");
+			map.joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
 		}
 		int joueurbatiment = (codeS/(50*50*50*50))%50;
 		if (!(map.joueurs.get(joueurbatiment).isalive)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
@@ -86,6 +88,8 @@ public class CreationMap {
 			System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
 			String str = saisieUtilisateur.next();
 			map.joueurs.get(joueurbatiment).changename(str);
+			System.out.println("Veuillez saisir une armee de "+map.joueurs.get(joueurunite)+ " :");
+			map.joueurs.get(joueurbatiment).typearmee=saisieUtilisateur.nextInt();
 		}
 	}
 	
@@ -167,21 +171,19 @@ public class CreationMap {
 		if (codebatiment !=0) {
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types de batiments !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codebatiment == 1) {
-				map.plateau[k].batiment= new Carregris(map.taillec,joueur);
+				map.plateau[k].batiment = new Portal(map.taillec,joueur,map.joueurs.get(joueur).typearmee);
 				}
 			else if (codebatiment == 2) {
-				map.plateau[k].batiment = new Portal(map.taillec,joueur);
-			}
-			else if (codebatiment == 3) {
 				map.plateau[k].batiment = new Crystal(map.taillec,joueur);
 			}
+
 		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (increa) {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
 				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
 			}
 			if (ingame&&(joueur < 4)) {
-				map.joueurs.get(joueur).add(map.plateau[k].batiment); //on ajoute le batiment à la liste d'unités du bon joueur si on est en jeu et que le batiment n'est pas neutre
+				map.joueurs.get(joueur).add(map.plateau[k]); //on ajoute le batiment à la liste d'unités du bon joueur si on est en jeu et que le batiment n'est pas neutre
 			}
 		}
 		else {
@@ -192,7 +194,7 @@ public class CreationMap {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE DE BATIMENT
 	 */
-	int nombretotbatiment() {return 3;}
+	int nombretotbatiment() {return 2;}
 	
 	/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -259,13 +261,13 @@ public class CreationMap {
 		    			map.selectionne.unite = null; //on enleve l'unite visuellement et dans la sauvegarde
 		    			mapcode[map.selectionne.rang] -= ((mapcode[map.selectionne.rang]/50)%50)*50; 
 		    			mapcode[map.selectionne.rang] -= ((mapcode[map.selectionne.rang]/(50*50))%50)*50*50;
-		    			
 		    		}
 		    	}
 		    	else if (menucrea.choixtype == 2) {
 		    		if (map.selectionne.batiment != null) {
 		    			map.selectionne.batiment = null; //on enleve l'e batiment visuellement et dans la sauvegarde
 		    			mapcode[map.selectionne.rang] -= ((mapcode[map.selectionne.rang]/125000)%50)*125000; 
+		    			mapcode[map.selectionne.rang] -= ((mapcode[map.selectionne.rang]/(125000*50))%50)*125000*50; 
 		    		}
 		    	}
 	    	}

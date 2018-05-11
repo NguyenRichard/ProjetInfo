@@ -1,5 +1,6 @@
 package jeu;
 
+import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -87,6 +88,12 @@ public class MenuInfo {
 			gc.drawImage(images[0],positionxmenuinfo*1.04,positionymenuinfo+50);
 	        gc.fillText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
 	        gc.strokeText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
+			if (selectionne.batiment instanceof Portal) {
+				Portal portail = (Portal) selectionne.batiment;
+				if (portail.uniteainvoque!=null) {
+					portail.uniteainvoque.render(gc, positionxmenuinfo+150, positionymenuinfo+50);
+				}
+			}
 		} else {
 			this.images = selectionne.terrain.images;
 			gc.drawImage(images[0],positionxmenuinfo*1.04,positionymenuinfo+50);

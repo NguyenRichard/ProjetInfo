@@ -182,7 +182,7 @@ public class Gestionatq {
 			//si on est sur une unite ennemi :
 			if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) {jeu.gc.drawImage(viseur, x, y);
 			}
-			//si on est sur une unite alli�e :
+			//si on est sur une unite alliee :
 			else if(!(cible.unite == null)) {jeu.gc.drawImage(viseursoin, x, y); 
 			}
 		}

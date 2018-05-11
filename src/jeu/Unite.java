@@ -1,6 +1,6 @@
 package jeu;
 
-public abstract class Unite extends Element{
+public abstract class Unite extends Element implements Cloneable{
 	/**Entier qui decrit l'appartenance a un joueur. */
 	protected int joueur;
 	/**Booleen qui decrit si l'on a joue l'unite ou non. */
@@ -44,5 +44,9 @@ public abstract class Unite extends Element{
 	boolean goodplayer(int joueur) {
 		return (this.joueur==joueur);
 	}
+	
+    protected Unite clone() throws CloneNotSupportedException {
+        return (Unite) super.clone();
+    }
 
 }

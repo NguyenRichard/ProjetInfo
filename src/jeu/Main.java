@@ -54,7 +54,6 @@ public class Main extends Application { //Nouveau test
 			          game.update();
 			          Joueur entrainjouer = game.map.joueurs.get(game.entrainjouer);
 			          String infojoueur = "Joueur: "+entrainjouer+"; Ressources: "+entrainjouer.ressources;
-			          String tour = "Tour: "+game.tour;
 			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			          gc.setLineWidth(1);
 					  switch(game.entrainjouer) {
@@ -76,8 +75,6 @@ public class Main extends Application { //Nouveau test
 			          gc.strokeText(infojoueur, game.positionxmenu*1.05, 50 );
 			          gc.setFill(Color.BISQUE);
 			          gc.setStroke(Color.BLACK);
-			          gc.fillText(tour, game.positionxmenu+50, height-50);
-			          gc.strokeText(tour, game.positionxmenu+50, height-50 );
 		          }
 		          if (crea.increa) {
 		        	  crea.update();
@@ -114,12 +111,22 @@ public class Main extends Application { //Nouveau test
 	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	        public void handle(KeyEvent e) {
 	    			if (game.ingame) {
-	    				game.touch(e.getCode());
+	    				try {
+							game.touch(e.getCode());
+						} catch (CloneNotSupportedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 	    			}
 	    			if (crea.increa) {
 	    				crea.touch(e.getCode());
 	    			}
-	        		menu.touch(e.getCode());
+	        		try {
+						menu.touch(e.getCode());
+					} catch (CloneNotSupportedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 	        	
 	        }
 	    });

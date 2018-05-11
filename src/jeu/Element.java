@@ -61,6 +61,7 @@ public abstract class Element {
 			else if (this instanceof Unite) {
 				Unite uni = (Unite)this;
 				String txt = "cerclejoueur/cerclejoueur" + uni.joueur+".png";
+
 				Image cercle = new Image(txt,taille, taille,false,false);
 				gc.drawImage(cercle, x, y);
 			}
