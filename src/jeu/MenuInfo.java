@@ -84,8 +84,15 @@ public class MenuInfo {
 	        gc.fillRect(positionxmenuinfo*1.4, positionymenuinfo+50, 15, 100-ratiopvpvmax);
 	        
 		} else if (selectionne.batiment!=null) {
+			int animcompteur= selectionne.batiment.animcompteur;
+			int maxcompteur = selectionne.batiment.maxcompteur;
 			this.images = selectionne.batiment.images;
-			gc.drawImage(images[0],positionxmenuinfo*1.04,positionymenuinfo+50);
+			int k = animcompteur / (maxcompteur/images.length);
+			if (k >= images.length) {
+				animcompteur = 0;
+				k=0;
+			}
+			gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
 	        gc.fillText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
 	        gc.strokeText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
 			if (selectionne.batiment instanceof Portal) {

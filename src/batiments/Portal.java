@@ -24,9 +24,19 @@ public class Portal extends Batiment {
 		this.taille=taille;
 		this.joueur = joueur;
 		pv = 100;
+<<<<<<< HEAD
 		images = new Image[1];
 		images[0] = new Image("portal"+".png",taille, taille,false,false);
 		this.reset(typearmee);
+=======
+		images = new Image[7];
+		for (int k = 0; k < images.length; k++ ) {
+			images[k] = new Image("portal/portal_"+k+".png",taille, taille,false,false);
+		}
+		maxcompteur = 75;
+		this.reset(typearmee);
+		
+>>>>>>> branch 'master' of https://github.com/NguyenRichard/ProjetInfo.git
 	}
 	
 	

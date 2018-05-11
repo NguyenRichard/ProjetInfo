@@ -19,9 +19,9 @@ public class Jeu {
 	Map map;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
-	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour) */
+	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour); 3 dans le menu3(invoquer)*/
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer et 3 : invoquer*/
+	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer*/
 	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
@@ -66,6 +66,10 @@ public class Jeu {
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		menucache = new Image("wood.jpg", width-map.taillec*map.nombrecaseaffichee,height,false,false);
+		menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
+		curseur = new Image("curseurmenu1.png",200, 320, false, false);
+		menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
+		cache = new Image("cache.png",200, 320, false, false);
 		positionxmenu = map.taillec*map.nombrecaseaffichee;
 		ingame = false;
 		menuinfo = new MenuInfo(gc,map,positionxmenu);
@@ -166,10 +170,10 @@ public class Jeu {
 	    			} 
 	    			break; 
 	    case B : 
-		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
-		    	else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
-		    	else {menu=0;}
-		    	update=true; break;
+	    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
+	    	else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
+	    	else {menu=0;}
+	    	update=true; break;
 		case LEFT:  
 					switch(menu) {
 					case 0: map.leftcurseur(); break;//on bouge sur la map
@@ -246,16 +250,18 @@ public class Jeu {
 		gc.drawImage(menucache, positionxmenu, 0);
 	    switch(menu) {
 	    case 1:
-				Image menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
-				Image curseur = new Image("curseurmenu1.png",200, 320, false, false);
 				gc.drawImage(menu1, positionxmenu*1.05, 50);
+				if (map.selectionnemenu.unite.restdeplacement == 0) {
+	    			gc.drawImage(cache, positionxmenu*1.05,50+1*52);
+	    		}
+				if ((map.selectionnemenu.batiment == null)||(map.selectionnemenu.batiment.joueur == map.selectionnemenu.unite.joueur)) {
+					gc.drawImage(cache, positionxmenu*1.05,50+2*52);
+				}
 				gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
 				break;
 	    case 2:
-    			Image menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
-	    		Image curseur2 = new Image("curseurmenu1.png", 200, 320, false, false);
 	    		gc.drawImage(menu2, positionxmenu*1.05, 50);
-	    		gc.drawImage(curseur2, positionxmenu*1.05,50+positioncurseur1*52);
+	    		gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
 	    		break;
 
 	    default:
