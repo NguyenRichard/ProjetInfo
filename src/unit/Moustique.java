@@ -25,6 +25,6 @@ public class Moustique extends Unite{
 	}
 	
 	public String toString() {
-		return "moustique";
+		return "Moustique";
 	}
 }

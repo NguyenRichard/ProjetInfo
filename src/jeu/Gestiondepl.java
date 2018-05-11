@@ -171,7 +171,6 @@ public class Gestiondepl {
 				listUpdate();
 				if (map.selectionnemenu.unite.restdeplacement == 0) { // on arrive a� 0 deplacements
 					deplacementencours=false;
-					return 0;
 				}
 			}
 		}

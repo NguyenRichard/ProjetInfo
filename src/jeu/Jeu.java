@@ -19,9 +19,9 @@ public class Jeu {
 	Map map;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
-	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour) */
+	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour); 3 dans le menu3(invoquer)*/
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer et 3 : invoquer*/
+	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer*/
 	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
@@ -152,7 +152,7 @@ public class Jeu {
 	    			case 0:
 			    			System.out.print(map.selectionne);
 			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
-			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) { menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
+			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) {menuinvoc.positioncurseur=0; menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
 			    			else {menu=2; positioncurseur1=0;};	 
 			    			break;
 	    			case 2:
@@ -166,9 +166,10 @@ public class Jeu {
 	    			} 
 	    			break; 
 	    case B : 
-		    	depl.deplacementencours=false;menu=0;
-		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;} //pour faire revenir le curseur a l'unite qui attaque
-		    	update=true; break;
+	    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
+	    	else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
+	    	else {menu=0;}
+	    	update=true; break;
 		case LEFT:  
 					switch(menu) {
 					case 0: map.leftcurseur(); break;//on bouge sur la map

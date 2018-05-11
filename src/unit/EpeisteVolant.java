@@ -24,6 +24,6 @@ public class EpeisteVolant extends Unite {
 	}
 		
 	public String toString() {
-		return "epeiste volant";
+		return "Epeiste volant";
 	}
 }

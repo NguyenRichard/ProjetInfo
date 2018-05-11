@@ -24,6 +24,6 @@ public class Fourmis extends Unite{
 	}
 	
 	public String toString() {
-		return "fourmis";
+		return "Fourmis";
 	}
 }

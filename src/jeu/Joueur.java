@@ -33,7 +33,11 @@ public class Joueur {
 	
 	public void printSituation() {
 		if (isalive) {
-			System.out.println("Situation Joueur " + name + " : " + "\n" + "armee : " + armee + "\n" + "possessions : " + possessions + "\n");
+			System.out.print("Situation Joueur " + name + " : " + "\n" + "armee : " + armee + "\n" + "possessions : " + "[ ");
+			for (Case cur : possessions) {
+				System.out.print(cur.batiment + " ");
+			}
+			System.out.println("]\n");
 		}
 	}
 	

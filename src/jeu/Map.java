@@ -89,7 +89,7 @@ public class Map {
 	void renderanim(GraphicsContext gc) {
 		for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
 			// Boucle qui affiche les cases du plateau de la carte affichee
-			if (plateau[k].unite != null) {
+			if ((plateau[k].unite != null)||(plateau[k].batiment != null)) {
 				plateau[k].render(gc,rangcorner);
 				k=kdefine(k);
 			}

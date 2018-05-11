@@ -25,7 +25,7 @@ public class Scarabe extends Unite {
 	}
 	
 	public String toString() {
-		return "scarabe";
+		return "Scarabe";
 	}
 	
 }

@@ -24,7 +24,7 @@ public class AbeilleSamourai extends Unite{
 	}
 		
 	public String toString() {
-		return "abeille samourai";
+		return "Abeille Samourai";
 	}
 		
 

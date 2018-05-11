@@ -24,24 +24,13 @@ public class Portal extends Batiment {
 		this.taille=taille;
 		this.joueur = joueur;
 		pv = 100;
-		images = new Image[1];
-		images[0] = new Image("portal"+".png",taille, taille,false,false);
-		
-		listeinvoc = new ArrayList<Unite>();
-		switch(typearmee) {
-			case 0:
-					listeinvoc.add(new Abeille(taille,joueur));
-					listeinvoc.add(new AbeilleSamourai(taille,joueur));
-					listeinvoc.add(new Fourmis(taille,joueur));
-					listeinvoc.add(new Scarabe(taille,joueur));
-					listeinvoc.add(new Moustique(taille,joueur));
-					break;
-			case 1:
-					listeinvoc.add(new EpeisteVolant(taille,joueur));
-					break;
-			default:
-					break;
+		images = new Image[7];
+		for (int k = 0; k < images.length; k++ ) {
+			images[k] = new Image("portal/portal_"+k+".png",taille, taille,false,false);
 		}
+		maxcompteur = 75;
+		this.reset(typearmee);
+		
 	}
 	
 	

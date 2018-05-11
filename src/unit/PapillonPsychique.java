@@ -25,7 +25,7 @@ public class PapillonPsychique extends Unite{
 		}
 			
 		public String toString() {
-			return "papillon psychique";
+			return "Papillon psychique";
 		}
 			
 	}
