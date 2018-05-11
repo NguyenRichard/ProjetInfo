@@ -38,6 +38,14 @@ public class Jeu {
     int positionxmenu;
 	/**Image de fond du menu lateral droit**/
 	Image menucache;
+	/**Image de fond du menu lateral droit**/
+	Image menu1;
+	/**Image de fond du menu changer tour**/
+	Image menu2;
+	/**Image du curseur pour les menu**/
+	Image curseur;
+	/**Cache des options qui ne sont plus valide */
+Image cache;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
 	boolean updatemenu;
 	Menuinvocation menuinvoc;
