@@ -9,8 +9,11 @@ public class Crystal extends Batiment{
 		super(taille);
 		this.joueur = joueur;
 		pv = 100;
-		images = new Image[1];
-		images[0] = new Image("crystal"+".png",taille, taille,false,false);
+		images = new Image[5];
+		for (int k = 0; k < images.length; k++ ) {
+			images[k] = new Image("crystal/crystal"+k+".png",taille, taille,false,false);
+		}
+		maxcompteur = 70;
 	}
 	
 	public String toString() {
