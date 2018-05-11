@@ -64,6 +64,9 @@ public class Menuinvocation {
 	
 	void changeinvoque() {
 		portail.uniteainvoque=portail.listeinvoc.get(positioncurseur);
+		portail.images=portail.images2;
+		portail.maxcompteur=portail.maxcompteur2;
+		
 	}
 	
 }
