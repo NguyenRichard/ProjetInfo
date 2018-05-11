@@ -65,23 +65,32 @@ public class Gestionatq {
 	int attaque(String type) {
 		if(attaqueencours) {
 			if (map.selectionne!=map.selectionnemenu) {
-				if ((type==null)||(type.compareTo("healer")!= 0)){
+				if (type=="attaque en ligne") { // Ajouter condition attaque en ligne
+					for(Case cible: atqlist) { // Ne fonctionne pas pour l'instant
+						if (cible.unite != null) {
+							map.selectionne=cible;
+							animatqencours=true;
+						}
+					}
+				}
+				else if ((type==null)||(type.compareTo("healer")!= 0)){
 					// Son d'attaque
 					Sound sd = new Sound();
 					sd.runSoundattack();
+					animatqencours=true;
 				}
 				else if (type.compareTo("healer")== 0) {
 					// Son de soin
 					Sound sd = new Sound();
 					sd.runSoundheal();
+					animatqencours=true;
 				}
-				animatqencours=true;
 			}
 			attaqueencours=false;
 			return 0;
 		}
 		else {
-			listcaseaportee(); //liste pour l'affichage de l'attaque
+			listcaseaporteeligne(); //liste pour l'affichage de l'attaque
 			listennemiaportee(); //liste pour la selection des adversaires
 			attaqueencours=true;
 			if(atqenemi.size()!=0) {map.selectionne = atqenemi.get(0);}
@@ -128,6 +137,73 @@ public class Gestionatq {
 				
 		}
 	}
+	
+	void listcaseaporteeligne() {
+		int rang = map.selectionnemenu.rang;
+		int portee = map.selectionnemenu.unite.portee[1];
+		int porteemin = map.selectionnemenu.unite.portee[0];
+		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
+		int col = rang%50;
+		int lign = rang/50;
+		int coldeb = col - portee - 1;
+		int ligndeb = lign - portee;
+		if(coldeb<0) {coldeb=0;}; //on s'assure que le debut ne sort pas des limites de la map
+		if(ligndeb<0) {ligndeb=0;};
+		int colfin = col + portee + 1;
+		int lignfin = lign + portee;
+		if(colfin>49) {colfin=49;}; //on s'assure que la fin ne sort pas des limites de la map
+		if(lignfin>49) {lignfin=49;};
+	
+		atqlist = new ArrayList<Case>();
+		// Ligne droite
+		for (int k = col + 50*lign + porteemin; k <= col + 50*lign + portee; k++) { //on balaye du debut a la fin
+			if ((k>=0) && (k<2500) && (map.selectionnemenu.distance(map.plateau[k]) > porteemin) && (map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) 
+			{atqlist.add(map.plateau[k]);}		
+		}
+		// Ligne gauche
+		for (int k = col + 50*lign - portee; k <= col + 50*lign - porteemin; k++) { //on balaye du debut a la fin
+			if ((k>=0) && (k<2500) &&(map.selectionnemenu.distance(map.plateau[k]) > porteemin) && (map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) 
+			{atqlist.add(map.plateau[k]);}		
+		}
+		// Ligne bas
+		for (int k = col + 50*lign + porteemin*50; k <= col + 50*lign + portee*50; k=k+50) { //on balaye du debut a la fin
+			if ((k>=0) && (k<2500) &&(map.selectionnemenu.distance(map.plateau[k]) > porteemin) && (map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) 
+			{atqlist.add(map.plateau[k]);}		
+		}
+		// Ligne haut
+		for (int k = col + 50*lign - portee*50; k <= col + 50*lign - porteemin*50; k=k+50) { //on balaye du debut a la fin
+			if ((k>=0) && (k<2500) &&(map.selectionnemenu.distance(map.plateau[k]) > porteemin) && (map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) 
+			{atqlist.add(map.plateau[k]);}		
+		}
+	}
+	
+	void listcaseaporteezone() {
+		int rang = map.selectionnemenu.rang;
+		int portee = map.selectionnemenu.unite.portee[1];
+		int porteemin = map.selectionnemenu.unite.portee[0];
+		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
+		int col = rang%50;
+		int lign = rang/50;
+		int coldeb = col - portee - 1;
+		int ligndeb = lign - portee;
+		if(coldeb<0) {coldeb=0;}; //on s'assure que le debut ne sort pas des limites de la map
+		if(ligndeb<0) {ligndeb=0;};
+		int colfin = col + portee + 1;
+		int lignfin = lign + portee;
+		if(colfin>49) {colfin=49;}; //on s'assure que la fin ne sort pas des limites de la map
+		if(lignfin>49) {lignfin=49;};
+	
+		atqlist = new ArrayList<Case>();
+		for (int k = coldeb + 50*ligndeb; k <= colfin + 50*lignfin; k++) { //on balaye du debut a la fin
+			if(k%50==colfin) {
+				k=coldeb + ((k/50)+1)*50; //si on atteint le bord droit du carre que l'on veut balayer on revient a la ligne
+			} 
+			if ((map.selectionnemenu.distance(map.plateau[k]) > porteemin) && (map.selectionnemenu.distance(map.plateau[k]) <= portee) && (verifCase(map.plateau[k]))) {
+				atqlist.add(map.plateau[k]);
+			}
+		}
+	}
+	
 	void listennemiaportee() {
 		atqenemi = new 	ArrayList<Case>();
 		for(Case cible: atqlist) {
@@ -272,7 +348,7 @@ public class Gestionatq {
 		  	  		pvendiminution=false;
 		  	  	}
 	    	}
-			map.selectionnemenu.unite.valable=false; //apr�s l'animation d'attaque l'unit� n'est plus valable
+			map.selectionnemenu.unite.valable=false; //apres l'animation d'attaque l'unite n'est plus valable
 	  	  	map.render(gc);
 	    }
 	}
