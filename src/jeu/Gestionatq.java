@@ -460,12 +460,11 @@ public class Gestionatq {
 	  	  				}
 	  	  			}
 	  	  		}
+	  	  	map.render(gc);
 	  	  	}		
 	    }
-		else {
-			map.selectionnemenu.unite.valable=false; //apres l'animation d'attaque l'unite n'est plus valable
-			map.render(gc);
-		}
+		map.selectionnemenu.unite.valable=false; //apres l'animation d'attaque l'unite n'est plus valable
+		
 	    
 	}
 	
