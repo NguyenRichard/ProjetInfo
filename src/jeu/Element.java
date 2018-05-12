@@ -45,7 +45,7 @@ public abstract class Element {
 	 * 		Calcul des coordonees en fonction du rang de la case dans le plateau
 	 */
 	
-	void render(GraphicsContext gc, int x, int y) {
+	public void render(GraphicsContext gc, int x, int y) {
 		// Avec x, y sont les coordonnees sur l'ecran calculees grace a la Map
 			int k = animcompteur / (maxcompteur/images.length);
 			if (k >= images.length) {

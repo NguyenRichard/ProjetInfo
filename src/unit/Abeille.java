@@ -21,6 +21,7 @@ public class Abeille extends Unite{
 		pvmax=99;
 		pv=pvmax;
 		dmg=1;
+		cost=20;
 	}
 	
 	public String toString() {

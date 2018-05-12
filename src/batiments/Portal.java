@@ -17,9 +17,9 @@ public class Portal extends Batiment {
 	public ArrayList<Unite> listeinvoc;
 	public Unite uniteainvoque;
 	int taille;
-	protected Image[] images1;
+	public Image[] images1;
 	public Image[] images2;
-	int maxcompteur1;
+	public int maxcompteur1;
 	public int maxcompteur2;
 	
 	

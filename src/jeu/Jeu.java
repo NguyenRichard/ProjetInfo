@@ -171,7 +171,17 @@ Image cache;
 	    					passertour();
 	    					break;
 	    			case 3:
-	    					menuinvoc.changeinvoque();
+	    					if(menuinvoc.confirmationencours && menuinvoc.positioncurseurconf==0) {
+		    					menuinvoc.changeinvoque(map.joueurs.get(entrainjouer));
+		    					menuinvoc.confirmationencours=false;
+	    					}
+	    					else if (menuinvoc.confirmationencours && menuinvoc.positioncurseurconf==1) {
+	    						menuinvoc.confirmationencours=false;
+	    					}
+	    					else {
+		    					menuinvoc.confirmationencours=true;
+	    					}
+	    					update=true;
 	    					break;
 	    			default:
 	    					break;
@@ -195,6 +205,10 @@ Image cache;
 							}
 							updatemenu=true;
 							break;
+					case 3:
+							if(menuinvoc.confirmationencours) {
+								menuinvoc.leftcurseurconf();
+							}
 					default:
 							break;
 					} update=true; break;
@@ -211,6 +225,11 @@ Image cache;
 							}
 							updatemenu=true;
 							break;
+					case 3:
+							if(menuinvoc.confirmationencours) {
+								menuinvoc.rightcurseurconf();
+							}
+							break;
 					default:
 							break;
 					} update=true;break;
@@ -224,7 +243,9 @@ Image cache;
 							break;
 					case 0: map.upcurseur(); break;//on bouge curseur de map
 					case 3:
-							menuinvoc.upcurseur();
+							if(!menuinvoc.confirmationencours) {
+								menuinvoc.upcurseur();
+							}
 							break;
 					default:
 							break;
@@ -239,7 +260,9 @@ Image cache;
 							break;
 					case 0: map.downcurseur(); break;//on bouge curseur de map
 					case 3:
-							menuinvoc.downcurseur();
+							if(!menuinvoc.confirmationencours) {
+								menuinvoc.downcurseur();
+							}
 							break;
 					default:
 							break;

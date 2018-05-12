@@ -19,6 +19,7 @@ public abstract class Unite extends Element implements Cloneable{
 	protected int dmg;
 	/**Represente le type de l'unite*/
 	protected String type;
+	protected int cost;
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	/**

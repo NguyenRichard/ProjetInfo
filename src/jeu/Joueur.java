@@ -94,7 +94,10 @@ public class Joueur {
 					if (portail.uniteainvoque!=null) {
 						cur.unite = portail.uniteainvoque.clone();
 						armee.add(cur.unite);
-					}
+						portail.uniteainvoque=null;
+						portail.images=portail.images1;
+						portail.maxcompteur=portail.maxcompteur1;
+					}					
 
 				}
 			}

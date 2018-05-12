@@ -21,6 +21,7 @@ public class Fourmis extends Unite{
 		pvmax=99;
 		pv=pvmax;
 		dmg=20;
+		cost=20;
 	}
 	
 	public String toString() {

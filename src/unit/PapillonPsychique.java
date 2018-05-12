@@ -22,6 +22,7 @@ public class PapillonPsychique extends Unite{
 			pvmax=99;
 			pv=pvmax;
 			dmg=100;
+			cost=20;
 		}
 			
 		public String toString() {

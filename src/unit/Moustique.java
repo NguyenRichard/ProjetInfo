@@ -22,6 +22,7 @@ public class Moustique extends Unite{
 		pv=pvmax;
 		dmg=-30;
 		type = "healer";
+		cost=20;
 	}
 	
 	public String toString() {
