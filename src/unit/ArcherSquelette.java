@@ -15,7 +15,7 @@ public class ArcherSquelette extends Unite{
 			restdeplacement=deplacement;
 			valable=true;
 			maxcompteur = 75;
-			portee = new int[] {0,1};
+			portee = new int[] {2,4};
 			pvmax=99;
 			pv=pvmax;
 			dmg=20;

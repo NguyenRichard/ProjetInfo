@@ -74,9 +74,11 @@ public class Gestiondepl {
 
 		for(int i = 1; i<deplist.length;i++) {
 			if (deplist[i] != -1) {
-				int x = (deplist[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-				int y = (deplist[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				jeu.gc.drawImage(green, x, y);
+				if((jeu.updatemenu)||(jeu.map.plateau[deplist[i]].unite!=null)||(jeu.map.plateau[deplist[i]].batiment!=null)) { //on render si on doit update ou si il y a un element sur la case
+					int x = (deplist[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+					int y = (deplist[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					jeu.gc.drawImage(green, x, y);
+				}
 			}
 		}
 	}
@@ -104,50 +106,54 @@ public class Gestiondepl {
 			
 			
 			for (int i=1;i<chemin.length-1;i++) {
-				if (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+50))) {
-					int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(basgauche, x, y);
-				} else if (((chemin[i-1]==chemin[i]+1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]+1)&&(chemin[i-1]==chemin[i]+50))) {
-					int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(basdroite, x, y);
-				} else if  (((chemin[i-1]==chemin[i]+1)&&(chemin[i+1]==chemin[i]-50)) || ((chemin[i+1]==chemin[i]+1)&&(chemin[i-1]==chemin[i]-50))) {
-					int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(hautdroite, x, y);
-				} else if  (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]-50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]-50))) {
-					int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(hautgauche, x, y);
-				} else if  (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+1)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+1))) {
-					int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(droithoriz, x, y);
-				} else if  (((chemin[i-1]==chemin[i]-50)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-50)&&(chemin[i-1]==chemin[i]+50))) {
-					int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(droitverti, x, y);
+				if((jeu.updatemenu)||(jeu.map.plateau[chemin[i]].unite!=null)||(jeu.map.plateau[chemin[i]].batiment!=null)) { //on render si on doit update ou si il y a unun element sur la case
+					if (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+50))) {
+						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						jeu.gc.drawImage(basgauche, x, y);
+					} else if (((chemin[i-1]==chemin[i]+1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]+1)&&(chemin[i-1]==chemin[i]+50))) {
+						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						jeu.gc.drawImage(basdroite, x, y);
+					} else if  (((chemin[i-1]==chemin[i]+1)&&(chemin[i+1]==chemin[i]-50)) || ((chemin[i+1]==chemin[i]+1)&&(chemin[i-1]==chemin[i]-50))) {
+						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						jeu.gc.drawImage(hautdroite, x, y);
+					} else if  (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]-50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]-50))) {
+						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						jeu.gc.drawImage(hautgauche, x, y);
+					} else if  (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+1)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+1))) {
+						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						jeu.gc.drawImage(droithoriz, x, y);
+					} else if  (((chemin[i-1]==chemin[i]-50)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-50)&&(chemin[i-1]==chemin[i]+50))) {
+						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						jeu.gc.drawImage(droitverti, x, y);
+					}
 				}
 			}
 			int n = chemin.length;
-			if (chemin[n-1]==chemin[n-2]+50) {
-				int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-				int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				jeu.gc.drawImage(flechebas, x, y);
-			} else if (chemin[n-1]==chemin[n-2]-50) {
-				int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-				int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				jeu.gc.drawImage(flechehaut, x, y);
-			} else if (chemin[n-1]==chemin[n-2]+1) {
-				int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-				int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				jeu.gc.drawImage(flechedroite, x, y);
-			} else if (chemin[n-1]==chemin[n-2]-1) {
-				int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-				int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				jeu.gc.drawImage(flechegauche, x, y);
-			} 
+			if((jeu.updatemenu)||(jeu.map.plateau[chemin[n-1]].unite!=null)||(jeu.map.plateau[chemin[n-1]].batiment!=null)) { //on render si on doit update ou si il y a un element sur la case
+				if (chemin[n-1]==chemin[n-2]+50) {
+					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					jeu.gc.drawImage(flechebas, x, y);
+				} else if (chemin[n-1]==chemin[n-2]-50) {
+					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					jeu.gc.drawImage(flechehaut, x, y);
+				} else if (chemin[n-1]==chemin[n-2]+1) {
+					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					jeu.gc.drawImage(flechedroite, x, y);
+				} else if (chemin[n-1]==chemin[n-2]-1) {
+					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					jeu.gc.drawImage(flechegauche, x, y);
+				}
+			}
 			
 		}
 		

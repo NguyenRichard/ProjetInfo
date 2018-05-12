@@ -72,7 +72,7 @@ public class CreationMap {
 	 */
 	void remakejoueur(int k, int codeS, Map map) {
 		int joueurunite = (codeS/(50*50))%50;
-		if (!(map.joueurs.get(joueurunite).isalive)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+		if ((!(map.joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
 			map.joueurs.get(joueurunite).isalive = true;
 			Scanner saisieUtilisateur = new Scanner(System.in); 
 			System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
@@ -82,13 +82,13 @@ public class CreationMap {
 			map.joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
 		}
 		int joueurbatiment = (codeS/(50*50*50*50))%50;
-		if (!(map.joueurs.get(joueurbatiment).isalive)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+		if ((!(map.joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
 			map.joueurs.get(joueurbatiment).isalive = true;
 			Scanner saisieUtilisateur = new Scanner(System.in); 
 			System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
 			String str = saisieUtilisateur.next();
 			map.joueurs.get(joueurbatiment).changename(str);
-			System.out.println("Veuillez saisir une armee de "+map.joueurs.get(joueurunite)+ " :");
+			System.out.println("Veuillez saisir une armee de "+map.joueurs.get(joueurbatiment)+ " :");
 			map.joueurs.get(joueurbatiment).typearmee=saisieUtilisateur.nextInt();
 		}
 	}
@@ -191,7 +191,7 @@ public class CreationMap {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
 				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
 			}
-			if (ingame&&(joueur < 4)) {
+			if (ingame&&(joueur != 0)) {
 				map.joueurs.get(joueur).add(map.plateau[k]); //on ajoute le batiment à la liste d'unités du bon joueur si on est en jeu et que le batiment n'est pas neutre
 			}
 		}
@@ -210,11 +210,11 @@ public class CreationMap {
 	void update() {
 		map.renderanim(gc); //animation des sprites
 		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
-			gc.drawImage(menucache, positionxmenu, 0); 
 			map.render(gc);
-			menucrea.render();
 			update=false;
 		}
+		gc.drawImage(menucache, positionxmenu, 0);
+		menucrea.render();
 	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
 		
 	}

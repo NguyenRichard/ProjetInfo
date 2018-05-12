@@ -65,7 +65,7 @@ Image cache;
 	Jeu(GraphicsContext gc, int width, int height){
 		this.map = new Map();
 		tour = 0;
-		entrainjouer=0;
+		entrainjouer=1;
 		this.gc=gc;
 		menu=0;
 		positioncurseur1 = 0;
@@ -109,7 +109,7 @@ Image cache;
 			}
 		
 		    if (menu==1) {
-		    		if (depl.deplacementencours&&updatemenu) {
+		    		if (depl.deplacementencours) {
 		    			depl.render(this);
 		    			depl.arrowrender(this);
 		    		}

@@ -21,7 +21,7 @@ public class EpeisteVolant extends Unite {
 		pvmax=99;
 		pv=pvmax;
 		dmg=1;
-		cost=150;
+		cost=20;
 	}
 		
 	public String toString() {

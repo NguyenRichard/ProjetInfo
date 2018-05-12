@@ -57,7 +57,7 @@ public class Map {
 		selectionne = plateau[51];
 		//initialisation des joueurs :
 		joueurs = new ArrayList<Joueur>();
-        for (int i = 0; i <= 3;i++) {
+        for (int i = 0; i <= 4;i++) {
         	joueurs.add(new Joueur("sansnom"));
         }
 	}

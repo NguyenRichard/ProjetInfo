@@ -24,6 +24,7 @@ public class Joueur {
 		armee= new ArrayList<Unite>();
 		possessions=new ArrayList<Case>();
 		ressources = 100;
+		typearmee = 0;
 	}
 	
 /*_Personalisation et infos du joueur________________________________________________________________*/

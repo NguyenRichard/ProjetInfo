@@ -40,7 +40,7 @@ public class Menucrea {
 		fond = new Image("menucrea.png", 200, 320, false, false);
 		curseur = new Image("curseurmenu1.png",200, 320, false, false);
 		this.positionxmenu=positionxmenu+50;
-		codesave = 1+50+125000;
+		codesave = 1+50+50*50+125000;
 		choix = false;
 		positioncurseurcrea = 0;
 		choixtype=0;
@@ -155,8 +155,8 @@ public class Menucrea {
 		}
 		else if (positioncurseurcrea==2) { //on change l'appartenance au joueur
 			if (choixtype==1){ //on change le numjoueur correspondant a l'unite
-				if (numjoueur == 3) {
-					numjoueur = 0;
+				if (numjoueur == 4) {
+					numjoueur = 1;
 				}
 				else {
 					numjoueur += 1; //pour l'affichage
@@ -224,8 +224,8 @@ public class Menucrea {
 		}
 		else if (positioncurseurcrea==2) { //on change l'appartenance au joueur
 			if ((choixtype==1)){ //on change le numjoueur correspondant a l'unite
-				if (numjoueur == 0) {
-					numjoueur = 3;
+				if (numjoueur == 1) {
+					numjoueur = 4;
 				}
 				else {
 					numjoueur -= 1; //pour l'affichage

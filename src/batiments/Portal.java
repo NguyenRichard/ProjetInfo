@@ -52,6 +52,8 @@ public class Portal extends Batiment {
 					listeinvoc.add(new Fourmis(taille,joueur));
 					listeinvoc.add(new Scarabe(taille,joueur));
 					listeinvoc.add(new Moustique(taille,joueur));
+					listeinvoc.add(new PapillonPsychique(taille,joueur));
+					
 					break;
 			case 1:
 					listeinvoc.add(new EpeisteVolant(taille,joueur));
