@@ -168,7 +168,7 @@ Image cache;
 	    			case 0:
 			    			System.out.print(map.selectionne);
 			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
-			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) {menuinvoc.positioncurseur=0; menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
+			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) {menuinvoc.positioncurseur=0; menuinvoc.confirmationencours=false;menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
 			    			else {menu=2; positioncurseur1=0;};	 
 			    			break;
 	    			case 2:
