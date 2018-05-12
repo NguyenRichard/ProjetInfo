@@ -5,12 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import jeu.Batiment;
 import jeu.Unite;
-import unit.Abeille;
-import unit.AbeilleSamourai;
-import unit.EpeisteVolant;
-import unit.Fourmis;
-import unit.Moustique;
-import unit.Scarabe;
+import unit.*;
 
 public class Portal extends Batiment {
 	
@@ -60,6 +55,11 @@ public class Portal extends Batiment {
 					break;
 			case 1:
 					listeinvoc.add(new EpeisteVolant(taille,joueur));
+					break;
+			case 2:
+					listeinvoc.add(new TankSquelette(taille,joueur));
+					listeinvoc.add(new SkeletonSoldier(taille,joueur));
+					listeinvoc.add(new ArcherSquelette(taille,joueur));
 					break;
 			default:
 					break;

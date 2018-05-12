@@ -145,6 +145,15 @@ public class CreationMap {
 				else if (codeunite == 7) {
 					map.addunite(k,new EpeisteVolant(map.taillec,joueur));
 				}
+				else if (codeunite == 8) {
+					map.addunite(k,new TankSquelette(map.taillec,joueur));
+				}
+				else if (codeunite == 9) {
+					map.addunite(k,new SkeletonSoldier(map.taillec,joueur));
+				}
+				else if (codeunite == 10) {
+					map.addunite(k,new ArcherSquelette(map.taillec,joueur));
+				}
 				if (ingame) {
 					map.joueurs.get(joueur).add(map.plateau[k].unite); //on ajoute l'unité à la liste d'unités du bon joueur si on est en jeu
 				}
@@ -160,7 +169,7 @@ public class CreationMap {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
 	 */
-	int nombretotunite() {return 7;}
+	int nombretotunite() {return 10;}
 	
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
