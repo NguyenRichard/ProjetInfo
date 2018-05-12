@@ -28,7 +28,7 @@ public class Map {
 	Case selectionnemenu;
 	Image fond;
 	int nombrecaseaffichee;
-	/**Liste des joueurs avec leurs unités, batiments etc... */
+	/**Liste des joueurs avec leurs unitï¿½s, batiments etc... */
 	ArrayList<Joueur> joueurs;
 	
 
@@ -271,7 +271,7 @@ public class Map {
     }
     
     /**
-     * On retire l'unité de la liste d'unite du joueur indiqué
+     * On retire l'unite de la liste d'unite du joueur indique
      * @param unite
      * @param joueur
      */

@@ -21,6 +21,7 @@ public class AbeilleSamourai extends Unite{
 		pvmax=99;
 		pv=pvmax;
 		dmg=1;
+		type="zone1";
 	}
 		
 	public String toString() {
