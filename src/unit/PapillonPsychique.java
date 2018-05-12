@@ -18,11 +18,12 @@ public class PapillonPsychique extends Unite{
 			valable=true;
 			animcompteur = 0;
 			maxcompteur = 60;
-			portee = new int[] {1,3};
+			portee = new int[] {2,4};
 			pvmax=99;
 			pv=pvmax;
 			dmg=100;
 			cost=20;
+			type="zone2";
 		}
 			
 		public String toString() {

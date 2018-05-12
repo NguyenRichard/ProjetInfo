@@ -92,6 +92,9 @@ Image cache;
 			if (atq.animatqencours||atq.pvendiminution) {
 				atq.renderanim(gc);
 			}
+			else if (atq.animatqencoursligne) {
+				atq.renderanimligne(gc);
+			}
 			else {	map.renderanim(gc);}//animation des sprites si pas de combat
 			if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
 		         String tour = "Tour: "+this.tour;
@@ -147,6 +150,7 @@ Image cache;
 	    			case 1:
 		    				if (positioncurseur1==0) {
 		    					// gestion de l'attaque
+		    					//menu = atq.attaque(map.selectionnemenu.unite.type);
 		    					menu = atq.attaque(map.selectionnemenu.unite.type);
 		    				}
 		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {

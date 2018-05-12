@@ -22,7 +22,7 @@ public class Scarabe extends Unite {
 		pv=pvmax;
 		dmg=80;
 		cost=20;
-		
+		type="ligne";
 	}
 	
 	public String toString() {
