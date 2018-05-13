@@ -53,11 +53,11 @@ public class Main extends Application { //Nouveau test
 		          if (game.ingame) {
 			          game.update();
 			          Joueur entrainjouer = game.map.joueurs.get(game.entrainjouer);
-			          String infojoueur = "Joueur: "+entrainjouer+"; Ressources: "+entrainjouer.ressources;
+			          String infojoueur = "Joueur: "+entrainjouer+"\nRessources: "+entrainjouer.ressources;
 			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			          gc.setLineWidth(1);
 					  switch(game.entrainjouer) {
-					    	case 0: 
+					    	case 4: 
 					    			gc.setFill(Color.WHITE);
 					    			break;
 					    	case 1:

@@ -45,6 +45,7 @@ public class Portal extends Batiment {
 		images=images1;
 		maxcompteur=maxcompteur1;
 		listeinvoc = new ArrayList<Unite>();
+		uniteainvoque = null;
 		switch(typearmee) {
 			case 0:
 					listeinvoc.add(new Abeille(taille,joueur));

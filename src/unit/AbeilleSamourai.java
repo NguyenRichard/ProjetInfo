@@ -20,9 +20,9 @@ public class AbeilleSamourai extends Unite{
 		portee = new int[] {0,1};
 		pvmax=99;
 		pv=pvmax;
-		dmg=1;
+		dmg=50;
 		cost=20;
-		type="zone1";
+		type="finisher";
 	}
 		
 	public String toString() {
