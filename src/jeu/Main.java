@@ -37,10 +37,10 @@ public class Main extends Application { //Nouveau test
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 	    Jeu game = new Jeu(gc,width,height);	// Creation d'une partie
 	    CreationMap crea = new CreationMap(gc, "creamap.ser",width,height,game.ingame);	// Creation de l'editeur
-	   	Menuprinc menu = new Menuprinc(gc,game,crea,width,height); //Creation du menu
+	   	Menuprinc menu = new Menuprinc(game,crea,width,height); //Creation du menu
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";
-		menu.render();
+		menu.render(gc);
 		
 		// Pour l'instant je le mets ici mais on peut le changer de place ensuite
 		Sound sd = new Sound();
@@ -71,8 +71,8 @@ public class Main extends Application { //Nouveau test
 					    			break;
 					  }
 					    	
-			          gc.fillText(infojoueur, game.positionxmenu*1.05, 50 );
-			          gc.strokeText(infojoueur, game.positionxmenu*1.05, 50 );
+			          gc.fillText(infojoueur, game.menudroite.positionxmenu*1.05, 50 );
+			          gc.strokeText(infojoueur, game.menudroite.positionxmenu*1.05, 50 );
 			          gc.setFill(Color.BISQUE);
 			          gc.setStroke(Color.BLACK);
 		          }
@@ -86,14 +86,14 @@ public class Main extends Application { //Nouveau test
 				          gc.setStroke(Color.BLACK);
 				          gc.setLineWidth(1);
 			        	  if (menu.positioncurseur == 0) {
-			        			menu.render();
+			        			menu.render(gc);
 			        			gc.strokeText(edit, 360, 450 );
 			        			gc.fillText(edit, 360, 450 );
 						        gc.setFill(Color.YELLOW);
 			        			gc.fillText(start, 360, 400 );
 			        	  }
 			        	  else if (menu.positioncurseur == 1) {
-			        			menu.render();
+			        			menu.render(gc);
 			        			gc.fillText(start, 360, 400 );
 			        			gc.strokeText(start, 360, 400 );
 						        gc.setFill(Color.YELLOW);

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,8 +20,6 @@ public class Jeu {
 	GraphicsContext gc;
 	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour); 3 dans le menu3(invoquer)*/
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer*/
-	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
 	/**Objet contenant les methodes pour gerer l'attaque entre unites*/
@@ -34,21 +31,12 @@ public class Jeu {
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
-	/**Entier a partir du quel affiche le menu lateral droit**/
-    int positionxmenu;
-	/**Image de fond du menu lateral droit**/
-	Image menucache;
-	/**Image de fond du menu lateral droit**/
-	Image menu1;
-	/**Image de fond du menu changer tour**/
-	Image menu2;
-	/**Image du curseur pour les menu**/
-	Image curseur;
-	/**Cache des options qui ne sont plus valide */
-Image cache;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
 	boolean updatemenu;
+	/** Menu pour les invocations*/
 	Menuinvocation menuinvoc;
+	/** Menu de droite pour faire les actions: Attaquer, se deplacer, capturer et passer le tour*/
+	Menuaction menudroite;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -68,21 +56,15 @@ Image cache;
 		entrainjouer=1;
 		this.gc=gc;
 		menu=0;
-		positioncurseur1 = 0;
 		update=true;
 		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menucache = new Image("wood.jpg", width-map.taillec*map.nombrecaseaffichee,height,false,false);
-		menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
-		curseur = new Image("curseurmenu1.png",200, 320, false, false);
-		menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
-		cache = new Image("cache.png",200, 320, false, false);
-		positionxmenu = map.taillec*map.nombrecaseaffichee;
 		ingame = false;
-		menuinfo = new MenuInfo(gc,map,positionxmenu);
+		menudroite= new Menuaction(gc,map.taillec*map.nombrecaseaffichee,width,height);
+		menuinfo = new MenuInfo(map,menudroite.positionxmenu);
 		updatemenu=false;
-		menuinvoc = new Menuinvocation(gc,new Portal(75,0,0));
+		menuinvoc = new Menuinvocation(new Portal(75,0,0));
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
@@ -104,8 +86,8 @@ Image cache;
 		         gc.setStroke(Color.BLACK);
 				 map.render(gc);
 				 update=false;
-		         gc.fillText(tour, positionxmenu-120, 730);
-		         gc.strokeText(tour, positionxmenu-120, 730 );
+		         gc.fillText(tour, menudroite.positionxmenu-120, 730);
+		         gc.strokeText(tour, menudroite.positionxmenu-120, 730 );
 			}
 		
 		    if (menu==1) {
@@ -121,12 +103,12 @@ Image cache;
 		    		}
 		    		updatemenu=false;
 		    }
-		    menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
-			menuinfo.MenuInforender();
+		    menudroite.menurender(this); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+			menuinfo.MenuInforender(gc);
 		    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
 		}
 		else {
-			menuinvoc.render();
+			menuinvoc.render(gc);
 		}
 	}
 /*_Controle du clavier____________________________________________________________________________________________________________ */	
@@ -148,17 +130,17 @@ Image cache;
 	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
 	    			switch(menu) {
 	    			case 1:
-		    				if (positioncurseur1==0) {
+		    				if (menudroite.positioncurseur1==0) {
 		    					// gestion de l'attaque
 		    					//menu = atq.attaque(map.selectionnemenu.unite.type);
 		    					menu = atq.attaque(map.selectionnemenu.unite.type);
 		    				}
-		    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
+		    				else if ((menudroite.positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
 		    					// gestion de deplacement
 		    					menu = depl.deplacement();
 		    					
 		    				}
-		    				else if (positioncurseur1==2) {
+		    				else if (menudroite.positioncurseur1==2) {
 		    					// gestion de la capture
 		    					menu = capt.capture();
 		    				}
@@ -169,7 +151,7 @@ Image cache;
 			    			System.out.print(map.selectionne);
 			    			if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
 			    			else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) {menuinvoc.positioncurseur=0; menuinvoc.confirmationencours=false;menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
-			    			else {menu=2; positioncurseur1=0;};	 
+			    			else {menu=2; menudroite.positioncurseur1=0;};	 
 			    			break;
 	    			case 2:
 	    					passertour();
@@ -200,7 +182,7 @@ Image cache;
 					switch(menu) {
 					case 0: map.leftcurseur(); break;//on bouge sur la map
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-1,depl.deplist))) {
+							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-1,depl.deplist))) {
 								map.leftcurseur(); //on selectionne case pour deplacement
 							}
 							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
@@ -220,7 +202,7 @@ Image cache;
 					switch(menu) {
 					case 0: map.rightcurseur(); break;
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+1,depl.deplist))) {
+							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+1,depl.deplist))) {
 								map.rightcurseur(); //on selectionne case pour deplacement
 							}
 							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
@@ -240,9 +222,9 @@ Image cache;
 		case UP:  
 					switch(menu) {
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-50,depl.deplist))) {
+							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-50,depl.deplist))) {
 								map.upcurseur();//on selectionne case pour deplacement
-							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {upcurseur1();} //on bouge curseur du menu
+							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.upcurseur1();} //on bouge curseur du menu
 							updatemenu=true;
 							break;
 					case 0: map.upcurseur(); break;//on bouge curseur de map
@@ -257,9 +239,9 @@ Image cache;
 		case DOWN: 
 					switch(menu) {
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+50,depl.deplist))) {
+							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+50,depl.deplist))) {
 								map.downcurseur();//on selectionne case pour deplacement
-							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {downcurseur1();}//on bouge curseur du menu
+							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.downcurseur1();}//on bouge curseur du menu
 							updatemenu=true;
 							break;
 					case 0: map.downcurseur(); break;//on bouge curseur de map
@@ -276,54 +258,7 @@ Image cache;
 	    }
 		}
 	}
-/*_Affichage du menu1_____________________________________________________________________________________________________________ */	
-	/**
-	 * Affichage du menu de deplacement et d'attaque, true le montre en false le cache en recouvrant tout le coter(a adapter plus tard)
-	 * 			
-	 */	
-	void menurender() {
-		gc.drawImage(menucache, positionxmenu, 0);
-	    switch(menu) {
-	    case 1:
-				gc.drawImage(menu1, positionxmenu*1.05, 50);
-				if (map.selectionnemenu.unite.restdeplacement == 0) {
-	    			gc.drawImage(cache, positionxmenu*1.05,50+1*52);
-	    		}
-				if ((map.selectionnemenu.batiment == null)||(map.selectionnemenu.batiment.joueur == map.selectionnemenu.unite.joueur)) {
-					gc.drawImage(cache, positionxmenu*1.05,50+2*52);
-				}
-				gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
-				break;
-	    case 2:
-	    		gc.drawImage(menu2, positionxmenu*1.05, 50);
-	    		gc.drawImage(curseur, positionxmenu*1.05,50+positioncurseur1*52);
-	    		break;
 
-	    default:
-	    		break;
-		} 
-	}
-
-/*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
-	
-	void upcurseur1() {if (positioncurseur1 != 0) {positioncurseur1 -= 1;}}
-	void downcurseur1() {if (positioncurseur1 != 2){positioncurseur1 += 1;}}
-	
-	
-	/**
-	 * 
-	 * @param e
-	 * @param list
-	 * @return true si l'entier e est dans la liste list, false sinon
-	 */
-	boolean inlist(int e, int[] list) {
-		for (int i=0;i<list.length;i++) {
-			if (list[i]==e) {
-				return true;
-			}
-		} return false;
-	}
-	
 	/**
 	 * Incremente le nombre de tour, change le joueur qui est entrain de jouee et reinitialisation du booleen valable
 	 * pour pouvoir rejouer les unites.
@@ -364,12 +299,11 @@ Image cache;
 		tour = 0;
 		entrainjouer=0;
 		menu=0;
-		positioncurseur1 = 0;
 		update=true;
 		atq = new Gestionatq(map);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menuinfo = new MenuInfo(gc,map,positionxmenu);
+		menuinfo = new MenuInfo(map,menudroite.positionxmenu);
 		ingame=false;
 	}
 

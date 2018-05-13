@@ -16,8 +16,6 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Menuprinc {
-	/**Contexte graphique dans lequel on affiche le jeu */
-	GraphicsContext gc;
 	/**L'image de fond du menu*/
 	Image fond;
 	boolean inmenuprin;
@@ -27,16 +25,15 @@ public class Menuprinc {
    	boolean update;
 	
 	/* Constructeur de Menu*/
-	Menuprinc(GraphicsContext gc,Jeu game,CreationMap crea,int width, int height){
+	Menuprinc(Jeu game,CreationMap crea,int width, int height){
 		fond = new Image("InsectWorldWar.png", width, height, false, false);
-		this.gc=gc;
 		this.game=game;
 		this.crea=crea;
 		this.inmenuprin = true;
 		update = true;
 	}
 	
-	void render() {
+	void render(GraphicsContext gc) {
 		gc.drawImage(fond, 0, 0);
 		
 	}
@@ -70,7 +67,6 @@ public class Menuprinc {
 			    				game.ingame=true;
 			    				game.map.affichageEquipe();
 				    			game.map.selectionne = game.map.plateau[51];
-			    				game.map.render(gc);
 			    				game.map.joueurs.get(game.entrainjouer).actiondesbatiments();
 			    				inmenuprin=false;
 			    				
@@ -101,7 +97,6 @@ public class Menuprinc {
 			    				}
 			    			
 			    			}else {Sauvegardemap sauvegarde = new Sauvegardemap(); crea.mapcode = sauvegarde.grillemap;} // si nouveau nom on cree une nouvelle map
-			    			crea.map.render(gc);
 	        				crea.increa = true;
 	        				inmenuprin=false;
 			    		}
@@ -122,15 +117,13 @@ public class Menuprinc {
 				case Z:
 					if (game.ingame) {
 						game.fin();
-						gc.clearRect(0, 0, 1000, 600);
 						inmenuprin=true;
-						this.render();
+						this.render(game.gc);
 					}
 					if (crea.increa) {
 						crea.stop();
-						gc.clearRect(0, 0, 1000, 600);
 						inmenuprin=true;
-						this.render();
+						this.render(crea.gc);
 					}
 					update=true;
 					break;

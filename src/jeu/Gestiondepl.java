@@ -247,4 +247,18 @@ public class Gestiondepl {
 		}
 		
 	}
+
+	/**
+	 * 
+	 * @param e
+	 * @param list
+	 * @return true si l'entier e est dans la liste list, false sinon
+	 */
+	boolean inlist(int e, int[] list) {
+		for (int i=0;i<list.length;i++) {
+			if (list[i]==e) {
+				return true;
+			}
+		} return false;
+	}
 }

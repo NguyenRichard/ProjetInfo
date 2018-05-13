@@ -16,8 +16,6 @@ public class Menuinvocation {
 	Image confirmation;
 	/** Cursuer du popup confiramtion */
 	Image curseurconf;
-	/**Contexte graphique dans lequel on affiche le jeu */
-	GraphicsContext gc;
 	/** Portail ou se deroule l'invocation*/
 	Portal portail;
 	/** Position du curseur */
@@ -32,22 +30,20 @@ public class Menuinvocation {
 	int positioncurseurconf;
 	
 	
-	
-	Menuinvocation(GraphicsContext gc, Portal portail) {
+	Menuinvocation(Portal portail) {
 		
 		fond = new Image("menuinvoc/fondmenuinvoc.png", 1100, 750, false, false);
 		curseur = new Image("menuinvoc/curseurinvoc.png", 730, 75, false, false );
 		curseurconf= new Image("menuinvoc/confirmationcurseur.png", 90, 40,false,false);
 		confirmation= new Image("menuinvoc/confirmation.png",250,100,false,false);
 		this.portail = portail;
-		this.gc = gc;
 		positioncurseur = 0;
 		positionxmenu=25;
 		positionymenu=25;
 		positioncurseurconf=0;
 	}
 	
-	void render() {
+	void render(GraphicsContext gc) {
 		gc.drawImage(fond, 0, 0);
 		gc.drawImage(curseur, 10 ,25+positioncurseur*100);
         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -65,30 +61,32 @@ public class Menuinvocation {
 			portail.uniteainvoque.render(gc, 885, 660);
 		}
 		if (confirmationencours) {
-			this.renderconfirmation();
+			this.renderconfirmation(gc);
 		}
 	}
 	
+	/** Deplacement du curseur vers le bas pour la selection de l'unite a invoque*/
 	void downcurseur() {
 		positioncurseur += 1;
 		if (positioncurseur >= portail.listeinvoc.size()) {
 			positioncurseur = 0;
 		}
 	}
+	/** Deplacement du curseur vers le haut pour la selection de l'unite a invoque*/
 	void upcurseur() {
 		positioncurseur -= 1;
 		if (positioncurseur <= -1) {
 			positioncurseur = portail.listeinvoc.size()-1;
 		}
 	}
-	
+	/** Deplacement du curseur vers la droite pour confirmer la selection de l'unite*/
 	void rightcurseurconf() {
 		positioncurseurconf+=1;
 		if (positioncurseurconf>=2) {
 			positioncurseurconf=0;
 		}
 	}
-	
+	/** Deplacement du curseur vers la gauche pour confirmer la selection de l'unite*/
 	void leftcurseurconf() {
 		positioncurseurconf-=1;
 		if (positioncurseurconf<=-1) {
@@ -96,7 +94,8 @@ public class Menuinvocation {
 		}
 	}
 	
-	void renderconfirmation() {
+	/** Render du popup de confirmation*/
+	void renderconfirmation(GraphicsContext gc) {
 		gc.drawImage(confirmation, 350, 350);
 		if(positioncurseurconf==0) {
 			gc.drawImage(curseurconf, 360, 400);
@@ -106,6 +105,7 @@ public class Menuinvocation {
 		}
 	}
 	
+	/** Change l'unite a invoque si le coût des ressources est suffisant*/
 	void changeinvoque(Joueur joueur) {
 		Unite unite = portail.listeinvoc.get(positioncurseur);
 		if ( 0 <= joueur.ressources-unite.cost ) {

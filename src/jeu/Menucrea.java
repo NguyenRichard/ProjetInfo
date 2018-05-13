@@ -29,14 +29,13 @@ public class Menucrea {
 	int numjoueur;
 	/**Tableau d'element permettant de faire le lien entre le code de l'element et le type de terrain */
 	ArrayList<Terrain> referencecodeterrain;
-	GraphicsContext gc;
 	Case visualisation;
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
     /**Cache les options qui ne sont pas valide */
 	Image cache;
 	
-	Menucrea(GraphicsContext gc,ArrayList<Terrain> referencecodeterrain, Case visu,int positionxmenu){
+	Menucrea(ArrayList<Terrain> referencecodeterrain, Case visu,int positionxmenu){
 		fond = new Image("menucrea.png", 200, 320, false, false);
 		curseur = new Image("curseurmenu1.png",200, 320, false, false);
 		this.positionxmenu=positionxmenu+50;
@@ -47,11 +46,10 @@ public class Menucrea {
 		numjoueur=0;
 		visualisation = visu;
 		this.referencecodeterrain = referencecodeterrain;
-		this.gc = gc;
 		cache = new Image("cache.png",200, 320, false, false);
 	}
 	
-	void render() {
+	void render(GraphicsContext gc) {
 		gc.drawImage(fond, positionxmenu, 50);
 		//affichage du numjoueur
 		String txt = "joueur : " + numjoueur;

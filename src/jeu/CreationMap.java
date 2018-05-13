@@ -59,7 +59,7 @@ public class CreationMap {
 		menucache = new Image("wood.jpg",width-map.taillec*map.nombrecaseaffichee,height,false,false);
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
-		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500],positionxmenu);
+		menucrea= new Menucrea(referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		map.affichageEquipe();
 		update=true;
@@ -214,7 +214,7 @@ public class CreationMap {
 			update=false;
 		}
 		gc.drawImage(menucache, positionxmenu, 0);
-		menucrea.render();
+		menucrea.render(gc);
 	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
 		
 	}
@@ -337,7 +337,7 @@ public class CreationMap {
 	void stop() {
 		increa = false;
 		map.selectionne = map.plateau[51];
-		menucrea= new Menucrea(gc,referencecodeterrain,map.plateau[2500],positionxmenu);
+		menucrea= new Menucrea(referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		update=true;
 	}

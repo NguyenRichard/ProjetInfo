@@ -9,8 +9,6 @@ import javafx.scene.text.FontWeight;
 
 
 public class MenuInfo {
-	/**Contexte graphique dans lequel on affiche le jeu */
-	GraphicsContext gc;
 	/**Carte du jeu */
 	Map map;
 	/**Image */
@@ -18,14 +16,13 @@ public class MenuInfo {
 	int positionxmenuinfo;
 	int positionymenuinfo;
 	
-	MenuInfo(GraphicsContext gc, Map map, int positionxmenu) {
-		this.gc = gc;
+	MenuInfo(Map map, int positionxmenu) {
 		this.map = map;
 		this.positionxmenuinfo=positionxmenu+10;
 		positionymenuinfo=500;
 	}
 	
-	void MenuInforender() {
+	void MenuInforender(GraphicsContext gc) {
 		Case selectionne = map.selectionne;
 		if (selectionne != null) {
 		if (selectionne.unite!=null) {
