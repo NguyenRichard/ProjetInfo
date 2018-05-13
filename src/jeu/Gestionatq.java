@@ -57,7 +57,7 @@ public class Gestionatq {
 		rang=0;
 	}
 	
-	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux */
+	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux et reset attaque si finisher */
 	void prisedegat() {
 		map.selectionne.unite.pv--;
 
@@ -65,6 +65,11 @@ public class Gestionatq {
 	    	map.joueurs.get(map.selectionne.unite.joueur).remove(map.selectionne.unite); //on enleve l'unite de la liste d'unite du joueur
 	    	map.selectionne.unite=null;
 	    	pvendiminution = false;
+			if 	(map.selectionnemenu.unite.type.compareTo("finisher")== 0) {
+				map.selectionnemenu.unite.valable=true;
+				Sound sd = new Sound();
+				sd.runSoundrefresh();
+			}
 		}
 	}
 	
@@ -75,14 +80,8 @@ public class Gestionatq {
 	 */
 	int attaque(String type) {
 		if(attaqueencours) {
-			if (map.selectionne!=map.selectionnemenu) {
-				if ((type==null)){
-					// Son d'attaque
-					Sound sd = new Sound();
-					sd.runSoundattack();
-					animatqencours=true;
-				}
-				else if (type.compareTo("ligne")==0) { // Ajouter condition attaque en ligne
+			if (map.selectionne!=map.selectionnemenu) { 
+				if (type.compareTo("ligne")==0) { // Ajouter condition attaque en ligne
 						rang = map.selectionnemenu.rang;
 						portee = map.selectionnemenu.unite.portee[1];
 						porteemin = map.selectionnemenu.unite.portee[0];
@@ -112,22 +111,30 @@ public class Gestionatq {
 					sd.runSoundheal();
 					animatqencours=true;
 				}
+				else { //cas par defaut
+					//Son d'attaque
+					Sound sd = new Sound();
+					sd.runSoundattack();
+					animatqencours=true;
+				}
+				map.selectionnemenu.unite.valable=false; //apres l'attaque l'unite n'est plus valable
 			}
-			attaqueencours=false;
-			return 0;
+		attaqueencours=false;
+		return 0;
 		}
 		else {
-			if ((type==null)||(type.compareTo("ligne")!= 0)) {
+			if ((type.compareTo("soldat")==0)||(type.compareTo("ligne")!= 0)) {
 				listcaseaportee(); //liste pour l'affichage de l'attaque
 			} else if (type.compareTo("ligne")== 0) {
 				listcaseaporteeligne(); //liste pour l'affichage de l'attaque
 			}
-			listennemiaportee(); //liste pour la selection des adversaires
-			attaqueencours=true;
-			if(atqenemi.size()!=0) {map.selectionne = atqenemi.get(0);}
-			map.adaptaffichage(map.selectionne.rang); //si il y a un ennemi on le selectionne et on adapte l'affichage
-			return 1;
-			}
+		listennemiaportee(); //liste pour la selection des adversaires
+		attaqueencours=true;
+		if(atqenemi.size()!=0) {map.selectionne = atqenemi.get(0);}
+		map.adaptaffichage(map.selectionne.rang); //si il y a un ennemi on le selectionne et on adapte l'affichage
+		return 1;
+		}
+	
 	}
 
 	/**
@@ -212,7 +219,7 @@ public class Gestionatq {
 		atqenemi = new 	ArrayList<Case>();
 		for(Case cible: atqlist) {
 			if (cible.unite != null) {
-				if ((cible.unite.joueur==map.selectionnemenu.unite.joueur)&&((map.selectionnemenu.unite.type!=null)&&(map.selectionnemenu.unite.type.compareTo("healer")== 0)))
+				if ((cible.unite.joueur==map.selectionnemenu.unite.joueur)&&(map.selectionnemenu.unite.type.compareTo("healer")== 0))
 					atqenemi.add(cible);
 				else if (cible.unite.joueur!=map.selectionnemenu.unite.joueur) {
 					atqenemi.add(cible);
@@ -229,16 +236,17 @@ public class Gestionatq {
 		 if (map.selectionne.unite == null) {
 			 return false;
 		 }
-		 else if ((map.selectionne.unite.type == null)||(map.selectionne.unite.type.compareTo("healer") != 0)) { //cas pour les unites sans types
+		 else if (map.selectionne.unite.type.compareTo("healer") != 0) { //cas general (non healer)
 			 if (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) ){ 
 				return false;
 			}
 		 }
 		 else if (map.selectionne.unite.type.compareTo("healer") == 0){ //si l'unite est un healer il faut cibler les allies et non les ennemis
-			 	if (carre.unite != null && (map.selectionne.unite.joueur != carre.unite.joueur) ){
-					return false;
-				}
-			 }
+			 if (carre.unite != null && (map.selectionne.unite.joueur != carre.unite.joueur) ){
+				return false;
+			}
+		}
+		
 		return (! (carre.terrain instanceof Void)); //Pour pour enlever le vide
 	}
 
@@ -263,10 +271,10 @@ public class Gestionatq {
 		for(Case cible: atqlist) {
 			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-			if ((map.selectionnemenu.unite.type!=null)&&(map.selectionnemenu.unite.type.compareTo("zone1")==0)) {
+			if (map.selectionnemenu.unite.type.compareTo("zone1")==0) {
 				if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) 
 				{jeu.gc.drawImage(viseurzone1, x-map.taillec, y-map.taillec);}
-			} else if ((map.selectionnemenu.unite.type!=null)&&(map.selectionnemenu.unite.type.compareTo("zone2")==0)) {
+			} else if (map.selectionnemenu.unite.type.compareTo("zone2")==0) {
 				if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) 
 				{jeu.gc.drawImage(viseurzone2, x-map.taillec*2, y-map.taillec*2);}
 			} else {
@@ -416,15 +424,15 @@ public class Gestionatq {
 	void animdegat(String type, GraphicsContext gc) {
 		int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
 		int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
-		if ((type==null)||(type.compareTo("healer")!= 0)){ //cas ou le type n'est pas healer, a changer si animation differente pour d'autres types que healer
+		if (type.compareTo("healer")!= 0){ //cas ou le type n'est pas healer, a changer si animation differente pour d'autres types que healer
 			if (animatq<4) {gc.drawImage(Im_deg, x+(map.taillec/2), y);}
 			else if(animatq<8) {gc.drawImage(Im_deg, x, y+(map.taillec/2));}
 			else if(animatq<12) {gc.drawImage(Im_deg, x, y);}
 			else if(animatq<16) {gc.drawImage(Im_deg, x+(map.taillec/2), y+(map.taillec/2));}
 			else if (animatq<30) {gc.drawImage(Im_deg, x, y, map.taillec, map.taillec);;}
 		}
-		else if (type.compareTo("healer")== 0) { //cas ou le type est un healer
-			if (animatq<4) {gc.drawImage(Im_hea, x+(map.taillec/2), y);}
+		else if (type.compareTo("healer")== 0) { //cas ou le type est un healer. je laisse la condition a verifier au cas ou 
+			if (animatq<4) {gc.drawImage(Im_hea, x+(map.taillec/2), y);} //on fait le choix de mettre d'autres animations pour des autres types d'unites que healer
 			else if(animatq<8) {gc.drawImage(Im_hea, x, y+(map.taillec/2));}
 			else if(animatq<12) {gc.drawImage(Im_hea, x, y);}
 			else if(animatq<16) {gc.drawImage(Im_hea, x+(map.taillec/2), y+(map.taillec/2));}
@@ -445,7 +453,7 @@ public class Gestionatq {
 			}
 	  	  	if(animatq<30) {animatq++;}
 	  	  	else {
-	  	  		//On enlève les pv :
+	  	  		//On enleve les pv :
 	  	  		animatqencoursligne=false;
 	  	  		for (int i = 0;i<list.length;i++) {
 	  	  			if (list[i]!=0) {
@@ -463,7 +471,6 @@ public class Gestionatq {
 	  	  	map.render(gc);
 	  	  	}		
 	    }
-		map.selectionnemenu.unite.valable=false; //apres l'animation d'attaque l'unite n'est plus valable
 		
 	    
 	}
@@ -494,7 +501,6 @@ public class Gestionatq {
 		  	  		pvendiminution=false;
 		  	  	}
 	    	}
-			map.selectionnemenu.unite.valable=false; //apres l'animation d'attaque l'unite n'est plus valable
 	  	  	map.render(gc);
 	    }
 	}

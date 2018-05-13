@@ -35,6 +35,7 @@ public abstract class Unite extends Element implements Cloneable{
 	protected Unite(int taille){
 		super(taille);
 		valable=false;
+		type = "soldat";
 	}
 	public abstract String toString() ;
 	
