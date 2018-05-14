@@ -297,7 +297,7 @@ public class Jeu {
 			map.joueurs.add(new Joueur("sansnom")); 
 		}
 		tour = 0;
-		entrainjouer=0;
+		entrainjouer=1;
 		menu=0;
 		update=true;
 		atq = new Gestionatq(map);
