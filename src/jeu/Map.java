@@ -45,7 +45,7 @@ public class Map {
 	Map(){
 		taillec=75;
 		nombrecaseaffichee = 10;
-		fond = new Image("nuage.jpg",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
+		fond = new Image("ciel.png",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
 		Case[] plateau = new Case[2501];
 		rangcorner=0;
 		for (int k = 0; k < plateau.length; k++) {
@@ -278,6 +278,29 @@ public class Map {
     void delunite(Unite unite,int joueur) {
 	    joueurs.get(joueur).remove(unite);
     }
+    void delbatiment(Case casebatiment,int joueur) {
+    	joueurs.get(joueur).remove(casebatiment);
+    }
+
+	public void perdu(int joueur) {
+			System.out.println(joueur+" a perdu !");
+			Joueur perdant = joueurs.get(joueur);
+			int i = 0;
+            while( i<2500 && perdant.possedeunite()) {
+                if((plateau[i].unite != null)&&(plateau[i].unite.joueur == joueur)) {
+                    delunite(plateau[i].unite,joueur);
+                    plateau[i].unite = null;
+                }
+                i++;
+            }
+			while(perdant.possedebatiment()) {
+				Case casebatiment = perdant.possessions.get(perdant.possessions.size()-1);
+				casebatiment.batiment=null;
+				perdant.possessions.remove(perdant.possessions.size()-1);
+			}
+			perdant.isalive=false;
+			
+	}
 	   
 }
 

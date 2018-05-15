@@ -52,8 +52,8 @@ public class Menuinvocation {
 		for (Unite cur : portail.listeinvoc) {
 			cur.render(gc, positionxmenu, positionymenu+compteur);
 			gc.setFill(Color.WHITE);
-	        gc.fillText(cur.toString()+"   Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
-	        gc.strokeText(cur.toString()+"   Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
+	        gc.fillText(cur.toString()+" -  Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
+	        gc.strokeText(cur.toString()+" -  Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
 			compteur+=100;
 		}
 		portail.render(gc, 885, 660);

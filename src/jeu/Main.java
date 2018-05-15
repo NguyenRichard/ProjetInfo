@@ -71,15 +71,15 @@ public class Main extends Application { //Nouveau test
 					    			break;
 					  }
 					    	
-			          gc.fillText(infojoueur, game.menudroite.positionxmenu*1.05, 50 );
-			          gc.strokeText(infojoueur, game.menudroite.positionxmenu*1.05, 50 );
+			          gc.fillText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
+			          gc.strokeText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
 			          gc.setFill(Color.BISQUE);
 			          gc.setStroke(Color.BLACK);
 		          }
 		          if (crea.increa) {
 		        	  crea.update();
 		          }
-		          if (menu.inmenuprin) {
+		          if (!(menu.game.ingame || menu.crea.increa)) {
 		        	  if (menu.update) {
 				          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
 				          gc.setFill(Color.WHITE);
@@ -113,20 +113,25 @@ public class Main extends Application { //Nouveau test
 	    			if (game.ingame) {
 	    				try {
 							game.touch(e.getCode());
+		    				game.update=true;
 						} catch (CloneNotSupportedException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 	    			}
-	    			if (crea.increa) {
+	    			else if (crea.increa) {
 	    				crea.touch(e.getCode());
+	    				crea.update=true;
 	    			}
-	        		try {
-						menu.touch(e.getCode());
-					} catch (CloneNotSupportedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+	    			else {
+		        		try {
+							menu.touch(e.getCode());
+							menu.update=true;
+						} catch (CloneNotSupportedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}	    				
+	    			}
 	        	
 	        }
 	    });

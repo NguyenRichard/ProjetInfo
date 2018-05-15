@@ -24,8 +24,8 @@ public class Menuaction {
 	
 	Menuaction(GraphicsContext gc, int positionxmenu,int width, int height){
 		this.positionxmenu=positionxmenu;
-		positionymenu= 90;
-		menucache = new Image("wood.jpg", width-positionxmenu,height,false,false);
+		positionymenu= 110;
+		menucache = new Image("fondmenu.png", width-positionxmenu,height,false,false);
 		menu1attaque = new Image("menu1attaque(10x16).png", 200, 320, false, false);
 		menu1soin = new Image("menu1soin(10x16).png", 200, 320, false, false);
 		curseur = new Image("curseurmenu1.png",200, 320, false, false);

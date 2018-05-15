@@ -12,8 +12,8 @@ import javafx.scene.text.FontWeight;
 public class Joueur {
 	private String name;
 	boolean isalive;
-	private ArrayList<Unite> armee;
-	private ArrayList<Case> possessions;
+	public ArrayList<Unite> armee;
+	public ArrayList<Case> possessions;
 	int ressources;
 	int typearmee;
 	
@@ -55,6 +55,11 @@ public class Joueur {
 	 * retourne vrai si le joueur possede au moins une unite
 	 */
 	boolean possedeunite() {return !(armee.isEmpty());}
+	
+	/**
+	 * retourne vrai si le joueur possede au moins un batiment
+	 */
+	boolean possedebatiment() {return !(possessions.isEmpty());}
 	
 	void rendreValable() {
 		for (Unite unite : armee) {

@@ -35,6 +35,7 @@ public class CreationMap {
 	int[] mapcode;
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
+    Menuoption menuoption;
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -56,13 +57,14 @@ public class CreationMap {
 		this.namesave = txt;
 		positionxmenu=map.taillec*map.nombrecaseaffichee;
 		increa = false;
-		menucache = new Image("wood.jpg",width-map.taillec*map.nombrecaseaffichee,height,false,false);
+		menucache = new Image("fondmenu.png",width-map.taillec*map.nombrecaseaffichee,height,false,false);
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
 		menucrea= new Menucrea(referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		map.affichageEquipe();
 		update=true;
+		menuoption = new Menuoption(1,width,height);
 		
 	}
 	
@@ -208,15 +210,21 @@ public class CreationMap {
 	/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
 	void update() {
-		map.renderanim(gc); //animation des sprites
-		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
-			map.render(gc);
-			update=false;
+		if(!menuoption.inmenuop) {
+			map.renderanim(gc); //animation des sprites
+			if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
+				map.render(gc);
+				update=false;
+			}
+			gc.drawImage(menucache, positionxmenu, 0);
+			menucrea.render(gc);
+		    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image	
 		}
-		gc.drawImage(menucache, positionxmenu, 0);
-		menucrea.render(gc);
-	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
-		
+		else {
+			if(menuoption.update) {
+				menuoption.render(gc);
+			}
+		}
 	}
 	
 	void actualiservisu() {
@@ -244,19 +252,44 @@ public class CreationMap {
 	    switch(code) {
 	    case A:
 	    	if(!menucrea.choix) {
-		    	int codeS = menucrea.codesave;
-		    	if (menucrea.choixtype == 0) {
-		    		remaketerrain(map.selectionne.rang,codeS,map);
-		    		
-		    	}
-		    	else if ((menucrea.choixtype == 2)&&(map.selectionne.batiment == null)&&!(map.selectionne.terrain instanceof Void)) {remakebatiment(map.selectionne.rang,codeS,map,false);}
-		    	else if ((menucrea.choixtype == 1)&&(map.selectionne.unite == null)&&!(map.selectionne.terrain instanceof Void)) {remakeunite(map.selectionne.rang,codeS,map,false);}
+	    		if(menuoption.inmenuop) {
+	    			switch(menuoption.positioncurseur) {
+	    			case 0:
+	    				menuoption.inmenuop=false;
+	    				break;
+	    			case 2:
+	    				try {
+	    					FileOutputStream fos = new FileOutputStream("creamap.ser"); // nom du fichier contenant la sauvegarde
+	    					Sauvegardemap sauvegarde = new Sauvegardemap();
+	    					sauvegarde.grillemap = mapcode;
+	    					ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    					oos.writeObject(sauvegarde);
+	    					oos.close();
+	    					} catch (FileNotFoundException e) {
+	    						e.printStackTrace();
+	    					} catch (IOException e) {
+	    						e.printStackTrace();
+	    					}
+	    				break;
+	    			case 3:
+	    				stop();
+	    				break;
+	    			}
+	    			menuoption.inmenuop=false;
+	    		}
+	    		else {
+			    	int codeS = menucrea.codesave;
+			    	if (menucrea.choixtype == 0) {
+			    		remaketerrain(map.selectionne.rang,codeS,map);
+			    		
+			    	}
+			    	else if ((menucrea.choixtype == 2)&&(map.selectionne.batiment == null)&&!(map.selectionne.terrain instanceof Void)) {remakebatiment(map.selectionne.rang,codeS,map,false);}
+			    	else if ((menucrea.choixtype == 1)&&(map.selectionne.unite == null)&&!(map.selectionne.terrain instanceof Void)) {remakeunite(map.selectionne.rang,codeS,map,false);}
+	    		}
 	    	}
-		    update=true;
 	   		break;
 	    case B: 
     		menucrea.choix=!menucrea.choix;
-    		update=true;
     		break; 
 	    case R :
 	    	if(!menucrea.choix) {
@@ -280,53 +313,59 @@ public class CreationMap {
 		    		}
 		    	}
 	    	}
-		    update=true; 
 		    break;
 		case LEFT: 
-			if (menucrea.choix) {
-				menucrea.leftcurseur(nombretotunite(),nombretotbatiment());
-				actualiservisu();
-				
+			if(!menuoption.inmenuop) {
+				if (menucrea.choix) {
+					menucrea.leftcurseur(nombretotunite(),nombretotbatiment());
+					actualiservisu();
+					
+				}
+				else {map.leftcurseur();}
 			}
-			else {map.leftcurseur();}
-			update=true; 
 			break;
 		case RIGHT: 
-			if (menucrea.choix) {
-				menucrea.rightcurseur(nombretotunite(),nombretotbatiment());
-				actualiservisu();
+			if(!menuoption.inmenuop) {
+				if (menucrea.choix) {
+					menucrea.rightcurseur(nombretotunite(),nombretotbatiment());
+					actualiservisu();
+				}
+				else {map.rightcurseur();}
 			}
-			else {map.rightcurseur();}
-			update=true;
 			break;
 		case UP:
-			if (menucrea.choix) { //si on est en train de choisir l'element
-				menucrea.upcurseur();
+			if(menuoption.inmenuop) {
+				menuoption.upcurseur();
+				menuoption.update=true;
 			}
-			else {map.upcurseur();}
-			update=true;
+			else {
+				if (menucrea.choix) { //si on est en train de choisir l'element
+					menucrea.upcurseur();
+				}
+				else {map.upcurseur();}
+			}
 			break;
 		case DOWN:
-			if (menucrea.choix) { //si on est en train de choisir l'element
-				menucrea.downcurseur();
+			if(menuoption.inmenuop) {
+				menuoption.downcurseur();
+				menuoption.update=true;
 			}
-			else {map.downcurseur();}
-			update=true;
+			else {
+				if (menucrea.choix) { //si on est en train de choisir l'element
+					menucrea.downcurseur();
+				}
+				else {map.downcurseur();}
+			}
+			
 			break;
 		case ENTER:
-			// on cree l'objet
-			try {
-				FileOutputStream fos = new FileOutputStream("creamap.ser"); // nom du fichier contenant la sauvegarde
-				Sauvegardemap sauvegarde = new Sauvegardemap();
-				sauvegarde.grillemap = mapcode;
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(sauvegarde);
-				oos.close();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			if (!menucrea.choix) {
+				menuoption.inmenuop=true;
+				menuoption.positioncurseur=0;
+				menuoption.update=true;
+			}
+			break;		
+
 				
 		default:
     		break;
