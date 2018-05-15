@@ -6,8 +6,7 @@ import jeu.Batiment;
 public class Crystal extends Batiment{
 	
 	public Crystal(int taille, int joueur){
-		super(taille);
-		this.joueur = joueur;
+		super(taille,joueur);
 		pv = 100;
 		images = new Image[5];
 		for (int k = 0; k < images.length; k++ ) {

@@ -6,8 +6,7 @@ import jeu.Unite;
 public class EpeisteVolant extends Unite {
 	
 	public EpeisteVolant(int taille, int joueur) {
-		super(taille);
-		this.joueur = joueur; 
+		super(taille,joueur);
 		images = new Image[3];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;

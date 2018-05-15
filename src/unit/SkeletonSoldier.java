@@ -5,8 +5,7 @@ import jeu.Unite;
 public class SkeletonSoldier extends Unite{
 
 	public SkeletonSoldier(int taille, int joueur) {
-			super(taille);
-			this.joueur = joueur;
+			super(taille,joueur);
 			images = new Image[6];
 			for (int k = 0; k < images.length; k++ ) {
 				images[k] = new Image("Skeleton_Soldier/Skeleton_Soldier_"+k+".png",taille, taille,false,false);

@@ -6,8 +6,7 @@ import jeu.Unite;
 public class AbeilleSamourai extends Unite{
 
 	public AbeilleSamourai(int taille, int joueur) {
-		super(taille);
-		this.joueur = joueur; 
+		super(taille,joueur);
 		images = new Image[6];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;

@@ -65,6 +65,10 @@ public class Gestionatq {
 	    	map.joueurs.get(map.selectionne.unite.joueur).remove(map.selectionne.unite); //on enleve l'unite de la liste d'unite du joueur
 	    	map.selectionne.unite=null;
 	    	pvendiminution = false;
+	    	if(map.selectionne.batiment!=null && map.selectionne.batiment.entraincapture) {
+	    		map.selectionne.batiment.pv=100;
+	    		map.selectionne.batiment.entraincapture=false;
+	    	}
 			if 	(map.selectionnemenu.unite.type.compareTo("finisher")== 0) {
 				map.selectionnemenu.unite.valable=true;
 				Sound sd = new Sound();

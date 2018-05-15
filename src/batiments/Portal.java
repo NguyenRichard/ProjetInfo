@@ -11,7 +11,6 @@ public class Portal extends Batiment {
 	
 	public ArrayList<Unite> listeinvoc;
 	public Unite uniteainvoque;
-	int taille;
 	public Image[] images1;
 	public Image[] images2;
 	public int maxcompteur1;
@@ -19,9 +18,7 @@ public class Portal extends Batiment {
 	
 	
 	public Portal(int taille, int joueur,int typearmee){
-		super(taille);
-		this.taille=taille;
-		this.joueur = joueur;
+		super(taille,joueur);
 		pv = 100;
 		images1 = new Image[7];
 		for (int k = 0; k < images1.length; k++ ) {

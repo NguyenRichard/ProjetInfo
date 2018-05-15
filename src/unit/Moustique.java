@@ -6,8 +6,7 @@ import jeu.Unite;
 public class Moustique extends Unite{
 
 	public Moustique(int taille, int joueur) {
-		super(taille);
-		this.joueur = joueur;
+		super(taille,joueur);
 		images = new Image[10];
 		for (int k = 0; k < images.length; k++ ) {
 			int l = k+1;

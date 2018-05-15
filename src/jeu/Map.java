@@ -2,14 +2,31 @@
 package jeu;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import batiments.Crystal;
+import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import terrain.Marais;
 import terrain.Terre;
+import terrain.Void;
 import unit.Abeille;
 import unit.AbeilleSamourai;
+import unit.ArcherSquelette;
+import unit.EpeisteVolant;
+import unit.Fourmis;
+import unit.Moustique;
 import unit.PapillonPsychique;
 import unit.Scarabe;
+import unit.SkeletonSoldier;
+import unit.TankSquelette;
 
 
 
@@ -30,6 +47,8 @@ public class Map {
 	int nombrecaseaffichee;
 	/**Liste des joueurs avec leurs unitï¿½s, batiments etc... */
 	ArrayList<Joueur> joueurs;
+	/**Tableau d'element permettant de faire le lien entre le code de l'element et le type de terrain */
+	ArrayList<Terrain> referencecodeterrain;
 	
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -43,7 +62,16 @@ public class Map {
 	 *- (xcurseur ,ycurseur): initialises a (0,0)
 	 */	
 	Map(){
+		
 		taillec=75;
+		
+	/*~~~~~~TABLE REFERENCE CODE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+		referencecodeterrain = new ArrayList<Terrain>();
+		referencecodeterrain.add(new Void(taillec)); //permet de faire le lien entre code et element
+		referencecodeterrain.add(new Terre(taillec)); // /!\laisser void en premier !
+		referencecodeterrain.add(new Marais(taillec));
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+		
 		nombrecaseaffichee = 10;
 		fond = new Image("ciel.png",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
 		Case[] plateau = new Case[2501];
@@ -300,6 +328,171 @@ public class Map {
 			}
 			perdant.isalive=false;
 			
+	}
+
+	/**gestion de la creation d'un joueur si le code du rang k contient un numero
+	 * de joueur encore non rencontre
+	 * IL FAUT TOUJOURS LE FAIRE AVANT remakeunite et remaketerrain !
+	 * @param k TODO
+	 * @param codeS TODO
+	 * @param creationMap TODO
+	 */
+	void remakejoueur(int k, int codeS) {
+		int joueurunite = (codeS/(50*50))%50;
+		if ((!(joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+			joueurs.get(joueurunite).isalive = true;
+			Scanner saisieUtilisateur = new Scanner(System.in); 
+			System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
+			String str = saisieUtilisateur.next();
+			joueurs.get(joueurunite).changename(str);
+			System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :");
+			joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
+		}
+		int joueurbatiment = (codeS/(50*50*50*50))%50;
+		if ((!(joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+			joueurs.get(joueurbatiment).isalive = true;
+			Scanner saisieUtilisateur = new Scanner(System.in); 
+			System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
+			String str = saisieUtilisateur.next();
+			joueurs.get(joueurbatiment).changename(str);
+			System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :");
+			joueurs.get(joueurbatiment).typearmee=saisieUtilisateur.nextInt();
+		}
+	}
+	
+	/**ajoute le terrain correspondant au bon code au rang k
+	 * @param k
+	 */
+	int remaketerrain(int k, int codeS) {
+		plateau[k].terrain = referencecodeterrain.get(0); //le vide par défaut
+		for (int j =1; j<referencecodeterrain.size();j++) {
+			if (codeS%50 == j){
+				this.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
+
+			return j; //on aura une seule correspondance, pas besoin de faire plus de tests
+			}
+
+		}
+		return 0;
+	}
+
+	/**ajoute l'unite correspondant au bon code au rang k
+	 * @param k
+	 * @param codeS TODO
+	 * @param creationMap TODO
+	 * @param ingame TODO
+	 */
+	void remakeunite(int k, int codeS, boolean startgame) {
+		int codeunite = (codeS/50)%50;
+		int joueur = (codeS/(50*50))%50;
+		
+		/*~~~~~~Partie a mettre a jour quand on ajoute des types d'unitees !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+			if (codeunite == 0) {
+				plateau[k].unite = null;
+			}
+			else {
+				if (codeunite == 1) {
+					addunite(k, new AbeilleSamourai(taillec,joueur)); //on ajoute l'unite sur la map
+				}
+				else if (codeunite == 2) {
+					addunite(k, new PapillonPsychique(taillec,joueur));
+					}
+				else if (codeunite == 3) {
+					addunite(k, new Scarabe(taillec,joueur));
+					}
+				else if (codeunite == 4) {
+					addunite(k, new Abeille(taillec,joueur));
+					}
+				else if (codeunite == 5) {
+					addunite(k, new Fourmis(taillec,joueur));
+				}
+				else if (codeunite == 6) {
+					addunite(k, new Moustique(taillec,joueur));
+				}
+				else if (codeunite == 7) {
+					addunite(k,new EpeisteVolant(taillec,joueur));
+				}
+				else if (codeunite == 8) {
+					addunite(k,new TankSquelette(taillec,joueur));
+				}
+				else if (codeunite == 9) {
+					addunite(k,new SkeletonSoldier(taillec,joueur));
+				}
+				else if (codeunite == 10) {
+					addunite(k,new ArcherSquelette(taillec,joueur));
+				}
+				if (startgame) {
+					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unité à la liste d'unités du bon joueur si on est en jeu
+				}
+			}
+			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+
+		}
+
+	/**
+	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
+	 */
+	int nombretotunite() {return 10;}
+
+	/**ajoute le batiment correspondant au bon code au rang k
+	 * @param k
+	 * @param codeS TODO
+	 * @param creationMap TODO
+	 * @param ingame TODO
+	 */
+	void remakebatiment(int k, int codeS, boolean startgame) {
+		int codebatiment = (codeS/(50*50*50))%50;
+		int joueur = (codeS/(50*50*50*50))%50;
+		if (codebatiment !=0) {
+		/*~~~~~~Partie a mettre a jour quand on ajoute des types de batiments !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+			if (codebatiment == 1) {
+				plateau[k].batiment = new Portal(taillec,joueur,joueurs.get(joueur).typearmee);
+				}
+			else if (codebatiment == 2) {
+				plateau[k].batiment = new Crystal(taillec,joueur);
+			}
+	
+		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
+			if (startgame&&(joueur != 0)) {
+				joueurs.get(joueur).add(plateau[k]); //on ajoute le batiment à la liste d'unités du bon joueur si on est en jeu et que le batiment n'est pas neutre
+			}
+		}
+		else {
+			plateau[k].batiment = null;
+		}
+	}
+
+	/**
+	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE DE BATIMENT
+	 */
+	int nombretotbatiment() {return 2;}
+
+	int[] remakemap(File f,boolean startgame) {
+		try { // si la sauvegarde existe on reconstruit la map a l'aide du code
+			FileInputStream fis = new FileInputStream(f.getName());
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Sauvegardemap sauvegarde = (Sauvegardemap) ois.readObject();
+			int[] mapcode = sauvegarde.grillemap;
+			for(int k=0; k<2500; k++) {
+				int codeS = mapcode[k];
+				if(startgame) {
+					remakejoueur(k,codeS);
+				}
+				remaketerrain(k,codeS);
+				remakebatiment(k,codeS,startgame);
+				remakeunite(k,codeS,startgame);
+
+			}
+			ois.close();
+			return mapcode;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	   
 }

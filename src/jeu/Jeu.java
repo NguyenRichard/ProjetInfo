@@ -368,6 +368,7 @@ public class Jeu {
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		ingame=false;
+		map.selectionne=map.plateau[51];
 	}
 
 }

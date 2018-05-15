@@ -5,8 +5,7 @@ import jeu.Unite;
 public class TankSquelette extends Unite{
 
 	public TankSquelette(int taille, int joueur) {
-			super(taille);
-			this.joueur = joueur;
+			super(taille,joueur);
 			images = new Image[6];
 			for (int k = 0; k < images.length; k++ ) {
 				images[k] = new Image("Tank_Squelette/Tank_Squelette_"+k+".png",taille, taille,false,false);

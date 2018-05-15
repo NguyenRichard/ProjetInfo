@@ -9,7 +9,7 @@ public abstract class Element {
 	/**Nom de l'image du terrain */
 	protected Image[] images;
 	/**Taille d'un element */
-	int taille;
+	protected int taille;
 	/**Compteur des sprites qui s'affichent**/
 	protected int animcompteur;
 	/**Compteur maximal de sprite (si il est grand alors l'animation est lente et si il est petit l'animation est rapide */
@@ -54,16 +54,11 @@ public abstract class Element {
 			}
 			if (this instanceof Batiment) {
 				Batiment bat = (Batiment)this;
-				String txt = "cerclejoueur/cerclejoueur" + bat.joueur+".png";
-				Image cercle = new Image(txt,taille, taille,false,false);
-				gc.drawImage(cercle, x, y);
+				gc.drawImage(bat.cercle, x, y);
 			}
 			else if (this instanceof Unite) {
 				Unite uni = (Unite)this;
-				String txt = "cerclejoueur/cerclejoueur" + uni.joueur+".png";
-
-				Image cercle = new Image(txt,taille, taille,false,false);
-				gc.drawImage(cercle, x, y);
+				gc.drawImage(uni.cercle, x, y);
 			}
 			Image sprite = images[k];
 			gc.drawImage(sprite, x, y);

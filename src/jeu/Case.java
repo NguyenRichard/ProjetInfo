@@ -1,6 +1,7 @@
 package jeu;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import terrain.Void;
 
 public class Case {
@@ -13,6 +14,7 @@ public class Case {
 	/**Rang de la case, sert a la localiser par rapport a map */
 	int rang;
 	int taillec;
+
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -31,6 +33,10 @@ public class Case {
 	 * 			
 	 */
 	Case(int taillec, int rang){
+		
+		
+		
+		
 		this.unite=null;
 		this.taillec=taillec;
 		this.terrain = new Void(taillec);
@@ -73,6 +79,9 @@ public class Case {
 		}
 		if (this.unite !=null) {
 			unite.render(gc,x,y);	
+		}
+		if(this.batiment !=null && this.unite!=null && this.batiment.entraincapture) {
+			gc.drawImage(unite.flag, x, y);
 		}
 	}
 	

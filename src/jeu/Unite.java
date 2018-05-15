@@ -1,5 +1,7 @@
 package jeu;
 
+import javafx.scene.image.Image;
+
 public abstract class Unite extends Element implements Cloneable{
 	/**Entier qui decrit l'appartenance a un joueur. */
 	protected int joueur;
@@ -20,6 +22,10 @@ public abstract class Unite extends Element implements Cloneable{
 	/**Represente le type de l'unite*/
 	protected String type;
 	protected int cost;
+	/** Image qui s'affiche lors de la capture d'un batiment par cette unite*/
+	protected Image flag;
+	/** Image qui s'affiche pour indiquer a qui appartient cette unite*/
+	protected Image cercle;
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	/**
@@ -32,8 +38,11 @@ public abstract class Unite extends Element implements Cloneable{
 	 * La taille de l'unite est fixee par la taille de la case
 	 * 			
 	 */
-	protected Unite(int taille){
+	protected Unite(int taille,int joueur){
 		super(taille);
+		this.joueur=joueur;
+		flag = new Image("flag/flag"+joueur+".png",75,75,false,false);
+		cercle = new Image("cerclejoueur/cerclejoueur"+joueur+".png",75,75,false,false);
 		valable=false;
 		type = "soldat";
 	}

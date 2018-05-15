@@ -94,7 +94,6 @@ public class Menuoption {
 				positioncurseur=maxpos-1;
 			}
 		}
-		System.out.println("poscurseur: "+positioncurseur);
 	}
 	/** Deplacement du curseur vers le bas*/
 	public void downcurseur() {
@@ -109,7 +108,6 @@ public class Menuoption {
 				positioncurseur=0;
 			}
 		}
-		System.out.println("poscurseur: "+positioncurseur);
 	}
 	
 	
