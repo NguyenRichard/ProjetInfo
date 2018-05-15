@@ -333,7 +333,7 @@ public class Jeu {
 		do{
 			i++;
 			entrainjouer++;	//on passe au prochain joueur en vie
-			if (entrainjouer == 4) {
+			if (entrainjouer == 5) {
 				entrainjouer = 0;
 				tour++; //Change de tour
 			}

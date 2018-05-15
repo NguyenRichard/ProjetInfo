@@ -62,6 +62,7 @@ public class Gestionatq {
 		map.selectionne.unite.pv--;
 
 		if (map.selectionne.unite.pv <= 0) {
+			System.out.println("AA"+map.selectionne.unite+map.selectionne.batiment);
 	    	map.joueurs.get(map.selectionne.unite.joueur).remove(map.selectionne.unite); //on enleve l'unite de la liste d'unite du joueur
 	    	map.selectionne.unite=null;
 	    	pvendiminution = false;
@@ -468,6 +469,10 @@ public class Gestionatq {
 	  	  					if (map.plateau[list[i]].unite.pv <= 0) {
 	  	  						map.joueurs.get(map.plateau[list[i]].unite.joueur).remove(map.plateau[list[i]].unite); //on enleve l'unite de la liste d'unite du joueur
 	  	  						map.plateau[list[i]].unite=null;
+	  	  						if(map.selectionne.batiment!=null && map.selectionne.batiment.entraincapture) {
+	  	  							map.selectionne.batiment.pv=100;
+	  	  							map.selectionne.batiment.entraincapture=false;
+	  	  						}
 	  	  					}
 	  	  				}
 	  	  			}
