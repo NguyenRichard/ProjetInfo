@@ -1,5 +1,7 @@
 package jeu;
 
+import javax.sound.sampled.Clip;
+import Sounds.Sound;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -36,6 +38,8 @@ public class CreationMap {
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
     Menuoption menuoption;
+    Sound sd;
+    Clip clip;
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -44,7 +48,7 @@ public class CreationMap {
 	 * 
 	 * @param gc le contexte graphique
 	 */
-	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame){
+	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame, Sound sd, Clip clip){
 		
 		map = new Map();
 		
@@ -65,7 +69,8 @@ public class CreationMap {
 		map.affichageEquipe();
 		update=true;
 		menuoption = new Menuoption(1,width,height);
-		
+		this.sd=sd;
+		this.clip=clip;
 	}
 	
 	/**gestion de la creation d'un joueur si le code du rang k contient un numero
@@ -74,7 +79,7 @@ public class CreationMap {
 	 */
 	void remakejoueur(int k, int codeS, Map map) {
 		int joueurunite = (codeS/(50*50))%50;
-		if ((!(map.joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+		if ((!(map.joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ï¿½tï¿½ personnaliser
 			map.joueurs.get(joueurunite).isalive = true;
 			Scanner saisieUtilisateur = new Scanner(System.in); 
 			System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
@@ -84,7 +89,7 @@ public class CreationMap {
 			map.joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
 		}
 		int joueurbatiment = (codeS/(50*50*50*50))%50;
-		if ((!(map.joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore été personnaliser
+		if ((!(map.joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ï¿½tï¿½ personnaliser
 			map.joueurs.get(joueurbatiment).isalive = true;
 			Scanner saisieUtilisateur = new Scanner(System.in); 
 			System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
@@ -100,7 +105,7 @@ public class CreationMap {
 	 * @param k
 	 */
 	void remaketerrain(int k, int codeS,Map map) {
-		map.plateau[k].terrain = referencecodeterrain.get(0); //le vide par défaut
+		map.plateau[k].terrain = referencecodeterrain.get(0); //le vide par dï¿½faut
 		for (int j =1; j<referencecodeterrain.size();j++) {
 			if (codeS%50 == j){
 				map.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
@@ -157,7 +162,7 @@ public class CreationMap {
 					map.addunite(k,new ArcherSquelette(map.taillec,joueur));
 				}
 				if (ingame) {
-					map.joueurs.get(joueur).add(map.plateau[k].unite); //on ajoute l'unité à la liste d'unités du bon joueur si on est en jeu
+					map.joueurs.get(joueur).add(map.plateau[k].unite); //on ajoute l'unitï¿½ ï¿½ la liste d'unitï¿½s du bon joueur si on est en jeu
 				}
 			}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
@@ -194,7 +199,7 @@ public class CreationMap {
 				mapcode[k] = mapcode[k] - ((mapcode[k]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
 			}
 			if (ingame&&(joueur != 0)) {
-				map.joueurs.get(joueur).add(map.plateau[k]); //on ajoute le batiment à la liste d'unités du bon joueur si on est en jeu et que le batiment n'est pas neutre
+				map.joueurs.get(joueur).add(map.plateau[k]); //on ajoute le batiment ï¿½ la liste d'unitï¿½s du bon joueur si on est en jeu et que le batiment n'est pas neutre
 			}
 		}
 		else {
