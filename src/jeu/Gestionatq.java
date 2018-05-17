@@ -394,11 +394,13 @@ public class Gestionatq {
 			y[i]=(listanim[i]/50 - map.rangcorner/50)*map.taillec;
 		}
 		for (int i = 0;i<5;i++) {
-			if (animatq<4) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]);}
-			else if(animatq<8) {gc.drawImage(Im_deg, x[i], y[i]+(map.taillec/2));}
-			else if(animatq<12) {gc.drawImage(Im_deg, x[i], y[i]);}
-			else if(animatq<16) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]+(map.taillec/2));}
-			else if (animatq<30) {gc.drawImage(Im_deg, x[i], y[i], map.taillec, map.taillec);;}
+			if (listanim[i]!=-1) {
+				if (animatq<4) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]);}
+				else if(animatq<8) {gc.drawImage(Im_deg, x[i], y[i]+(map.taillec/2));}
+				else if(animatq<12) {gc.drawImage(Im_deg, x[i], y[i]);}
+				else if(animatq<16) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]+(map.taillec/2));}
+				else if (animatq<30) {gc.drawImage(Im_deg, x[i], y[i], map.taillec, map.taillec);;}
+			}
 		}
 		return listanim;
 	}
@@ -413,11 +415,13 @@ public class Gestionatq {
 			y[i]=(listanim[i]/50 - map.rangcorner/50)*map.taillec;
 		}
 		for (int i = 0;i<13;i++) {
-			if (animatq<4) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]);}
-			else if(animatq<8) {gc.drawImage(Im_deg, x[i], y[i]+(map.taillec/2));}
-			else if(animatq<12) {gc.drawImage(Im_deg, x[i], y[i]);}
-			else if(animatq<16) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]+(map.taillec/2));}
-			else if (animatq<30) {gc.drawImage(Im_deg, x[i], y[i], map.taillec, map.taillec);;}
+			if (listanim[i]!=-1) {
+				if (animatq<4) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]);}
+				else if(animatq<8) {gc.drawImage(Im_deg, x[i], y[i]+(map.taillec/2));}
+				else if(animatq<12) {gc.drawImage(Im_deg, x[i], y[i]);}
+				else if(animatq<16) {gc.drawImage(Im_deg, x[i]+(map.taillec/2), y[i]+(map.taillec/2));}
+				else if (animatq<30) {gc.drawImage(Im_deg, x[i], y[i], map.taillec, map.taillec);;}
+			}
 		}
 		return listanim;
 	}
@@ -443,7 +447,7 @@ public class Gestionatq {
 	
 	void renderanimligne(GraphicsContext gc) {
 		if(animatqencoursligne) { //Animation d'attaque
-			int[] list = animdegatligne(gc);;
+			int[] list = new int[0];
 			if (map.plateau[rang].unite.type.compareTo("ligne")== 0) {
 				list = animdegatligne(gc);
 			} else if  (map.plateau[rang].unite.type.compareTo("zone1")== 0) {
@@ -456,7 +460,7 @@ public class Gestionatq {
 	  	  		//On enleve les pv :
 	  	  		animatqencoursligne=false;
 	  	  		for (int i = 0;i<list.length;i++) {
-	  	  			if (list[i]!=0) {
+	  	  			if (list[i]!=-1) {
 	  	  				if (map.plateau[list[i]].unite != null) {
 	  	  					map.plateau[list[i]].unite.pv=Integer.min(Integer.max(map.plateau[list[i]].unite.pv - map.selectionnemenu.unite.dmg,0),map.plateau[list[i]].unite.pvmax); //le max c'est pour la mort, le min c'est pour le cas du heal ne pas overheal
 	  	  					animatq=0;
@@ -510,6 +514,9 @@ public class Gestionatq {
 	int[] rangzone1(int center) {
 		int[] list = new int[5];
 		list[0]=center;
+		for (int i=0;i<list.length;i++) {
+			list[i]=-1;
+		}
 		if ((center-50>=0)&&(center-50<2500)) {list[1]=center-50;}
 		if ((center+50>=0)&&(center+50<2500)) {list[2]=center+50;}
 		if ((center-1>=0)&&(center-1<2500)) {list[3]=center-1;}
@@ -519,6 +526,9 @@ public class Gestionatq {
 	
 	int[] rangzone2(int center) {
 		int[] list = new int[13];
+		for (int i=0;i<list.length;i++) {
+			list[i]=-1;
+		}
 		list[0]=center;
 		if ((center-50>=0)&&(center-50<2500)) {list[1]=center-50;}
 		if ((center+50>=0)&&(center+50<2500)) {list[2]=center+50;}
