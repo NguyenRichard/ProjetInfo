@@ -1,5 +1,7 @@
 package jeu;
 
+import javax.sound.sampled.Clip;
+import Sounds.Sound;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -29,6 +31,8 @@ public class CreationMap {
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
     Menuoption menuoption;
+    Sound sd;
+    Clip clip;
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -37,7 +41,7 @@ public class CreationMap {
 	 * 
 	 * @param gc le contexte graphique
 	 */
-	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame){
+	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame, Sound sd, Clip clip){
 		
 		map = new Map();
 		
@@ -52,7 +56,8 @@ public class CreationMap {
 		map.affichageEquipe();
 		update=true;
 		menuoption = new Menuoption(1,width,height);
-		
+		this.sd=sd;
+		this.clip=clip;
 	}
 	
 	void changebatimentsave(int rang, int codeS) {

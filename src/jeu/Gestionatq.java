@@ -38,8 +38,9 @@ public class Gestionatq {
 	Image viseurzone1;
 	Image viseurzone2;
 	boolean animatqencoursligne;
+	Sound sd;
 	
- 	Gestionatq(Map map){
+ 	Gestionatq(Map map, Sound sd){
 		attaqueencours=false;
 		animatqencoursligne=false;
 		this.map=map;
@@ -55,6 +56,7 @@ public class Gestionatq {
 		portee = 0;
 		porteemin=0;
 		rang=0;
+		this.sd = sd;
 	}
 	
 	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux et reset attaque si finisher */
@@ -72,7 +74,6 @@ public class Gestionatq {
 	    	}
 			if 	(map.selectionnemenu.unite.type.compareTo("finisher")== 0) {
 				map.selectionnemenu.unite.valable=true;
-				Sound sd = new Sound();
 				sd.runSoundrefresh();
 			}
 		}
@@ -90,7 +91,6 @@ public class Gestionatq {
 						rang = map.selectionnemenu.rang;
 						portee = map.selectionnemenu.unite.portee[1];
 						porteemin = map.selectionnemenu.unite.portee[0];
-						Sound sd = new Sound();
 						sd.runSoundattack();
 						animatqencoursligne=true;
 				}
@@ -98,7 +98,6 @@ public class Gestionatq {
 					rang = map.selectionnemenu.rang;
 					portee = map.selectionnemenu.unite.portee[1];
 					porteemin = map.selectionnemenu.unite.portee[0];
-					Sound sd = new Sound();
 					sd.runSoundattack();
 					animatqencoursligne=true;
 				}
@@ -106,19 +105,16 @@ public class Gestionatq {
 					rang = map.selectionnemenu.rang;
 					portee = map.selectionnemenu.unite.portee[1];
 					porteemin = map.selectionnemenu.unite.portee[0];
-					Sound sd = new Sound();
 					sd.runSoundattack();
 					animatqencoursligne=true;
 				}
 				else if (type.compareTo("healer")== 0) {
 					// Son de soin
-					Sound sd = new Sound();
 					sd.runSoundheal();
 					animatqencours=true;
 				}
 				else { //cas par defaut
 					//Son d'attaque
-					Sound sd = new Sound();
 					sd.runSoundattack();
 					animatqencours=true;
 				}
@@ -443,7 +439,6 @@ public class Gestionatq {
 			else if(animatq<16) {gc.drawImage(Im_hea, x+(map.taillec/2), y+(map.taillec/2));}
 			else if (animatq<30) {gc.drawImage(Im_hea, x, y, map.taillec, map.taillec);;}
 		}
-		
 	}
 	
 	void renderanimligne(GraphicsContext gc) {
@@ -480,8 +475,6 @@ public class Gestionatq {
 	  	  	map.render(gc);
 	  	  	}		
 	    }
-		
-	    
 	}
 	
 	void renderanim(GraphicsContext gc) {

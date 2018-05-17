@@ -29,22 +29,23 @@ public class Main extends Application { //Nouveau test
 
 	    stage.setTitle("Projet info : un projet de Richard, Jean, Arthur et Fabien");
 	    stage.setResizable(false);
+	    
+	    // Pour l'instant je le mets ici mais on peut le changer de place ensuite
+	 	Sound sd = new Sound();
+	 	Clip clip = sd.boucle();
 
 	    Group root = new Group();
 	    Scene scene = new Scene(root);
 	    Canvas canvas = new Canvas(width, height);
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
-	    Jeu game = new Jeu(gc,width,height);	// Creation d'une partie
-	    CreationMap crea = new CreationMap(gc, "creamap.ser",width,height,game.ingame);	// Creation de l'editeur
+	    Jeu game = new Jeu(gc,width,height,sd,clip);	// Creation d'une partie
+	    CreationMap crea = new CreationMap(gc, "creamap.ser",width,height,game.ingame,sd,clip);	// Creation de l'editeur
 	   	Menuprinc menu = new Menuprinc(game,crea,width,height); //Creation du menu
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";
 		menu.render(gc);
 		
-		// Pour l'instant je le mets ici mais on peut le changer de place ensuite
-		Sound sd = new Sound();
-		Clip clip = sd.boucle();
 		
     	/* Refresh animation */
 		new AnimationTimer() {          

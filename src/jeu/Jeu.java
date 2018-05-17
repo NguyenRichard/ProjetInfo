@@ -1,5 +1,7 @@
 package jeu;
 
+import javax.sound.sampled.Clip;
+import Sounds.Sound;
 import java.util.ArrayList;
 
 import batiments.Portal;
@@ -39,6 +41,9 @@ public class Jeu {
 	/** Menu de droite pour faire les actions: Attaquer, se deplacer, capturer et passer le tour*/
 	Menuaction menudroite;
 	Menuoption menuoption;
+	MenuSon menuson;
+	Sound sd;
+	Clip clip;
 
 	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -52,14 +57,14 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc, int width, int height){
+	Jeu(GraphicsContext gc, int width, int height, Sound sd, Clip clip){
 		this.map = new Map();
 		tour = 0;
 		entrainjouer=1;
 		this.gc=gc;
 		menu=0;
 		update=true;
-		atq = new Gestionatq(map);
+		atq = new Gestionatq(map,sd);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		ingame = false;
@@ -68,13 +73,22 @@ public class Jeu {
 		updatemenu=false;
 		menuinvoc = new Menuinvocation(new Portal(75,0,0));
 		menuoption = new Menuoption(0,width,height);
+		menuson = new MenuSon(width,height, clip, sd);
+		this.sd=sd;
+		this.clip=clip;
 	}
 /*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
 	
 	void update() {
 		if (menu!=3) {
 			if(menuoption.inmenuop) {
-				if(menuoption.update) {
+				if (menuson.inmenusd) {
+					if(menuson.update) {
+						menuson.render(gc);
+						menuson.update=false;
+					}
+				}
+				else if(menuoption.update) {
 					menuoption.render(gc);
 					menuoption.update=false;
 				}
@@ -164,6 +178,8 @@ public class Jeu {
 	    			case 0:
 	    				menuoption.inmenuop=false;
 	    				break;
+	    			case 1: 
+	    				menuson.inmenusd=true;menuson.update=true; break;
 	    			case 2:
 	    				map.perdu(entrainjouer);
 	    				passertour();
@@ -174,7 +190,7 @@ public class Jeu {
 	    			default:
 	    				break;
 	    			}
-	    			menuoption.inmenuop=false;
+	    			if (!menuson.inmenusd) {menuoption.inmenuop=false;}
 	    		}
 	    		else {
 	    			System.out.print(map.selectionne);
@@ -204,17 +220,31 @@ public class Jeu {
 	    	} 
 	    	break; 
 	    case B : 
-	    	if (menuoption.inmenuop) { 
-	    		menuoption.inmenuop=false; menuoption.positioncurseur=0; }
+	    	if (menuoption.inmenuop) {
+	    		if (menuson.inmenusd) {
+	    			menuson.inmenusd = false;
+	    			menuson.update = false;
+	    			menuoption.update=true;
+	    		} else {
+	    		menuoption.inmenuop=false; menuoption.positioncurseur=0; } }
 	    	else {
 		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
 		    	else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
 		    	else {menu=0;}
-	    	}
+	    	} 
 	    	break;
 		case LEFT:  
 					switch(menu) {
 					case 0: if(!menuoption.inmenuop) { map.leftcurseur(); break;}//on bouge sur la map
+							else {
+								if (menuson.inmenusd) {
+									switch(menuson.positioncurseur) {
+										case 0 : menuson.lessMusic();menuson.update=true;break;
+										case 1 : menuson.lessEffect();menuson.update=true;break;
+										default : break;
+									}
+							}
+					}
 					case 1:
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-1,depl.deplist))) {
 								map.leftcurseur(); //on selectionne case pour deplacement
@@ -235,7 +265,17 @@ public class Jeu {
 					break;
 		case RIGHT: 
 					switch(menu) {
-					case 0: if(!menuoption.inmenuop) { map.rightcurseur(); break; }
+					case 0: if(!menuoption.inmenuop) { map.rightcurseur(); break; } 
+							else {
+								if (menuson.inmenusd) {
+									switch(menuson.positioncurseur) {
+									case 0 : menuson.moreMusic();menuson.update=true;break;
+									case 1 : menuson.moreEffect();menuson.update=true;break;
+									default : break;
+									}
+									
+								}
+							}
 					case 1:
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+1,depl.deplist))) {
 								map.rightcurseur(); //on selectionne case pour deplacement
@@ -265,8 +305,11 @@ public class Jeu {
 							break;
 					case 0: 
 							if (menuoption.inmenuop){
+								if (menuson.inmenusd) {menuson.upcurseur();menuson.update=true;}
+								else {
 								menuoption.upcurseur();
 								menuoption.update=true;
+								}
 							}
 							else {
 								map.upcurseur();//on bouge curseur de map
@@ -291,8 +334,11 @@ public class Jeu {
 							break;
 					case 0:
 							if (menuoption.inmenuop) {
+								if (menuson.inmenusd) {menuson.downcurseur();menuson.update=true;}
+								else {
 								menuoption.downcurseur();
 								menuoption.update=true;
+								}
 							}
 							else {
 
@@ -364,7 +410,7 @@ public class Jeu {
 		entrainjouer=1;
 		menu=0;
 		update=true;
-		atq = new Gestionatq(map);
+		atq = new Gestionatq(map,sd);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
 		ingame=false;
