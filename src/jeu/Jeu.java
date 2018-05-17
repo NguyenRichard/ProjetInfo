@@ -243,8 +243,8 @@ public class Jeu {
 										case 1 : menuson.lessEffect();menuson.update=true;break;
 										default : break;
 									}
+								}
 							}
-					}
 					case 1:
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-1,depl.deplist))) {
 								map.leftcurseur(); //on selectionne case pour deplacement

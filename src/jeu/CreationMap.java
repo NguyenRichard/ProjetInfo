@@ -31,6 +31,7 @@ public class CreationMap {
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
     Menuoption menuoption;
+    MenuSon menuson;
     Sound sd;
     Clip clip;
 	
@@ -56,6 +57,7 @@ public class CreationMap {
 		map.affichageEquipe();
 		update=true;
 		menuoption = new Menuoption(1,width,height);
+		menuson = new MenuSon(width,height, clip, sd);
 		this.sd=sd;
 		this.clip=clip;
 	}
@@ -94,7 +96,13 @@ public class CreationMap {
 		    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image	
 		}
 		else {
-			if(menuoption.update) {
+			if (menuson.inmenusd) {
+				if(menuson.update) {
+					menuson.render(gc);
+					menuson.update=false;
+				}
+			}
+			else if(menuoption.update) {
 				menuoption.render(gc);
 			}
 		}
@@ -142,6 +150,8 @@ public class CreationMap {
 	    			case 0:
 	    				menuoption.inmenuop=false;
 	    				break;
+	    			case 1: 
+	    				menuson.inmenusd=true;menuson.update=true; break;
 	    			case 2:
 	    				try {
 	    					FileOutputStream fos = new FileOutputStream("creamap.ser"); // nom du fichier contenant la sauvegarde
@@ -160,7 +170,9 @@ public class CreationMap {
 	    				stop();
 	    				break;
 	    			}
+	    			if (!menuson.inmenusd) {
 	    			menuoption.inmenuop=false;
+	    			}
 	    		}
 	    		else {
 			    	int codeS = menucrea.codesave;
@@ -179,7 +191,13 @@ public class CreationMap {
 	    	}
 	   		break;
 	    case B: 
-    		menucrea.choix=!menucrea.choix;
+	    	if (menuoption.inmenuop) {
+	    		if (menuson.inmenusd) {
+	    			menuson.inmenusd = false;
+	    			menuson.update = false;
+	    			menuoption.update=true;
+	    		}
+	    	} else {menucrea.choix=!menucrea.choix;}
     		break; 
 	    case R :
 	    	if(!menucrea.choix) {
@@ -212,6 +230,14 @@ public class CreationMap {
 					
 				}
 				else {map.leftcurseur();}
+			} else {
+				if (menuson.inmenusd) {
+					switch(menuson.positioncurseur) {
+						case 0 : menuson.lessMusic();menuson.update=true;break;
+						case 1 : menuson.lessEffect();menuson.update=true;break;
+						default : break;
+					}
+				}
 			}
 			break;
 		case RIGHT: 
@@ -221,12 +247,24 @@ public class CreationMap {
 					actualiservisu();
 				}
 				else {map.rightcurseur();}
+			} else {
+				if (menuson.inmenusd) {
+					switch(menuson.positioncurseur) {
+					case 0 : menuson.moreMusic();menuson.update=true;break;
+					case 1 : menuson.moreEffect();menuson.update=true;break;
+					default : break;
+					}
+					
+				}
 			}
 			break;
 		case UP:
 			if(menuoption.inmenuop) {
+				if (menuson.inmenusd) {menuson.upcurseur();menuson.update=true;} 
+				else {
 				menuoption.upcurseur();
 				menuoption.update=true;
+				}
 			}
 			else {
 				if (menucrea.choix) { //si on est en train de choisir l'element
@@ -237,8 +275,11 @@ public class CreationMap {
 			break;
 		case DOWN:
 			if(menuoption.inmenuop) {
+				if (menuson.inmenusd) {menuson.downcurseur();menuson.update=true;}
+				else {
 				menuoption.downcurseur();
 				menuoption.update=true;
+				}
 			}
 			else {
 				if (menucrea.choix) { //si on est en train de choisir l'element
