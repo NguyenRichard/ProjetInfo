@@ -126,8 +126,8 @@ public class Sound  {
 	         clip.setLoopPoints(1, 3042800);
 	         clip.setFramePosition(1);
 	         clip.loop(10000);
-	         System.out.println(clip.getFrameLength());
-	         System.out.println(clip.getMicrosecondLength());
+	         //System.out.println(clip.getFrameLength());
+	         //System.out.println(clip.getMicrosecondLength());
 	         return clip;
 	         
 	      } catch (UnsupportedAudioFileException e) {

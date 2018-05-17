@@ -14,16 +14,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Main extends Application { //Nouveau test
 
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	    launch(args);    
+		// TODO Auto-generated method stub      
+	    launch(args); 
+	    
 	}
 	
-	public void start(Stage stage){
+	public void start(Stage stage){   
+		
 	    int width = 1100;
 	    int height = 750;
 
@@ -45,6 +48,7 @@ public class Main extends Application { //Nouveau test
 		String start = "Commencer la partie";
 		String edit = "Editer la carte";
 		menu.render(gc);
+		
 		
 		
     	/* Refresh animation */

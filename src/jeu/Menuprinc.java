@@ -1,5 +1,6 @@
 package jeu;
 
+
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -22,13 +23,15 @@ public class Menuprinc {
 	Jeu game;
 	CreationMap crea;
    	boolean update;
-	
+	FXDialogs fx;
+   	
 	/* Constructeur de Menu*/
 	Menuprinc(Jeu game,CreationMap crea,int width, int height){
 		fond = new Image("InsectWorldWar.png", width, height, false, false);
 		this.game=game;
 		this.crea=crea;
 		update = true;
+		fx = new FXDialogs();
 	}
 	
 	void render(GraphicsContext gc) {
@@ -49,6 +52,7 @@ public class Menuprinc {
 					game.map.joueurs.get(game.entrainjouer).actiondesbatiments();
 				}
 				else {
+					fx.showWarning("Attention", "Le fichier n'existe pas");
 					System.out.println("Le fichier n'existe pas");
 				}
 

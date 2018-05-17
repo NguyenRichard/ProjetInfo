@@ -338,25 +338,46 @@ public class Map {
 	 * @param creationMap TODO
 	 */
 	void remakejoueur(int k, int codeS) {
+		FXDialogs fx = new FXDialogs();
 		int joueurunite = (codeS/(50*50))%50;
-		if ((!(joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ÈtÈ personnaliser
+		if ((!(joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ÔøΩtÔøΩ personnaliser
 			joueurs.get(joueurunite).isalive = true;
-			Scanner saisieUtilisateur = new Scanner(System.in); 
-			System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
-			String str = saisieUtilisateur.next();
+			//Pour entr√©e des String depuis la console
+			//Scanner saisieUtilisateur = new Scanner(System.in);
+			//String str = saisieUtilisateur.next();
+			//joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
+			//System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
+			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurunite +  " :",  "King Arthur");
 			joueurs.get(joueurunite).changename(str);
-			System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :");
-			joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
+			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :");
+			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Arm√©e d'insectes", "Arm√©e des morts", "Arm√©e myhtologique chinoise");
+			int dec=0; 
+			if (str2 == "Arm√©e d'insectes") {
+				dec = 0;
+			} else if (str2 == "Arm√©e des morts") {
+				dec = 2;
+			} else {
+				dec = 1;
+			}
+			joueurs.get(joueurunite).typearmee=dec;
 		}
 		int joueurbatiment = (codeS/(50*50*50*50))%50;
-		if ((!(joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ÈtÈ personnaliser
+		if ((!(joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ete personnaliser
 			joueurs.get(joueurbatiment).isalive = true;
-			Scanner saisieUtilisateur = new Scanner(System.in); 
-			System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
-			String str = saisieUtilisateur.next();
+			//System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
+			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurunite +  " :", "King Arthur");
 			joueurs.get(joueurbatiment).changename(str);
-			System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :");
-			joueurs.get(joueurbatiment).typearmee=saisieUtilisateur.nextInt();
+			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :");
+			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Arm√©e d'insectes", "Arm√©e des morts", "Arm√©e myhtologique chinoise");
+			int dec=0; 
+			if (str2 == "Arm√©e d'insectes") {
+				dec = 0;
+			} else if (str2 == "Arm√©e des morts") {
+				dec = 2;
+			} else {
+				dec = 1;
+			}
+			joueurs.get(joueurbatiment).typearmee=dec;
 		}
 	}
 	
@@ -364,7 +385,7 @@ public class Map {
 	 * @param k
 	 */
 	int remaketerrain(int k, int codeS) {
-		plateau[k].terrain = referencecodeterrain.get(0); //le vide par dÈfaut
+		plateau[k].terrain = referencecodeterrain.get(0); //le vide par dÔøΩfaut
 		for (int j =1; j<referencecodeterrain.size();j++) {
 			if (codeS%50 == j){
 				this.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
@@ -422,7 +443,7 @@ public class Map {
 					addunite(k,new ArcherSquelette(taillec,joueur));
 				}
 				if (startgame) {
-					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unitÈ ‡ la liste d'unitÈs du bon joueur si on est en jeu
+					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unitÔøΩ ÔøΩ la liste d'unitÔøΩs du bon joueur si on est en jeu
 				}
 			}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
@@ -454,7 +475,7 @@ public class Map {
 	
 		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (startgame&&(joueur != 0)) {
-				joueurs.get(joueur).add(plateau[k]); //on ajoute le batiment ‡ la liste d'unitÈs du bon joueur si on est en jeu et que le batiment n'est pas neutre
+				joueurs.get(joueur).add(plateau[k]); //on ajoute le batiment ÔøΩ la liste d'unitÔøΩs du bon joueur si on est en jeu et que le batiment n'est pas neutre
 			}
 		}
 		else {
