@@ -100,7 +100,9 @@ public class Jeu {
 				else if (atq.animatqencoursligne) {
 					atq.renderanimligne(gc);
 				}
-				else {	map.renderanim(gc);}//animation des sprites si pas de combat
+				else {	
+					map.renderanim(gc); //animation des sprites si pas de combat
+				}
 				if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
 			         String tour = "Tour: "+this.tour;
 			         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -151,6 +153,7 @@ public class Jeu {
 	 */	
 	void touch(KeyCode code) throws CloneNotSupportedException {
 		if (ingame && !(atq.animatqencours||atq.pvendiminution)) {
+		if (map.ecranfin == 0){ //permet de quitter en appuyant sur n'importe quelle touche une fois la partie finie
 	    switch(code) {
 	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
 	    	switch(menu) {
@@ -217,7 +220,7 @@ public class Jeu {
 	    		break;
 	    	default:
 	    		break;
-	    	} 
+	    	}
 	    	break; 
 	    case B : 
 	    	if (menuoption.inmenuop) {
@@ -231,7 +234,7 @@ public class Jeu {
 		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
 		    	else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
 		    	else {menu=0;}
-	    	} 
+	    	}
 	    	break;
 		case LEFT:  
 					switch(menu) {
@@ -367,6 +370,14 @@ public class Jeu {
 	    		break;
 	    }
 		}
+		else {
+			switch(code) { //dans le cas ou il y a l'ecran de fin, on quitte a l'appui de n'importe quelle touche
+				default:
+			    	fin();
+					break;
+			}
+		}
+		}
 	}
 
 	/**
@@ -375,18 +386,13 @@ public class Jeu {
 	 * @throws CloneNotSupportedException 
 	 */
 	void passertour() throws CloneNotSupportedException {
-		int i = 0;
 		do{
-			i++;
 			entrainjouer++;	//on passe au prochain joueur en vie
 			if (entrainjouer == 5) {
-				entrainjouer = 0;
+				entrainjouer = 1;
 				tour++; //Change de tour
 			}
 		}while(!(map.joueurs.get(entrainjouer).isalive));
-		if (i==4) {
-			System.out.println(map.joueurs.get(entrainjouer) + " a gagne !");
-		}
 		map.joueurs.get(entrainjouer).rendreValable();
 		map.joueurs.get(entrainjouer).printSituation();
 		menu=0;
@@ -406,6 +412,7 @@ public class Jeu {
 		for (int i = 0; i <= 4;i++) {
 			map.joueurs.add(new Joueur("sansnom")); 
 		}
+		map.ecranfin = 0;
 		tour = 0;
 		entrainjouer=1;
 		menu=0;
@@ -415,6 +422,7 @@ public class Jeu {
 		capt = new Gestioncapture(map);
 		ingame=false;
 		map.selectionne=map.plateau[51];
+		map.rangcorner = 0;
 	}
 
 }

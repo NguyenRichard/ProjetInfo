@@ -54,7 +54,9 @@ public abstract class Element {
 			}
 			if (this instanceof Batiment) {
 				Batiment bat = (Batiment)this;
-				gc.drawImage(bat.cercle, x, y);
+				if (bat.joueur != 0) {
+					gc.drawImage(bat.cercle, x, y);
+				}
 			}
 			else if (this instanceof Unite) {
 				Unite uni = (Unite)this;

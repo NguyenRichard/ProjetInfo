@@ -14,6 +14,9 @@ import batiments.Crystal;
 import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import terrain.Marais;
 import terrain.Terre;
 import terrain.Void;
@@ -35,6 +38,10 @@ public class Map {
 	Case[] plateau; 
 	/**Image du curseur */
 	Image curseur;
+	/**Image signalant le gagnant quand la partie est finie */
+	Image finpartie;
+	/**Si cet entier est non egal a 0 alors la partie est fini et le joueur gagnant et le joueur portant ce nombre */
+	int ecranfin;
 	/**Taille de la carte affichee, en ordonnee */
 	int taillec;
 	/**Rang dans la matrice plateau du coin haut gauche du cadre 12x12 cases delimitant l'affichage du jeu */
@@ -74,6 +81,7 @@ public class Map {
 		
 		nombrecaseaffichee = 10;
 		fond = new Image("ciel.png",taillec*nombrecaseaffichee,taillec*nombrecaseaffichee,false,false);
+		finpartie =  new Image("victoire.png",250,100,false,false);
 		Case[] plateau = new Case[2501];
 		rangcorner=0;
 		for (int k = 0; k < plateau.length; k++) {
@@ -88,6 +96,7 @@ public class Map {
         for (int i = 0; i <= 4;i++) {
         	joueurs.add(new Joueur("sansnom"));
         }
+        ecranfin = 0;
 	}
 /*_Affichager des sprites___________________________________________________________________________________________________________ */
 	
@@ -121,6 +130,16 @@ public class Map {
 				plateau[k].render(gc,rangcorner);
 				k=kdefine(k);
 			}
+			if(ecranfin!=0) { //on affiche par dessus les sprites l'ecran de fin si la partie est finie
+	 			gc.drawImage(finpartie, taillec*(nombrecaseaffichee/2-1), taillec*(nombrecaseaffichee/2-1));
+	 			String tour = "Gagnant: " + joueurs.get(ecranfin);
+		        gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+		        gc.setLineWidth(1);
+		        gc.setFill(Color.YELLOW);
+		        gc.setStroke(Color.BLACK);
+		        gc.fillText(tour, taillec*(nombrecaseaffichee/2-1)+20, taillec*(nombrecaseaffichee/2-1)+75);
+		        gc.strokeText(tour, taillec*(nombrecaseaffichee/2-1)+20, taillec*(nombrecaseaffichee/2-1)+75 );
+	 		}
 		}
 		curseurRender(gc); // Affichage du curseur
 	}
@@ -310,9 +329,17 @@ public class Map {
     	joueurs.get(joueur).remove(casebatiment);
     }
 
+    /**
+     * Cette fonction est a executer lorsqu'un joueur a perdu. Elle rend ses batiments neutre et le signal mort.
+     * Elle permet aussi de detecter si la partie est fini et dans ce cas l'entier qu'elle renvoie est different de
+     * 0 et represente le joueur gagnant
+     * @param joueur le joueur mort
+     * @return 0 si la partie continue et le numero du joueur gagnant sinon
+     */
 	public void perdu(int joueur) {
 			System.out.println(joueur+" a perdu !");
 			Joueur perdant = joueurs.get(joueur);
+			int res = 0;
 			int i = 0;
             while( i<2500 && perdant.possedeunite()) {
                 if((plateau[i].unite != null)&&(plateau[i].unite.joueur == joueur)) {
@@ -323,10 +350,21 @@ public class Map {
             }
 			while(perdant.possedebatiment()) {
 				Case casebatiment = perdant.possessions.get(perdant.possessions.size()-1);
-				casebatiment.batiment=null;
+				casebatiment.batiment.joueur=0;
 				perdant.possessions.remove(perdant.possessions.size()-1);
 			}
 			perdant.isalive=false;
+			int j = 0;
+			for(int k=1; k<=4;k++){
+				if ((joueurs.get(k).isalive)){
+					j++;
+					res = k;
+				}
+			}
+			if (j==1) {
+				System.out.println("gagn� ");
+				ecranfin=res;
+			}
 			
 	}
 
@@ -352,9 +390,9 @@ public class Map {
 			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :");
 			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Armée d'insectes", "Armée des morts", "Armée myhtologique chinoise");
 			int dec=0; 
-			if (str2 == "Armée d'insectes") {
+			if (str2 == "Armee d'insectes") {
 				dec = 0;
-			} else if (str2 == "Armée des morts") {
+			} else if (str2 == "Armee des morts") {
 				dec = 2;
 			} else {
 				dec = 1;
@@ -368,11 +406,11 @@ public class Map {
 			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurbatiment +  " :", "King Arthur");
 			joueurs.get(joueurbatiment).changename(str);
 			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :");
-			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :", "Armée d'insectes", "Armée des morts", "Armée myhtologique chinoise");
+			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :", "Armee d'insectes", "Armee des morts", "Armee myhtologique chinoise");
 			int dec=0; 
-			if (str2 == "Armée d'insectes") {
+			if (str2 == "Armee d'insectes") {
 				dec = 0;
-			} else if (str2 == "Armée des morts") {
+			} else if (str2 == "Armee des morts") {
 				dec = 2;
 			} else {
 				dec = 1;

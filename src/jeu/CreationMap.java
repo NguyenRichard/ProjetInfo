@@ -307,6 +307,7 @@ public class CreationMap {
 	void stop() {
 		increa = false;
 		map.selectionne = map.plateau[51];
+		map.rangcorner = 0;
 		menucrea= new Menucrea(map.referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		update=true;

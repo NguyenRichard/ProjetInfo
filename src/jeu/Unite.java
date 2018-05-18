@@ -42,7 +42,9 @@ public abstract class Unite extends Element implements Cloneable{
 		super(taille);
 		this.joueur=joueur;
 		flag = new Image("flag/flag"+joueur+".png",75,75,false,false);
-		cercle = new Image("cerclejoueur/cerclejoueur"+joueur+".png",75,75,false,false);
+		if (joueur !=0) {
+			cercle = new Image("cerclejoueur/cerclejoueur"+joueur+".png",75,75,false,false);
+		}
 		valable=false;
 		type = "soldat";
 	}

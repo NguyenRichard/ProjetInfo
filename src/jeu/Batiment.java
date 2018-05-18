@@ -29,7 +29,9 @@ public abstract class Batiment extends Element{
 	public Batiment(int taille, int joueur){
 		super(taille);
 		this.joueur=joueur;
-		cercle = new Image("cerclejoueur/cerclejoueur"+joueur+".png",75,75,false,false);
+		if (joueur != 0){
+			cercle = new Image("cerclejoueur/cerclejoueur"+joueur+".png",75,75,false,false);
+		}
 		maxcompteur = 1;
 		entraincapture=false;
 	}
