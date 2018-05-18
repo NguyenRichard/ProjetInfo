@@ -54,99 +54,99 @@ public class Main extends Application { //Nouveau test
 		
     	/* Refresh animation */
 		new AnimationTimer() {          
-	        public void handle(long arg0) {              
-	          
-		          if (game.ingame) {
-			          game.update();
-			          Joueur entrainjouer = game.map.joueurs.get(game.entrainjouer);
-			          String infojoueur = "Joueur: "+entrainjouer+"\nRessources: "+entrainjouer.ressources;
-			          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-			          gc.setLineWidth(1);
-					  switch(game.entrainjouer) {
-					    	case 4: 
-					    			gc.setFill(Color.WHITE);
-					    			break;
-					    	case 1:
-					    			gc.setFill(Color.BLUE);
-					    			break;
-					    	case 2:
-				    				gc.setFill(Color.RED);
-				    				break;
-					    	case 3:
-					    			gc.setFill(Color.GREEN);
-					    			break;
-					  }
-					    	
-			          gc.fillText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
-			          gc.strokeText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
-			          gc.setFill(Color.BISQUE);
-			          gc.setStroke(Color.BLACK);
-		          }
-		          if (crea.increa) {
-		        	  crea.update();
-		          }
-		          if (!(menu.game.ingame || menu.crea.increa)) {
-		        	  if (menu.update) {
-				          gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
-				          gc.setFill(Color.WHITE);
-				          gc.setStroke(Color.BLACK);
-				          gc.setLineWidth(1);
-			        	  if (menu.positioncurseur == 0) {
-			        			menu.render(gc);
-			        			gc.strokeText(edit, 360, 450 );
-			        			gc.fillText(edit, 360, 450 );
-						        gc.setFill(Color.YELLOW);
-			        			gc.fillText(start, 360, 400 );
-			        	  }
-			        	  else if (menu.positioncurseur == 1) {
-			        			menu.render(gc);
-			        			gc.fillText(start, 360, 400 );
-			        			gc.strokeText(start, 360, 400 );
-						        gc.setFill(Color.YELLOW);
-			        			gc.fillText(edit, 360, 450 );
-			        	  }
-			        	  menu.update = false;
-	        		  
-		        	  }
-		          }
-	        	}
-	   	}.start();
-	    
-		
-	    	/* Mouvement curseur */
-	    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	        public void handle(KeyEvent e) {
-	    			if (game.ingame) {
-	    				try {
-							game.touch(e.getCode());
-		    				game.update=true;
-						} catch (CloneNotSupportedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-	    			}
-	    			else if (crea.increa) {
-	    				crea.touch(e.getCode());
-	    				crea.update=true;
-	    			}
-	    			else {
-		        		try {
-							menu.touch(e.getCode());
-							menu.update=true;
-						} catch (CloneNotSupportedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}	    				
-	    			}
-	        	
-	        }
-	    });
+			public void handle(long arg0) {              
 
-	   
-	   		/* Affichage scene */
-	   stage.setScene(scene);
-	   stage.show();
+				if (game.ingame) {
+					game.update();
+					Joueur entrainjouer = game.map.joueurs.get(game.entrainjouer);
+					String infojoueur = "Joueur: "+entrainjouer+"\nRessources: "+entrainjouer.ressources;
+					gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+					gc.setLineWidth(1);
+					switch(game.entrainjouer) {
+					case 4: 
+						gc.setFill(Color.WHITE);
+						break;
+					case 1:
+						gc.setFill(Color.BLUE);
+						break;
+					case 2:
+						gc.setFill(Color.RED);
+						break;
+					case 3:
+						gc.setFill(Color.GREEN);
+						break;
+					}
+
+					gc.fillText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
+					gc.strokeText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
+					gc.setFill(Color.BISQUE);
+					gc.setStroke(Color.BLACK);
+				}
+				if (crea.increa) {
+					crea.update();
+				}
+				if (!(menu.game.ingame || menu.crea.increa)) {
+					if (menu.update) {
+						gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
+						gc.setFill(Color.WHITE);
+						gc.setStroke(Color.BLACK);
+						gc.setLineWidth(1);
+						if (menu.positioncurseur == 0) {
+							menu.render(gc);
+							gc.strokeText(edit, 360, 450 );
+							gc.fillText(edit, 360, 450 );
+							gc.setFill(Color.YELLOW);
+							gc.fillText(start, 360, 400 );
+						}
+						else if (menu.positioncurseur == 1) {
+							menu.render(gc);
+							gc.fillText(start, 360, 400 );
+							gc.strokeText(start, 360, 400 );
+							gc.setFill(Color.YELLOW);
+							gc.fillText(edit, 360, 450 );
+						}
+						menu.update = false;
+
+					}
+				}
+			}
+		}.start();
+
+
+		/* Mouvement curseur */
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				if (game.ingame) {
+					try {
+						game.touch(e.getCode());
+						game.update=true;
+					} catch (CloneNotSupportedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				else if (crea.increa) {
+					crea.touch(e.getCode());
+					crea.update=true;
+				}
+				else {
+					try {
+						menu.touch(e.getCode());
+						menu.update=true;
+					} catch (CloneNotSupportedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	    				
+				}
+
+			}
+		});
+
+
+		/* Affichage scene */
+		stage.setScene(scene);
+		stage.show();
 	}
-	
-	
+
+
 }
