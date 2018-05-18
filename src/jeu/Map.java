@@ -365,10 +365,10 @@ public class Map {
 		if ((!(joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ete personnaliser
 			joueurs.get(joueurbatiment).isalive = true;
 			//System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
-			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurunite +  " :", "King Arthur");
+			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurbatiment +  " :", "King Arthur");
 			joueurs.get(joueurbatiment).changename(str);
 			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :");
-			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Armée d'insectes", "Armée des morts", "Armée myhtologique chinoise");
+			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :", "Armée d'insectes", "Armée des morts", "Armée myhtologique chinoise");
 			int dec=0; 
 			if (str2 == "Armée d'insectes") {
 				dec = 0;
