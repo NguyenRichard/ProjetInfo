@@ -388,7 +388,7 @@ public class Map {
 			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurunite +  " :",  "King Arthur");
 			joueurs.get(joueurunite).changename(str);
 			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :");
-			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Armée d'insectes", "Armée des morts", "Armée myhtologique chinoise");
+			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Armee d'insectes", "Armee des morts", "Armee myhtologique chinoise");
 			int dec=0; 
 			if (str2 == "Armee d'insectes") {
 				dec = 0;
