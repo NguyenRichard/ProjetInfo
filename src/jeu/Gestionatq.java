@@ -126,6 +126,9 @@ public class Gestionatq {
 		else {
 			if ((type.compareTo("soldat")==0)||(type.compareTo("ligne")!= 0)) {
 				listcaseaportee(); //liste pour l'affichage de l'attaque
+				if ((type.compareTo("zone1")*(type.compareTo("zone2"))==0) && !atqlist.isEmpty()) {
+					map.selectionne = atqlist.get(0);
+				}
 			} else if (type.compareTo("ligne")== 0) {
 				listcaseaporteeligne(); //liste pour l'affichage de l'attaque
 			}
@@ -269,23 +272,28 @@ public class Gestionatq {
 	}
 	
 	void rendercible(Jeu jeu) {
-		for(Case cible: atqlist) {
-			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-			if (map.selectionnemenu.unite.type.compareTo("zone1")==0) {
-				if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) 
-				{jeu.gc.drawImage(viseurzone1, x-map.taillec, y-map.taillec);}
-			} else if (map.selectionnemenu.unite.type.compareTo("zone2")==0) {
-				if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) 
-				{jeu.gc.drawImage(viseurzone2, x-map.taillec*2, y-map.taillec*2);}
-			} else {
+		if((map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2"))!=0) {
+			for(Case cible: atqlist) {
+				int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+				int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
 				//si on est sur une unite ennemi :
 				if(!(cible.unite == null)&&(cible.unite.joueur != map.selectionnemenu.unite.joueur)) {jeu.gc.drawImage(viseur, x, y);
 				}
 				//si on est sur une unite alliee :
-				else if(!(cible.unite == null)) {jeu.gc.drawImage(viseursoin, x, y); 
+				else if(!(cible.unite == null)) {jeu.gc.drawImage(viseursoin, x, y);
 				}
 			}
+		}
+		else if (map.selectionnemenu.unite.type.compareTo("zone1")==0) {
+				int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
+				int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
+				jeu.gc.drawImage(viseurzone1, x-map.taillec, y-map.taillec);
+		} 
+		else if (map.selectionnemenu.unite.type.compareTo("zone2")==0) {
+				int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
+				int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
+				jeu.gc.drawImage(viseurzone2, x-map.taillec*2, y-map.taillec*2);
+			
 		}
 	}
 	
@@ -459,11 +467,11 @@ public class Gestionatq {
 	  	  	else {
 	  	  		//On enleve les pv :
 	  	  		animatqencoursligne=false;
+				animatq=0;
 	  	  		for (int i = 0;i<list.length;i++) {
 	  	  			if (list[i]!=-1) {
 	  	  				if (map.plateau[list[i]].unite != null) {
 	  	  					map.plateau[list[i]].unite.pv=Integer.min(Integer.max(map.plateau[list[i]].unite.pv - map.selectionnemenu.unite.dmg,0),map.plateau[list[i]].unite.pvmax); //le max c'est pour la mort, le min c'est pour le cas du heal ne pas overheal
-	  	  					animatq=0;
 	  	  					animatqencours=false;
 	  	  					if (map.plateau[list[i]].unite.pv <= 0) {
 	  	  						map.joueurs.get(map.plateau[list[i]].unite.joueur).remove(map.plateau[list[i]].unite); //on enleve l'unite de la liste d'unite du joueur
@@ -513,10 +521,10 @@ public class Gestionatq {
 	
 	int[] rangzone1(int center) {
 		int[] list = new int[5];
-		list[0]=center;
 		for (int i=0;i<list.length;i++) {
 			list[i]=-1;
 		}
+		list[0]=center;
 		if ((center-50>=0)&&(center-50<2500)) {list[1]=center-50;}
 		if ((center+50>=0)&&(center+50<2500)) {list[2]=center+50;}
 		if ((center-1>=0)&&(center-1<2500)) {list[3]=center-1;}
@@ -545,4 +553,64 @@ public class Gestionatq {
 		return list;
 	}
 	
+	/**Permet d'alleger l'ecriture des conditions pour le deplacements du curseur continus dans les zones
+	 * 
+	 * 
+	 * @param e le rang de la case a tester
+	 * @return
+	 */
+	boolean deplacementzoneadjacente(int e) {
+		return attaqueencours
+		&& (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")==0)
+		&& e<2500 && e>=0 
+		&& atqlist.contains(map.plateau[e]);
+	}
+	
+	/**Si on est en bordure d'une zone continue, change la case selectionne pour qu'elle corresponde a l'intuition
+	 * 
+	 * @param direction 0:droite 1:gauche 2:haut 3:bas
+	 */
+	void deplacementzonesaut(int direction) {
+		if( attaqueencours && atqlist.size() != 0 &&
+				map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")==0) {
+			int position = atqlist.indexOf(map.selectionne); //la position dans la liste de la case selectionne
+			if (direction ==0) { //on selectionne la case suivante dans la liste si elle est a droite sur la meme ligne
+				if ((atqlist.size()>position+1) && (atqlist.get(position+1).rang < map.selectionne.rang + 50)) {
+					map.selectionne = atqlist.get(position+1);
+				}
+			}
+			else if (direction ==1) { //on selectionne la case precedente dans la liste si elle est a gauche sur la meme ligne
+				if ((position-1 >= 0) && (atqlist.get(position-1).rang > map.selectionne.rang -50)) {
+					map.selectionne = atqlist.get(position-1);
+				}
+			}
+			else if (direction ==2) { //on selectionne la premiere case precedente dans la liste qui est sur une ligne au dessus
+				int k = 0; //entier qui sert a savoir si il y a un candidat ou non
+				while(k==0 && position-1 >= 0) {
+					position--;
+					if (atqlist.get(position).rang <= map.selectionne.rang - 50){
+						k=1;
+					}
+				}
+				if(k==1) {
+					map.selectionne = atqlist.get(position);
+				}
+			}
+			else if (direction ==3) { //on selectionne la premiere case suivante dans la liste qui est sur une ligne au dessous
+				int k = 0; //entier qui sert a savoir si il y a un candidat ou non
+				while(k==0 && atqlist.size()>position+1) {
+					position++;
+					if (atqlist.get(position).rang >= map.selectionne.rang + 50){
+						k=1;
+					}
+				}
+				if(k==1) {
+					map.selectionne = atqlist.get(position);
+				}
+			}
+			
+			map.adaptaffichage(map.selectionne.rang);
+		}
+				
+	}
 }

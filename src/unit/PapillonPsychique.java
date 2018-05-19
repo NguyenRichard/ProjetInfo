@@ -22,7 +22,7 @@ public class PapillonPsychique extends Unite{
 			pv=pvmax;
 			dmg=100;
 			cost=20;
-			type="zone2";
+			type="zone1";
 		}
 			
 		public String toString() {

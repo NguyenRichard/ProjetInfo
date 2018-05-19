@@ -252,10 +252,14 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-1,depl.deplist))) {
 								map.leftcurseur(); //on selectionne case pour deplacement
 							}
-							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
+							else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")!=0)) {
 								atq.downenemi(); //on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
+							else if (atq.deplacementzoneadjacente(map.selectionne.rang-1)) {
+								map.leftcurseur();
+							}
+							else {atq.deplacementzonesaut(1);}
 							updatemenu=true;
 							break;
 					case 3:
@@ -283,10 +287,14 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+1,depl.deplist))) {
 								map.rightcurseur(); //on selectionne case pour deplacement
 							}
-							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
+							else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")!=0)) {
 								atq.upenemi();//on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
+							else if (atq.deplacementzoneadjacente(map.selectionne.rang+1)) {
+								map.rightcurseur();
+							}
+							else {atq.deplacementzonesaut(0);}
 							updatemenu=true;
 							break;
 					case 3:
@@ -303,7 +311,12 @@ public class Jeu {
 					case 1:
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-50,depl.deplist))) {
 								map.upcurseur();//on selectionne case pour deplacement
-							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.upcurseur1();} //on bouge curseur du menu
+							} 
+							else if (atq.deplacementzoneadjacente(map.selectionne.rang-50)) {
+								map.upcurseur();
+							}
+							else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.upcurseur1();} //on bouge curseur du menu
+							else {atq.deplacementzonesaut(2);}
 							updatemenu=true;
 							break;
 					case 0: 
@@ -332,7 +345,12 @@ public class Jeu {
 					case 1:
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+50,depl.deplist))) {
 								map.downcurseur();//on selectionne case pour deplacement
-							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.downcurseur1();}//on bouge curseur du menu
+							}
+							else if (atq.deplacementzoneadjacente(map.selectionne.rang+50)) {
+								map.downcurseur();
+							}
+							else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.downcurseur1();}//on bouge curseur du menu
+							else {atq.deplacementzonesaut(3);}
 							updatemenu=true;
 							break;
 					case 0:
