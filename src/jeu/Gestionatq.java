@@ -240,7 +240,7 @@ public class Gestionatq {
 		 if (map.selectionne.unite == null) {
 			 return false;
 		 }
-		 else if (map.selectionne.unite.type.compareTo("healer") != 0) { //cas general (non healer)
+		 else if ((map.selectionne.unite.type.compareTo("healer")*map.selectionne.unite.type.compareTo("zone1")*map.selectionne.unite.type.compareTo("zone2")) != 0) { //cas general (non healer)
 			 if (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) ){ 
 				return false;
 			}
@@ -263,11 +263,12 @@ public class Gestionatq {
 	
 	void rendercase(Jeu jeu) {
 		for(Case cible: atqlist) {
-			int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-			int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-			if(cible.unite == null){
+			if ((jeu.updatemenu)||(cible.unite!=null)||(cible.batiment!=null)) {
+				int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
+				int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
 				jeu.gc.drawImage(red, x, y);
 			}
+			
 		}
 	}
 	

@@ -120,7 +120,7 @@ public class Jeu {
 			    			depl.render(this);
 			    			depl.arrowrender(this);
 			    		}
-			    		if (atq.attaqueencours&&updatemenu) {
+			    		if (atq.attaqueencours) {
 			    			atq.rendercase(this);
 			    		}
 			    		if (atq.attaqueencours) {
