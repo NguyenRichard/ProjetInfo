@@ -395,6 +395,7 @@ public class Jeu {
 		else {
 			fin();
 		}
+		}
 	}
 
 	/**

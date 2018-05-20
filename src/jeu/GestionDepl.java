@@ -60,7 +60,7 @@ public class GestionDepl {
 		if ((map.selectionne.unite.joueur!=jeu.entrainjouer)) {
 			return false;
 		}
-		return (map.selectionne.unite.restdeplacement>=carre.terrain.deplacement);
+		return (carre.terrain.deplacement != 100);
 	}
 
 	/**
