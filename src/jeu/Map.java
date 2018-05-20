@@ -8,8 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import batiments.Crystal;
 import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
@@ -384,6 +382,8 @@ public class Map {
 	 * @param k TODO
 	 * @param codeS TODO
 	 * @param creationMap TODO
+	 * 
+	 * @SuppressWarnings
 	 */
 	void remakejoueur(int k, int codeS) {
 		FXDialogs fx = new FXDialogs();
@@ -395,9 +395,12 @@ public class Map {
 			//String str = saisieUtilisateur.next();
 			//joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
 			//System.out.println("Veuillez saisir le nom du joueur " + joueurunite +  " :");
+			
+			@SuppressWarnings("static-access")
 			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurunite +  " :",  "King Arthur");
 			joueurs.get(joueurunite).changename(str);
 			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :");
+			@SuppressWarnings("static-access")
 			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurunite)+ " :", "Armee d'insectes", "Armee des morts", "Armee myhtologique chinoise");
 			int dec=0; 
 			if (str2 == "Armee d'insectes") {
@@ -413,9 +416,11 @@ public class Map {
 		if ((!(joueurs.get(joueurbatiment).isalive))&&(joueurbatiment != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ete personnaliser
 			joueurs.get(joueurbatiment).isalive = true;
 			//System.out.println("Veuillez saisir le nom du joueur " + joueurbatiment +  " :");
+			@SuppressWarnings("static-access")
 			String str = fx.showTextInput("nom de joueur", "Veuillez saisir le nom du joueur " + joueurbatiment +  " :", "King Arthur");
 			joueurs.get(joueurbatiment).changename(str);
 			//System.out.println("Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :");
+			@SuppressWarnings("static-access")
 			String str2 = fx.showConfirm("nom de joueur", "Veuillez saisir une armee de "+joueurs.get(joueurbatiment)+ " :", "Armee d'insectes", "Armee des morts", "Armee myhtologique chinoise");
 			int dec=0; 
 			if (str2 == "Armee d'insectes") {

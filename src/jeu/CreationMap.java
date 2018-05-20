@@ -1,17 +1,11 @@
 package jeu;
 
 import javax.sound.sampled.Clip;
-
-import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import son.Son;
-import terrain.*;
 import terrain.Void;
-import unite.*;
-import batiments.*;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

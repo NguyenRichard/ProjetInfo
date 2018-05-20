@@ -1,9 +1,6 @@
 package jeu;
 
 import java.util.ArrayList;
-
-import javax.sound.sampled.Clip;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import son.Son;

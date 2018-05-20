@@ -1,12 +1,9 @@
 package jeu;
 
 import javax.sound.sampled.Clip;
-
 import java.util.ArrayList;
-
 import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

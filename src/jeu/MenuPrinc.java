@@ -3,17 +3,7 @@ package jeu;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
-import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
 public class MenuPrinc {
@@ -39,6 +29,7 @@ public class MenuPrinc {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	void touch(KeyCode code) throws CloneNotSupportedException {
 
 		switch(code) {

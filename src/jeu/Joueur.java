@@ -1,13 +1,9 @@
 package jeu;
 
-import batiments.Portal;
 import java.util.ArrayList;
-
 import batiments.Crystal;
 import batiments.Portal;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+
 
 public class Joueur {
 	private String name;

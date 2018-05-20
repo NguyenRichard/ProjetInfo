@@ -13,10 +13,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import son.Son;
-
 import javax.sound.sampled.Clip;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+
 
 public class Main extends Application { //Nouveau test
 
