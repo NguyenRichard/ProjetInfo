@@ -8,7 +8,7 @@ public class Eau extends Terrain {
 	
 	public Eau(int taille){
 		super(taille);
-		maxcompteur = 1800;
+		maxcompteur = 4000;
 		images = new Image[4];
 		for (int k = 0; k < images.length; k++ ) {
 			images[k] = new Image("terrains/eau"+k+".png",taille, taille,false,false);
