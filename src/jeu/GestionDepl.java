@@ -74,7 +74,7 @@ public class GestionDepl {
 
 		for(int i = 1; i<deplist.length;i++) {
 			if (deplist[i] != -1) {
-				if((jeu.updatemenu)||(jeu.map.plateau[deplist[i]].unite!=null)||(jeu.map.plateau[deplist[i]].batiment!=null)) { //on render si on doit update ou si il y a un element sur la case
+				if((jeu.updatemenu)||(jeu.map.plateau[deplist[i]].unite!=null)||(jeu.map.plateau[deplist[i]].batiment!=null)||(jeu.map.plateau[deplist[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
 					int x = (deplist[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 					int y = (deplist[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
 					jeu.gc.drawImage(green, x, y);
@@ -107,7 +107,7 @@ public class GestionDepl {
 			
 			
 			for (int i=1;i<chemin.length-1;i++) {
-				if((jeu.updatemenu)||(jeu.map.plateau[chemin[i]].unite!=null)||(jeu.map.plateau[chemin[i]].batiment!=null)) { //on render si on doit update ou si il y a unun element sur la case
+				if((jeu.updatemenu)||(jeu.map.plateau[chemin[i]].unite!=null)||(jeu.map.plateau[chemin[i]].batiment!=null)||(jeu.map.plateau[chemin[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a unun element sur la case
 					if (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+50))) {
 						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
@@ -136,7 +136,7 @@ public class GestionDepl {
 				}
 			}
 			int n = chemin.length;
-			if((jeu.updatemenu)||(jeu.map.plateau[chemin[n-1]].unite!=null)||(jeu.map.plateau[chemin[n-1]].batiment!=null)) { //on render si on doit update ou si il y a un element sur la case
+			if((jeu.updatemenu)||(jeu.map.plateau[chemin[n-1]].unite!=null)||(jeu.map.plateau[chemin[n-1]].batiment!=null)||(jeu.map.plateau[chemin[n-1]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
 				if (chemin[n-1]==chemin[n-2]+50) {
 					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;

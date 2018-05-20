@@ -263,7 +263,7 @@ public class GestionAtq {
 	
 	void rendercase(Jeu jeu) {
 		for(Case cible: atqlist) {
-			if ((jeu.updatemenu)||(cible.unite!=null)||(cible.batiment!=null)) {
+			if ((jeu.updatemenu)||(cible.unite!=null)||(cible.batiment!=null)||(cible.terrain.toString().compareTo("eau")==0)) {
 				int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 				int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
 				jeu.gc.drawImage(red, x, y);
