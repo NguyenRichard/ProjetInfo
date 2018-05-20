@@ -33,6 +33,7 @@ public class MenuInfo {
 		Case selectionne = map.selectionne;
 		if (selectionne != null) {
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
 			if (selectionne.unite!=null) {
 				InfoUniterender(gc, selectionne.unite, positionymenuinfo, false, false);
 			} else if (selectionne.batiment!=null) {
@@ -122,6 +123,18 @@ public class MenuInfo {
 				if (portail.uniteainvoque!=null) {
 					portail.uniteainvoque.render(gc, positionxmenuinfo+150, positionymenuinfo+50);
 >>>>>>> 8d5e0a4 up
+=======
+			if (selectionne.unite!=null) {
+				InfoUniterender(gc, selectionne.unite, positionymenuinfo, false, false);
+			} else if (selectionne.batiment!=null) {
+				int animcompteur= selectionne.batiment.animcompteur;
+				int maxcompteur = selectionne.batiment.maxcompteur;
+				this.images = selectionne.batiment.images;
+				int k = animcompteur / (maxcompteur/images.length);
+				if (k >= images.length) {
+					animcompteur = 0;
+					k=0;
+>>>>>>> 7699536 up
 				}
 				gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
 				gc.fillText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
