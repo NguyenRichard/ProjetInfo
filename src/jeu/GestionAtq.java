@@ -108,7 +108,7 @@ public class GestionAtq {
 					sd.runSoundattack();
 					animatqencoursligne=true;
 				}
-				else if (type.compareTo("healer")== 0) {
+				else if (type.compareTo("soigneur")== 0) {
 					// Son de soin
 					sd.runSoundheal();
 					animatqencours=true;
@@ -223,7 +223,7 @@ public class GestionAtq {
 		atqenemi = new 	ArrayList<Case>();
 		for(Case cible: atqlist) {
 			if (cible.unite != null) {
-				if ((cible.unite.joueur==map.selectionnemenu.unite.joueur)&&(map.selectionnemenu.unite.type.compareTo("healer")== 0))
+				if ((cible.unite.joueur==map.selectionnemenu.unite.joueur)&&(map.selectionnemenu.unite.type.compareTo("soigneur")== 0))
 					atqenemi.add(cible);
 				else if (cible.unite.joueur!=map.selectionnemenu.unite.joueur) {
 					atqenemi.add(cible);
@@ -240,12 +240,12 @@ public class GestionAtq {
 		 if (map.selectionne.unite == null) {
 			 return false;
 		 }
-		 else if ((map.selectionne.unite.type.compareTo("healer")*map.selectionne.unite.type.compareTo("zone1")*map.selectionne.unite.type.compareTo("zone2")) != 0) { //cas general (non healer)
+		 else if ((map.selectionne.unite.type.compareTo("soigneur")*map.selectionne.unite.type.compareTo("zone1")*map.selectionne.unite.type.compareTo("zone2")) != 0) { //cas general (non soigneur)
 			 if (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) ){ 
 				return false;
 			}
 		 }
-		 else if (map.selectionne.unite.type.compareTo("healer") == 0){ //si l'unite est un healer il faut cibler les allies et non les ennemis
+		 else if (map.selectionne.unite.type.compareTo("soigneur") == 0){ //si l'unite est un soigneur il faut cibler les allies et non les ennemis
 			 if (carre.unite != null && (map.selectionne.unite.joueur != carre.unite.joueur) ){
 				return false;
 			}
@@ -438,15 +438,15 @@ public class GestionAtq {
 	void animdegat(String type, GraphicsContext gc) {
 		int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
 		int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
-		if (type.compareTo("healer")!= 0){ //cas ou le type n'est pas healer, a changer si animation differente pour d'autres types que healer
+		if (type.compareTo("soigneur")!= 0){ //cas ou le type n'est pas soigneur, a changer si animation differente pour d'autres types que soigneur
 			if (animatq<4) {gc.drawImage(Im_deg, x+(map.taillec/2), y);}
 			else if(animatq<8) {gc.drawImage(Im_deg, x, y+(map.taillec/2));}
 			else if(animatq<12) {gc.drawImage(Im_deg, x, y);}
 			else if(animatq<16) {gc.drawImage(Im_deg, x+(map.taillec/2), y+(map.taillec/2));}
 			else if (animatq<30) {gc.drawImage(Im_deg, x, y, map.taillec, map.taillec);;}
 		}
-		else if (type.compareTo("healer")== 0) { //cas ou le type est un healer. je laisse la condition a verifier au cas ou 
-			if (animatq<4) {gc.drawImage(Im_hea, x+(map.taillec/2), y);} //on fait le choix de mettre d'autres animations pour des autres types d'unites que healer
+		else if (type.compareTo("soigneur")== 0) { //cas ou le type est un soigneur. je laisse la condition a verifier au cas ou 
+			if (animatq<4) {gc.drawImage(Im_hea, x+(map.taillec/2), y);} //on fait le choix de mettre d'autres animations pour des autres types d'unites que soigneur
 			else if(animatq<8) {gc.drawImage(Im_hea, x, y+(map.taillec/2));}
 			else if(animatq<12) {gc.drawImage(Im_hea, x, y);}
 			else if(animatq<16) {gc.drawImage(Im_hea, x+(map.taillec/2), y+(map.taillec/2));}
@@ -503,8 +503,8 @@ public class GestionAtq {
 	  	  }		
 	    }
 	    
-	    if(pvendiminution) { //Animation de chute des pv (ou augmentation pour healer)
-	    	if (map.selectionnemenu.unite.dmg < 0) { //cas du healer
+	    if(pvendiminution) { //Animation de chute des pv (ou augmentation pour soigneur)
+	    	if (map.selectionnemenu.unite.dmg < 0) { //cas du soigneur
 	    		map.selectionne.unite.pv ++;
 	    		if(map.selectionne.unite.pv>=pvfin) {
 		  	  		pvendiminution=false;

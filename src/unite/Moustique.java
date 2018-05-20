@@ -20,7 +20,7 @@ public class Moustique extends Unite{
 		pvmax=99;
 		pv=pvmax;
 		dmg=-30;
-		type = "healer";
+		type = "soigneur";
 		cost=20;
 		volant = true;
 	}
