@@ -52,10 +52,14 @@ public class Map {
 	Case selectionnemenu;
 	Image fond;
 	int nombrecaseaffichee;
-	/**Liste des joueurs avec leurs unit�s, batiments etc... */
+	/**Liste des joueurs avec leurs unitï¿½s, batiments etc... */
 	ArrayList<Joueur> joueurs;
 	/**Tableau d'element permettant de faire le lien entre le code de l'element et le type de terrain */
 	ArrayList<Terrain> referencecodeterrain;
+	/**Nom du joueur qui vient de perdre, vaut null si le jeu est normal*/
+	String nomperdant;
+	/**Timer pour l'affichage de la mort d'un joueur */
+	int affichageperdu;
 	
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -93,10 +97,11 @@ public class Map {
 		selectionne = plateau[51];
 		//initialisation des joueurs :
 		joueurs = new ArrayList<Joueur>();
-        for (int i = 0; i <= 4;i++) {
-        	joueurs.add(new Joueur("sansnom"));
-        }
-        ecranfin = 0;
+                for (int i = 0; i <= 4;i++) {
+        	        joueurs.add(new Joueur("sansnom"));
+  	        }
+                ecranfin = 0;
+	        nomperdant=null;
 	}
 /*_Affichager des sprites___________________________________________________________________________________________________________ */
 	
@@ -362,8 +367,11 @@ public class Map {
 				}
 			}
 			if (j==1) {
-				System.out.println("gagn� ");
+				System.out.println("gagné ");
 				ecranfin=res;
+			}
+			else {
+				nomperdant=perdant.toString();
 			}
 			
 	}
@@ -378,9 +386,9 @@ public class Map {
 	void remakejoueur(int k, int codeS) {
 		FXDialogs fx = new FXDialogs();
 		int joueurunite = (codeS/(50*50))%50;
-		if ((!(joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore �t� personnaliser
+		if ((!(joueurs.get(joueurunite).isalive))&&(joueurunite != 0)){ //si le joueur n'est pas en vie lors de la creation c'est qu'il n'a pas encore ï¿½tï¿½ personnaliser
 			joueurs.get(joueurunite).isalive = true;
-			//Pour entrée des String depuis la console
+			//Pour entrÃ©e des String depuis la console
 			//Scanner saisieUtilisateur = new Scanner(System.in);
 			//String str = saisieUtilisateur.next();
 			//joueurs.get(joueurunite).typearmee=saisieUtilisateur.nextInt();
@@ -423,7 +431,7 @@ public class Map {
 	 * @param k
 	 */
 	int remaketerrain(int k, int codeS) {
-		plateau[k].terrain = referencecodeterrain.get(0); //le vide par d�faut
+		plateau[k].terrain = referencecodeterrain.get(0); //le vide par dï¿½faut
 		for (int j =1; j<referencecodeterrain.size();j++) {
 			if (codeS%50 == j){
 				this.plateau[k].terrain = referencecodeterrain.get(j); //on change la map
@@ -481,7 +489,7 @@ public class Map {
 					addunite(k,new ArcherSquelette(taillec,joueur));
 				}
 				if (startgame) {
-					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unit� � la liste d'unit�s du bon joueur si on est en jeu
+					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unitï¿½ ï¿½ la liste d'unitï¿½s du bon joueur si on est en jeu
 				}
 			}
 			/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
@@ -513,7 +521,7 @@ public class Map {
 	
 		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (startgame&&(joueur != 0)) {
-				joueurs.get(joueur).add(plateau[k]); //on ajoute le batiment � la liste d'unit�s du bon joueur si on est en jeu et que le batiment n'est pas neutre
+				joueurs.get(joueur).add(plateau[k]); //on ajoute le batiment ï¿½ la liste d'unitï¿½s du bon joueur si on est en jeu et que le batiment n'est pas neutre
 			}
 		}
 		else {
@@ -552,8 +560,33 @@ public class Map {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
+		}
+	void affichageperdant(GraphicsContext gc){
+		affichageperdu++;
+		if (affichageperdu<120) {
+			gc.setFill(Color.DARKRED);
+			gc.setLineWidth(2);
+			int distaucentre =Integer.min(300,Integer.max(9,nomperdant.length())*17);
+			gc.fillRoundRect(355-distaucentre, 230, 2*distaucentre, 250, 20, 20);
+			gc.strokeRoundRect(355-distaucentre, 230, 2*distaucentre, 250, 20, 20);
+			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 60));
+			gc.setFill(Color.BISQUE);
+			gc.setStroke(Color.BLACK);
+			gc.setLineWidth(1);
+			gc.fillText(nomperdant, 355-Integer.min(250,nomperdant.length()*16), 300, 600);
+			gc.strokeText(nomperdant, 355-Integer.min(250,nomperdant.length()*16), 300, 600);
+			
+			gc.fillText("a perdu", 240, 370);
+			gc.strokeText("a perdu", 240, 370);
+			
+			gc.fillText("RIP", 310, 450);
+			gc.strokeText("RIP", 310, 450);
+		}
+		else {
+			affichageperdu=0;
+			nomperdant=null;
+		}
+}
 	   
 }
 
