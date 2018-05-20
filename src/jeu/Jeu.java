@@ -71,7 +71,7 @@ public class Jeu {
 		menudroite= new Menuaction(gc,map.taillec*map.nombrecaseaffichee,width,height);
 		menuinfo = new MenuInfo(map,menudroite.positionxmenu);
 		updatemenu=false;
-		menuinvoc = new Menuinvocation(new Portal(75,0,0));
+		menuinvoc = new Menuinvocation(new Portal(75,0,0),menudroite.positionxmenu);
 		menuoption = new Menuoption(0,width,height);
 		menuson = new MenuSon(width,height, clip, sd);
 		this.sd=sd;

@@ -13,6 +13,6 @@ public class Terre extends Terrain{
 		deplacement=1;
 	}
 	public String toString() {
-		return "Terre";
+		return "Terre : \ncout deplacement = " + deplacement;
 	}
 }

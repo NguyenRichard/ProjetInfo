@@ -14,6 +14,6 @@ public class Marais extends Terrain {
 		deplacement=2;
 	}
 	public String toString() {
-		return "Marais";
+		return "Marais : \ncout deplacement = " + deplacement;
 	}
 }
