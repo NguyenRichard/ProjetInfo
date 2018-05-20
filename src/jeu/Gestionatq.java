@@ -589,7 +589,7 @@ public class Gestionatq {
 				int k = 0; //entier qui sert a savoir si il y a un candidat ou non
 				while(k==0 && position-1 >= 0) {
 					position--;
-					if (atqlist.get(position).rang <= map.selectionne.rang - 50){
+					if ((atqlist.get(position).rang)%50 == (map.selectionne.rang)%50){
 						k=1;
 					}
 				}
@@ -601,7 +601,7 @@ public class Gestionatq {
 				int k = 0; //entier qui sert a savoir si il y a un candidat ou non
 				while(k==0 && atqlist.size()>position+1) {
 					position++;
-					if (atqlist.get(position).rang >= map.selectionne.rang + 50){
+					if ((atqlist.get(position).rang)%50 == (map.selectionne.rang)%50){
 						k=1;
 					}
 				}
