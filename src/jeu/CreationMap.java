@@ -1,14 +1,15 @@
 package jeu;
 
 import javax.sound.sampled.Clip;
-import Sounds.Sound;
+
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import son.Son;
 import terrain.*;
 import terrain.Void;
-import unit.*;
+import unite.*;
 import batiments.*;
 
 import java.io.FileNotFoundException;
@@ -32,7 +33,7 @@ public class CreationMap {
     int positionxmenu;
     MenuOption menuoption;
     MenuSon menuson;
-    Sound sd;
+    Son sd;
     Clip clip;
 	
 	/*_Methode de base de l'objet_______________________________________________________________________________________________________ */
@@ -42,7 +43,7 @@ public class CreationMap {
 	 * 
 	 * @param gc le contexte graphique
 	 */
-	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame, Sound sd, Clip clip){
+	CreationMap(GraphicsContext gc,String txt,int width,int height,boolean ingame, Son sd, Clip clip){
 		
 		map = new Map();
 		

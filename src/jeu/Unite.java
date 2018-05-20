@@ -21,6 +21,9 @@ public abstract class Unite extends Element implements Cloneable{
 	protected int dmg;
 	/**Represente le type de l'unite*/
 	protected String type;
+	/**Vrai si l'unite est volante, faux sinon*/
+	protected boolean volant;
+	/**Le cout en ressource pour invoquer l'unite via un portail*/
 	protected int cost;
 	/** Image qui s'affiche lors de la capture d'un batiment par cette unite*/
 	protected Image flag;
@@ -47,6 +50,7 @@ public abstract class Unite extends Element implements Cloneable{
 		}
 		valable=false;
 		type = "soldat";
+		volant = false;
 	}
 	public abstract String toString() ;
 	

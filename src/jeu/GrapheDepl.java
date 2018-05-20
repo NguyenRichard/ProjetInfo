@@ -1,6 +1,6 @@
 package jeu;
 
-public class CreateGrapheDepl {
+public class GrapheDepl {
 	
 	int depl;
 	int[][] cases;
@@ -9,8 +9,9 @@ public class CreateGrapheDepl {
 	int Nmatricedepl;
 	Map map;
 	int entraindejouer;
+	boolean volant;
 	
-	public CreateGrapheDepl(int depl,int firstcase,int centre, int Nmatricedepl, Map map, int entraindejouer) {
+	public GrapheDepl(int depl,int firstcase,int centre, int Nmatricedepl, Map map, int entraindejouer, boolean volant) {
 		this.depl=depl;
 		this.firstcase=firstcase;
 		this.centre=centre;
@@ -18,6 +19,7 @@ public class CreateGrapheDepl {
 		this.map=map;
 		this.cases=transforme();
 		this.entraindejouer=entraindejouer;
+		this.volant = volant;
 	}
 	
 	Graphe generate() {
@@ -63,7 +65,10 @@ public class CreateGrapheDepl {
 					res[i][j]=100;
 				}
 				else {
-					res[i][j]=map.plateau[firstcase+i*NN+j].terrain.deplacement;
+					if (!volant) {
+						res[i][j]=map.plateau[firstcase+i*NN+j].terrain.deplacement;
+					}
+					else {res[i][j]=1;} //on ne prend pas en compte le cout en deplacement du terrain si c'est une unite volante
 				}
 			}
 		}

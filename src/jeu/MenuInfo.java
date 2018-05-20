@@ -120,6 +120,25 @@ public class MenuInfo {
 			gc.strokeText(txtportee, positionxmenuinfo*1.15, positionymenuinfo+150);
 		}
 		
+		if (unite.volant) { //affichage dans menuinfo des specifications liees au type de l'unite
+			String type = "type : " + unite.type + " | " + "volant";
+			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+			gc.setFill(Color.BISQUE);
+			gc.setStroke(Color.BLACK);
+			gc.setLineWidth(1);
+			gc.fillText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
+			gc.strokeText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
+		}
+		else {
+			String type = "type : " + unite.type + " | " + "terrestre";
+			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+			gc.setFill(Color.BISQUE);
+			gc.setStroke(Color.BLACK);
+			gc.setLineWidth(1);
+			gc.fillText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
+			gc.strokeText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
+		}
+		
 		String txtnom = "";
 		if(uniteinvoquee) {
 			txtnom = "Unite invoquée : ";
@@ -131,13 +150,13 @@ public class MenuInfo {
 		gc.strokeText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
 		
 		if(pourinvocation) {
-			String txtcout = "coût : " + unite.cost;
+			String txtcout = "cout : " + unite.cost;
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-			gc.setFill(Color.BISQUE);
+			gc.setFill(Color.LIMEGREEN);
 			gc.setStroke(Color.BLACK);
 			gc.setLineWidth(1);
-			gc.fillText(txtcout, positionxmenuinfo*1.15, positionymenuinfo+200);
-			gc.strokeText(txtcout, positionxmenuinfo*1.15, positionymenuinfo+200);
+			gc.fillText(txtcout, positionxmenuinfo*1.29, positionymenuinfo+100);
+			gc.strokeText(txtcout, positionxmenuinfo*1.29, positionymenuinfo+100);
 		}
 		else {
 			int ratiopvpvmax = (int) 100*unite.pv/unite.pvmax;

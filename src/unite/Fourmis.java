@@ -1,4 +1,4 @@
-package unit;
+package unite;
 
 import javafx.scene.image.Image;
 import jeu.Unite;

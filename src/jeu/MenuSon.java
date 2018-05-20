@@ -5,9 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import son.Son;
 
 import javax.sound.sampled.Clip;
-import Sounds.Sound;
 
 public class MenuSon {
 	/** Position du menu sur l'axe des abscisses*/
@@ -26,10 +26,10 @@ public class MenuSon {
 	boolean inmenusd;
 	boolean update;
 	Clip clip;
-	Sound sd;
+	Son sd;
 	
 	
-	MenuSon(int width, int height, Clip clip, Sound sd){
+	MenuSon(int width, int height, Clip clip, Son sd){
 		menuim=new Image("menuson.png",250,370,false,false);
 		curseur=new Image("curseurmenuson.png",250,370,false,false);
 		positionxmenu=(int) width/2-125;

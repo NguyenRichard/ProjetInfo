@@ -1,4 +1,4 @@
-package unit;
+package unite;
 
 import javafx.scene.image.Image;
 import jeu.Unite;
@@ -22,6 +22,7 @@ public class Moustique extends Unite{
 		dmg=-30;
 		type = "healer";
 		cost=20;
+		volant = true;
 	}
 	
 	public String toString() {

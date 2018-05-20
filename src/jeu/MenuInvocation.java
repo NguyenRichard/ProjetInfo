@@ -18,6 +18,8 @@ public class MenuInvocation {
 	Image confirmation;
 	/** Cursuer du popup confiramtion */
 	Image curseurconf;
+	/** Indicateur de si l'unite est dans les moyens du joueur*/
+	Image indicateurvalide;
 	/** Portail ou se deroule l'invocation*/
 	Portal portail;
 	/** Position du curseur */
@@ -38,6 +40,7 @@ public class MenuInvocation {
 		curseur = new Image("menuinvoc/curseurinvoc.png", 730, 75, false, false );
 		curseurconf= new Image("menuinvoc/confirmationcurseur.png", 90, 40,false,false);
 		confirmation= new Image("menuinvoc/confirmation.png",250,100,false,false);
+		indicateurvalide = new Image("indicateurvalide.png",32,32,false,false);
 		menuinfoinvoc = new MenuInfo(positionxmenuinfo);
 		this.portail = portail;
 		positioncurseur = 0;
@@ -46,7 +49,7 @@ public class MenuInvocation {
 		positioncurseurconf=0;
 	}
 	
-	void render(GraphicsContext gc) {
+	void render(GraphicsContext gc,Joueur joueur) {
 		gc.drawImage(fond, 0, 0);
 		gc.drawImage(curseur, 10 ,25+positioncurseur*100);
         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -57,6 +60,9 @@ public class MenuInvocation {
 			gc.setFill(Color.WHITE);
 	        gc.fillText(cur.toString()+" -  Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
 	        gc.strokeText(cur.toString()+" -  Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
+	        if (0 <= joueur.ressources-cur.cost) {
+	        	gc.drawImage(indicateurvalide,positionxmenu+600,positionymenu+25+compteur);
+	        }
 			compteur+=100;
 		}
 		portail.render(gc, 885, 660);

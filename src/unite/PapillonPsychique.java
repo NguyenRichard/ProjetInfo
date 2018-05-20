@@ -1,4 +1,4 @@
-package unit;
+package unite;
 
 import javafx.scene.image.Image;
 import jeu.Unite;
@@ -21,8 +21,9 @@ public class PapillonPsychique extends Unite{
 			pvmax=99;
 			pv=pvmax;
 			dmg=100;
-			cost=20;
+			cost=100;
 			type="zone1";
+			volant = true;
 		}
 			
 		public String toString() {

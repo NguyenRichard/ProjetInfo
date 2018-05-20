@@ -1,19 +1,19 @@
-package unit;
+package unite;
 import javafx.scene.image.Image;
 import jeu.Unite;
 
-public class TankSquelette extends Unite{
+public class SkeletonSoldier extends Unite{
 
-	public TankSquelette(int taille, int joueur) {
+	public SkeletonSoldier(int taille, int joueur) {
 			super(taille,joueur);
 			images = new Image[6];
 			for (int k = 0; k < images.length; k++ ) {
-				images[k] = new Image("Tank_Squelette/Tank_Squelette_"+k+".png",taille, taille,false,false);
+				images[k] = new Image("Skeleton_Soldier/Skeleton_Soldier_"+k+".png",taille, taille,false,false);
 			}
 			deplacement=3;
 			restdeplacement=deplacement;
 			valable=true;
-			maxcompteur = 100;
+			maxcompteur = 75;
 			portee = new int[] {0,1};
 			pvmax=99;
 			pv=pvmax;
@@ -21,9 +21,8 @@ public class TankSquelette extends Unite{
 		}
 		
 		public String toString() {
-			return "Tank Squelette";
+			return "Soldat Squelette";
 		}
 		
 
 }
-

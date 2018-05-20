@@ -1,4 +1,4 @@
-package Sounds;
+package son;
 
 import java.io.IOException;
 import java.net.URL;
@@ -11,12 +11,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 
-public class Sound  {
+public class Son  {
 	public int soundlevelmusic; // max 0, min 30
 	public int soundleveleffect; // max 0, min 30
 	
 	
-	public Sound() {
+	public Son() {
 		soundlevelmusic=5;
 		soundleveleffect=10;
 	}

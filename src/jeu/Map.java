@@ -20,16 +20,16 @@ import javafx.scene.text.FontWeight;
 import terrain.Marais;
 import terrain.Terre;
 import terrain.Void;
-import unit.Abeille;
-import unit.AbeilleSamourai;
-import unit.ArcherSquelette;
-import unit.EpeisteVolant;
-import unit.Fourmis;
-import unit.Moustique;
-import unit.PapillonPsychique;
-import unit.Scarabe;
-import unit.SkeletonSoldier;
-import unit.TankSquelette;
+import unite.Abeille;
+import unite.AbeilleSamourai;
+import unite.ArcherSquelette;
+import unite.EpeisteVolant;
+import unite.Fourmis;
+import unite.Moustique;
+import unite.PapillonPsychique;
+import unite.Scarabe;
+import unite.SkeletonSoldier;
+import unite.TankSquelette;
 
 
 

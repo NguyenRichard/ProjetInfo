@@ -1,6 +1,5 @@
 package jeu;
 
-import Sounds.Sound;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import son.Son;
+
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -34,7 +35,7 @@ public class Main extends Application { //Nouveau test
 	    stage.setResizable(false);
 	    
 	    // Pour l'instant je le mets ici mais on peut le changer de place ensuite
-	 	Sound sd = new Sound();
+	 	Son sd = new Son();
 	 	Clip clip = sd.boucle();
 
 	    Group root = new Group();

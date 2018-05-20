@@ -1,7 +1,7 @@
 package jeu;
 
 import javax.sound.sampled.Clip;
-import Sounds.Sound;
+
 import java.util.ArrayList;
 
 import batiments.Portal;
@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import son.Son;
 
 public class Jeu {
 	/**Entier qui indique quel joueur est en train de jouer */
@@ -42,7 +43,7 @@ public class Jeu {
 	MenuAction menudroite;
 	MenuOption menuoption;
 	MenuSon menuson;
-	Sound sd;
+	Son sd;
 	Clip clip;
 
 	
@@ -57,7 +58,7 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc, int width, int height, Sound sd, Clip clip){
+	Jeu(GraphicsContext gc, int width, int height, Son sd, Clip clip){
 		this.map = new Map();
 		tour = 0;
 		entrainjouer=1;
@@ -135,7 +136,7 @@ public class Jeu {
 			}
 		}
 		else {
-			menuinvoc.render(gc);
+			menuinvoc.render(gc,map.joueurs.get(entrainjouer));
 		}
 	}
 /*_Controle du clavier____________________________________________________________________________________________________________ */	

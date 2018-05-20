@@ -9,7 +9,7 @@ public class GestionDepl {
 	int[] deplist;
 	Map map;
 	/** Objet permettant de convertir la matrice en graphe et vice-versa */
-	CreateGrapheDepl cgd;
+	GrapheDepl cgd;
 	/** Objet permettant de realiser l'algorithme de Dijkstra */
 	Dijkstra dijkstra;
 	/**Objet graphe */
@@ -90,7 +90,8 @@ public class GestionDepl {
 			
 			// Plus court chemin entre curseur et centre
 			int depl = map.selectionnemenu.unite.deplacement;
-			cgd=new CreateGrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer);
+			boolean volant = map.selectionnemenu.unite.volant;
+			cgd=new GrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer,volant);
 			cgd.transforme();
 			int newcenter = (center/50-firstcase/50)*(2*depl+1)+(center%50-firstcase%50);
 			int newcursor = (cursor/50-firstcase/50)*(2*depl+1)+(cursor%50-firstcase%50);
@@ -198,7 +199,8 @@ public class GestionDepl {
 	 */
 	void listUpdate() {
 		
-		int depl = map.selectionne.unite.deplacement; 
+		int depl = map.selectionne.unite.deplacement;
+		boolean volant = map.selectionnemenu.unite.volant;
 		int center = map.selectionne.rang;
 		deplist = new int[(2*depl+1)*(2*depl+1)];
 		
@@ -226,7 +228,7 @@ public class GestionDepl {
 			firstcase=((center/50)-depl)*50+center%50-depl;
 		}
 		
-		cgd=new CreateGrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer);
+		cgd=new GrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer,volant);
 		cgd.transforme();
 		
 		

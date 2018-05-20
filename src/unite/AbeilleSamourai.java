@@ -1,4 +1,4 @@
-package unit;
+package unite;
 
 import javafx.scene.image.Image;
 import jeu.Unite;
@@ -21,7 +21,8 @@ public class AbeilleSamourai extends Unite{
 		pv=pvmax;
 		dmg=50;
 		cost=20;
-		type="finisher";
+		type="assassin";
+		volant = true;
 	}
 		
 	public String toString() {

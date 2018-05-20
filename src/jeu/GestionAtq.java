@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import javax.sound.sampled.Clip;
 
-import Sounds.Sound;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import son.Son;
 import terrain.Void;
 
 public class GestionAtq {
@@ -38,9 +38,9 @@ public class GestionAtq {
 	Image viseurzone1;
 	Image viseurzone2;
 	boolean animatqencoursligne;
-	Sound sd;
+	Son sd;
 	
- 	GestionAtq(Map map, Sound sd){
+ 	GestionAtq(Map map, Son sd){
 		attaqueencours=false;
 		animatqencoursligne=false;
 		this.map=map;
@@ -59,7 +59,7 @@ public class GestionAtq {
 		this.sd = sd;
 	}
 	
-	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux et reset attaque si finisher */
+	/**Application des degats a l'unite selectionnee. Suppression de l'unite en cas de degats lethaux et reset attaque si assassin */
 	void prisedegat() {
 		map.selectionne.unite.pv--;
 
@@ -72,7 +72,7 @@ public class GestionAtq {
 	    		map.selectionne.batiment.pv=100;
 	    		map.selectionne.batiment.entraincapture=false;
 	    	}
-			if 	(map.selectionnemenu.unite.type.compareTo("finisher")== 0) {
+			if 	(map.selectionnemenu.unite.type.compareTo("assassin")== 0) {
 				map.selectionnemenu.unite.valable=true;
 				sd.runSoundrefresh();
 			}
