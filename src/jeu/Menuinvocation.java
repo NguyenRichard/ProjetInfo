@@ -8,6 +8,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class Menuinvocation {
+	/**Menu info pour les invocations */
+	MenuInfo menuinfoinvoc;
 	/**Image de fond du menuinvocation */
 	Image fond;
 	/**Image du curseur du menuinvocation */
@@ -30,12 +32,13 @@ public class Menuinvocation {
 	int positioncurseurconf;
 	
 	
-	Menuinvocation(Portal portail) {
+	Menuinvocation(Portal portail, int positionxmenuinfo) {
 		
 		fond = new Image("menuinvoc/fondmenuinvoc.png", 1100, 750, false, false);
 		curseur = new Image("menuinvoc/curseurinvoc.png", 730, 75, false, false );
 		curseurconf= new Image("menuinvoc/confirmationcurseur.png", 90, 40,false,false);
 		confirmation= new Image("menuinvoc/confirmation.png",250,100,false,false);
+		menuinfoinvoc = new MenuInfo(positionxmenuinfo);
 		this.portail = portail;
 		positioncurseur = 0;
 		positionxmenu=25;
@@ -62,6 +65,10 @@ public class Menuinvocation {
 		}
 		if (confirmationencours) {
 			this.renderconfirmation(gc);
+		}
+		menuinfoinvoc.InfoUniterender(gc, portail.listeinvoc.get(positioncurseur), 150, true, false);
+		if (portail.uniteainvoque!=null) {
+			menuinfoinvoc.InfoUniterender(gc, portail.uniteainvoque, 400, true, true);
 		}
 	}
 	
@@ -105,13 +112,13 @@ public class Menuinvocation {
 		}
 	}
 	
-	/** Change l'unite a invoque si le coût des ressources est suffisant*/
+	/** Change l'unite a invoquer si le coût des ressources est suffisant*/
 	void changeinvoque(Joueur joueur) {
 		Unite unite = portail.listeinvoc.get(positioncurseur);
 		if ( 0 <= joueur.ressources-unite.cost ) {
 			portail.uniteainvoque=unite;
 			portail.images=portail.images2;
-			portail.maxcompteur=portail.maxcompteur2;	
+			portail.maxcompteur=portail.maxcompteur2;
 			joueur.ressources-=unite.cost;
 		}
 		
