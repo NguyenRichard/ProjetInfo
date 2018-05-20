@@ -1,9 +1,16 @@
 package jeu;
 
+import javax.sound.sampled.Clip;
+import Sounds.Sound;
 import java.util.ArrayList;
+
+import batiments.Portal;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class Jeu {
 	/**Entier qui indique quel joueur est en train de jouer */
@@ -14,10 +21,8 @@ public class Jeu {
 	Map map;
 	/**Contexte graphique dans lequel on affiche le jeu */
 	GraphicsContext gc;
-	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour) */
+	/**Entier qui decrit si on est: 0 dans le jeu; 1 dans le menu1(deplacement/attaque/capture); 2 dans le menu2(changertour); 3 dans le menu3(invoquer)*/
 	int menu;
-	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer et 2 : capturer */
-	int positioncurseur1;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
 	/**Objet contenant les methodes pour gerer l'attaque entre unites*/
@@ -26,14 +31,21 @@ public class Jeu {
 	Gestiondepl depl;
 	/**Objet contenant les methodes pour gerer la capture des batiments*/
 	Gestioncapture capt;
-	Image menucache;
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
-	/**Variable qui contient les joueurs vivants*/
-	ArrayList<Joueur> joueurs;
-	
+	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
+	boolean updatemenu;
+	/** Menu pour les invocations*/
+	Menuinvocation menuinvoc;
+	/** Menu de droite pour faire les actions: Attaquer, se deplacer, capturer et passer le tour*/
+	Menuaction menudroite;
+	Menuoption menuoption;
+	MenuSon menuson;
+	Sound sd;
+	Clip clip;
 
+	
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
 	/**
@@ -45,48 +57,91 @@ public class Jeu {
 	 * Initialement, on se situe au tour 0 et le premier joueur indique par l'entier (entrainjouer=0) commence
 	 * 			
 	 */	
-	Jeu(GraphicsContext gc){
-		this.map = new Map(gc);
-		joueurs = new ArrayList<Joueur>();
-		map.joueurs=joueurs;
+	Jeu(GraphicsContext gc, int width, int height, Sound sd, Clip clip){
+		this.map = new Map();
 		tour = 0;
-		entrainjouer = 0;
-		this.gc = gc;
-		menu = 0;
-		positioncurseur1 = 0;
-		update = true;
-		atq = new Gestionatq(map, gc);
+		entrainjouer=1;
+		this.gc=gc;
+		menu=0;
+		update=true;
+		atq = new Gestionatq(map,sd);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menucache = new Image("wood.jpg",400,600,false,false);
 		ingame = false;
-		menuinfo = new MenuInfo(gc,map);
-		map.verifjoueursvivants();
+		menudroite= new Menuaction(gc,map.taillec*map.nombrecaseaffichee,width,height);
+		menuinfo = new MenuInfo(map,menudroite.positionxmenu);
+		updatemenu=false;
+		menuinvoc = new Menuinvocation(new Portal(75,0,0), menudroite.positionxmenu);
+		menuoption = new Menuoption(0,width,height);
+		menuson = new MenuSon(width,height, clip, sd);
+		this.sd=sd;
+		this.clip=clip;
 	}
-
-/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */
+/*_Mise a jour de l'affichage______________________________________________________________________________________________________ */	
+	
 	void update() {
-		if (!atq.animatqencours || !map.messagemortencours) {map.renderanim(gc); }//animation des sprites si pas de combat
-		if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
-			map.render(gc);
-			update=false;
-		}
-		
-		if (menu==1) {
-			if (depl.deplacementencours) {
-				depl.render(this);
-				depl.arrowrender(this);
+		if (menu!=3) {
+			if(menuoption.inmenuop) {
+				if (menuson.inmenusd) {
+					if(menuson.update) {
+						menuson.render(gc);
+						menuson.update=false;
+					}
+				}
+				else if(menuoption.update) {
+					menuoption.render(gc);
+					menuoption.update=false;
+				}
 			}
-			if (atq.attaqueencours) {
-				atq.render(this);
+			else {
+				if (atq.animatqencours||atq.pvendiminution) {
+					atq.renderanim(gc);
+				}
+				else if (atq.animatqencoursligne) {
+					atq.renderanimligne(gc);
+				}
+				else {	
+					map.renderanim(gc); //animation des sprites si pas de combat
+				}
+				if (update && map.nomperdant==null) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
+			         String tour = "Tour: "+this.tour;
+			         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+			         gc.setLineWidth(1);
+			         gc.setFill(Color.BISQUE);
+			         gc.setStroke(Color.BLACK);
+					 map.render(gc);
+					 update=false;
+			         gc.fillText(tour, menudroite.positionxmenu-120, 730);
+			         gc.strokeText(tour, menudroite.positionxmenu-120, 730 );
+				}
+				
+				if (map.nomperdant != null) {
+					map.affichageperdant(gc);
+				}
+				
+ 			    if (menu==1) {
+			    		if (depl.deplacementencours) {
+			    			depl.render(this);
+			    			depl.arrowrender(this);
+			    		}
+			    		if (atq.attaqueencours) {
+			    			atq.rendercase(this);
+			    		}
+			    		if (atq.attaqueencours) {
+			    			atq.rendercible(this);
+			    		}
+			    		updatemenu=false;
+			    }
+			    menudroite.menurender(this); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
+				menuinfo.MenuInforender(gc);
+			    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
+				
 			}
 		}
-		menurender(); //pour l'instant on refresh le menu a chaque fois, pas trop grave vu qu'il ne s'agit que de quelques images
-		menuinfo.MenuInforender();
-	    map.curseurRender(gc); //on affiche le curseur tout a la fin (au dessus donc) et tout le temps car il ne s'agit que d'une image
-	    
+		else {
+			menuinvoc.render(gc);
+		}
 	}
-
 /*_Controle du clavier____________________________________________________________________________________________________________ */	
 	/**
 	 * Controle du clavier:
@@ -97,194 +152,295 @@ public class Jeu {
 	 * 
 	 *@param code
 	 *		Code de la touche appuyee.
+	 * @throws CloneNotSupportedException 
 	 * 
 	 */	
-	void touch(KeyCode code) {
-		if (ingame) {
-	    switch(code) {
-	    case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
-	    			switch(menu) {
-	    			case 1:
-	    				if (positioncurseur1==0) {
-	    					// gestion de l'attaque
-	    					menu = atq.attaque();
-	    				}
-	    				else if ((positioncurseur1==1)&&(map.selectionnemenu.unite.restedeplacement!=0)) {
-	    					// gestion de deplacement
-	    					menu = depl.deplacement();
-	    					
-	    				}
-	    				else if (positioncurseur1==2) {
-	    					// gestion de la capture
-	    					menu = capt.capture();
-	    				}
-	    				update=true;
-	    				break;
-	    			case 0:
-	    				System.out.print(map.selectionne);
-	    				if (map.selectionne.unite!=null && map.selectionne.unite.joueur==joueurs.get(entrainjouer) && map.selectionne.unite.valable) {menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
-	    				else {menu=2; positioncurseur1=0;};	 
-	    				break;
-	    			case 2:
-	    				passertour();
-	    				break;
-	    			default:
-	    				break;
-	    			} 
-	    			break; 
-	    case B : 
-		    	depl.deplacementencours=false;menu=0;
-		    	if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;} //pour faire revenir le curseur a l'unite qui attaque
-		    	update=true; break;
-		case LEFT:  
+	void touch(KeyCode code) throws CloneNotSupportedException {
+		if (ingame && !(atq.animatqencours||atq.pvendiminution)) {
+			if (map.ecranfin == 0){ //permet de quitter en appuyant sur n'importe quelle touche une fois la partie finie
+				switch(code) {
+				case A: // On fait les options du menu1 : Verification que l'on peut jouer l'unite
 					switch(menu) {
-					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.leftcurseur(); break; }//on bouge sur la map
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-1,depl.deplist))) {
-								map.leftcurseur(); //on selectionne case pour deplacement
+						if (menudroite.positioncurseur1==0) {
+							// gestion de l'attaque
+							//menu = atq.attaque(map.selectionnemenu.unite.type);
+							menu = atq.attaque(map.selectionnemenu.unite.type);
+						}
+						else if ((menudroite.positioncurseur1==1)&&(map.selectionnemenu.unite.restdeplacement!=0)) {
+							// gestion de deplacement
+							menu = depl.deplacement();
+
+						}
+						else if (menudroite.positioncurseur1==2) {
+							// gestion de la capture
+							menu = capt.capture();
+						}
+						update=true;
+						updatemenu=true;
+						break;
+					case 0:
+						if(menuoption.inmenuop) {
+							switch(menuoption.positioncurseur) {
+							case 0:
+								menuoption.inmenuop=false;
+								break;
+							case 1: 
+								menuson.inmenusd=true;menuson.update=true; break;
+							case 2:
+								map.perdu(entrainjouer);
+								passertour();
+								break;
+							case 3:
+								fin();
+								break;
+							default:
+								break;
 							}
-							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
-								atq.downenemi(); //on change la cible de l'attaque
-								map.adaptaffichage(map.selectionne.rang);
-							}
-							break;
+							if (!menuson.inmenusd) {menuoption.inmenuop=false;}
+						}
+						else {
+							System.out.print(map.selectionne);
+							if (map.selectionne.unite!=null && map.selectionne.unite.goodplayer(entrainjouer) && map.selectionne.unite.valable) {menudroite.positioncurseur1=0;menu=1;map.selectionnemenu = map.selectionne;} //on ouvre le menu et on selectionne la case
+							else if (map.selectionne.unite==null && (map.selectionne.batiment!=null) &&(map.selectionne.batiment instanceof Portal) && map.selectionne.batiment.joueur==entrainjouer) {menuinvoc.positioncurseur=0; menuinvoc.confirmationencours=false;menu = 3; menuinvoc.portail = (Portal) map.selectionne.batiment; }
+							else {menu=2; menudroite.positioncurseur1=0;};	 
+						}
+						break;
+					case 2:
+						passertour();
+						break;
+					case 3:
+						if(menuinvoc.confirmationencours && menuinvoc.positioncurseurconf==0) {
+							menuinvoc.changeinvoque(map.joueurs.get(entrainjouer));
+							menuinvoc.confirmationencours=false;
+						}
+						else if (menuinvoc.confirmationencours && menuinvoc.positioncurseurconf==1) {
+							menuinvoc.confirmationencours=false;
+						}
+						else {
+							menuinvoc.confirmationencours=true;
+						}
+						update=true;
+						break;
 					default:
-							break;
-					} update=true; break;
-		case RIGHT: 
+						break;
+					}
+					break; 
+				case B : 
+					if (menuoption.inmenuop) {
+						if (menuson.inmenusd) {
+							menuson.inmenusd = false;
+							menuson.update = false;
+							menuoption.update=true;
+						} else {
+							menuoption.inmenuop=false; menuoption.positioncurseur=0; } }
+					else {
+						if (atq.attaqueencours) {atq.attaqueencours=false;map.selectionne = map.selectionnemenu;menu=1;} //pour faire revenir le curseur a l'unite qui attaque
+						else if (depl.deplacementencours) { depl.deplacementencours=false;map.selectionne = map.selectionnemenu;menu=1;}
+						else {menu=0;}
+					}
+					break;
+				case LEFT:  
 					switch(menu) {
-					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.rightcurseur(); break; }
-					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+1,depl.deplist))) {
-								map.rightcurseur(); //on selectionne case pour deplacement
+					case 0: if(!menuoption.inmenuop) { map.leftcurseur(); break;}//on bouge sur la map
+					else {
+						if (menuson.inmenusd) {
+							switch(menuson.positioncurseur) {
+							case 0 : menuson.lessMusic();menuson.update=true;break;
+							case 1 : menuson.lessEffect();menuson.update=true;break;
+							default : break;
 							}
-							if (atq.attaqueencours && atq.atqenemi.size()!=0) {
-								atq.upenemi();//on change la cible de l'attaque
-								map.adaptaffichage(map.selectionne.rang);
+						}
+					}
+					case 1:
+						if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-1,depl.deplist))) {
+							map.leftcurseur(); //on selectionne case pour deplacement
+						}
+						else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")!=0)) {
+							atq.downenemi(); //on change la cible de l'attaque
+							map.adaptaffichage(map.selectionne.rang);
+						}
+						else if (atq.deplacementzoneadjacente(map.selectionne.rang-1)) {
+							map.leftcurseur();
+						}
+						else {atq.deplacementzonesaut(1);}
+						updatemenu=true;
+						break;
+					case 3:
+						if(menuinvoc.confirmationencours) {
+							menuinvoc.leftcurseurconf();
+						}
+					default:
+						break;
+					}
+					break;
+				case RIGHT: 
+					switch(menu) {
+					case 0: if(!menuoption.inmenuop) { map.rightcurseur(); break; } 
+					else {
+						if (menuson.inmenusd) {
+							switch(menuson.positioncurseur) {
+							case 0 : menuson.moreMusic();menuson.update=true;break;
+							case 1 : menuson.moreEffect();menuson.update=true;break;
+							default : break;
 							}
-							break;
-					default:
-							break;
-					} update=true;break;
-		case UP:  
-					switch(menu) {
-					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.upcurseur(); break; }//on bouge curseur de map
+
+						}
+					}
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang-50,depl.deplist))) {
-								map.upcurseur();//on selectionne case pour deplacement
-							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {upcurseur1();} //on bouge curseur du menu
-							break;
+						if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+1,depl.deplist))) {
+							map.rightcurseur(); //on selectionne case pour deplacement
+						}
+						else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")!=0)) {
+							atq.upenemi();//on change la cible de l'attaque
+							map.adaptaffichage(map.selectionne.rang);
+						}
+						else if (atq.deplacementzoneadjacente(map.selectionne.rang+1)) {
+							map.rightcurseur();
+						}
+						else {atq.deplacementzonesaut(0);}
+						updatemenu=true;
+						break;
+					case 3:
+						if(menuinvoc.confirmationencours) {
+							menuinvoc.rightcurseurconf();
+						}
+						break;
 					default:
-							break;
-					} update=true; break; 
-		case DOWN: 
+						break;
+					}
+					break;
+				case UP:  
 					switch(menu) {
-					case 0: if(!(atq.pvendiminution||atq.animatqencours)) {map.downcurseur(); break; }//on bouge curseur de map
 					case 1:
-							if ((depl.deplacementencours)&&(inlist(map.selectionne.rang+50,depl.deplist))) {
-								map.downcurseur();//on selectionne case pour deplacement
-							} else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {downcurseur1();}//on bouge curseur du menu
-							break;
+						if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-50,depl.deplist))) {
+							map.upcurseur();//on selectionne case pour deplacement
+						} 
+						else if (atq.deplacementzoneadjacente(map.selectionne.rang-50)) {
+							map.upcurseur();
+						}
+						else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.upcurseur1();} //on bouge curseur du menu
+						else {atq.deplacementzonesaut(2);}
+						updatemenu=true;
+						break;
+					case 0: 
+						if (menuoption.inmenuop){
+							if (menuson.inmenusd) {menuson.upcurseur();menuson.update=true;}
+							else {
+								menuoption.upcurseur();
+								menuoption.update=true;
+							}
+						}
+						else {
+							map.upcurseur();//on bouge curseur de map
+						}
+						break;
+					case 3:
+						if(!menuinvoc.confirmationencours) {
+							menuinvoc.upcurseur();
+						}
+						break;
 					default:
-							break;
-					} update=true; break;
-		case I : //demande affichage état du jeu
-			map.verifjoueursvivants();
-			System.out.println("\n" + "Liste joueurs : " + joueurs + "\n");
-			map.affichageSituationJoueurs();
-			System.out.println("la case Map.selectionné est : ");
-			System.out.println(map.selectionne);
-	    default:
-	    		break;
-	    }
+						break;
+					}
+					break; 
+				case DOWN: 
+					switch(menu) {
+					case 1:
+						if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+50,depl.deplist))) {
+							map.downcurseur();//on selectionne case pour deplacement
+						}
+						else if (atq.deplacementzoneadjacente(map.selectionne.rang+50)) {
+							map.downcurseur();
+						}
+						else if(!(depl.deplacementencours)&&(!atq.attaqueencours)) {menudroite.downcurseur1();}//on bouge curseur du menu
+						else {atq.deplacementzonesaut(3);}
+						updatemenu=true;
+						break;
+					case 0:
+						if (menuoption.inmenuop) {
+							if (menuson.inmenusd) {menuson.downcurseur();menuson.update=true;}
+							else {
+								menuoption.downcurseur();
+								menuoption.update=true;
+							}
+						}
+						else {
+
+							map.downcurseur();//on bouge curseur de map
+						}
+						break;
+					case 3:
+						if(!menuinvoc.confirmationencours) {
+							menuinvoc.downcurseur();
+						}
+						break;
+					default:
+						break;
+					}
+					break;
+				case ENTER:
+					if (ingame) {
+						if (menu==0) {
+							menuoption.inmenuop=true;
+							menuoption.positioncurseur=0;
+							menuoption.update=true;
+						}
+					}
+					break;			
+				default:
+					break;
+				}
+			}
+			else {
+				fin();
+			}
 		}
 	}
 
-/*_Affichage du menu1_____________________________________________________________________________________________________________ */	
-	/**
-	 * Affichage du menu de deplacement et d'attaque, true le montre en false le cache en recouvrant tout le coter(a adapter plus tard)
-	 * 			
-	 */	
-	void menurender() {
-		gc.drawImage(menucache, 600, 0);
-	    switch(menu) {
-	    case 1:
-				Image menu1 = new Image("menu1(10x16).png", 200, 320, false, false);
-				Image curseur = new Image("curseurmenu1.png",200, 320, false, false);
-				gc.drawImage(menu1, 650, 50);
-				gc.drawImage(curseur, 650,50+positioncurseur1*52);
-				break;
-	    case 2:
-    			Image menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
-	    		Image curseur2 = new Image("curseurmenu1.png", 200, 320, false, false);
-	    		gc.drawImage(menu2, 650, 50);
-	    		gc.drawImage(curseur2, 650,50+positioncurseur1*52);
-	    		break;
-
-	    default:
-	    		break;
-		} 
-	}
-
-/*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
-	
-	void upcurseur1() {if (positioncurseur1 != 0) {positioncurseur1 -= 1;}}
-	void downcurseur1() {if (positioncurseur1 != 2){positioncurseur1 += 1;}}
-	
-	
-	/**
-	 * 
-	 * @param e
-	 * @param list
-	 * @return true si l'entier e est dans la liste list, false sinon
-	 */
-	boolean inlist(int e, int[] list) {
-		for (int i=0;i<list.length;i++) {
-			if (list[i]==e) {
-				return true;
-			}
-		} return false;
-	}
-	
-/*_Gestion des joueurs, de la création à la mort__________________________________________________________________________________ */
-	
 	/**
 	 * Incremente le nombre de tour, change le joueur qui est entrain de jouee et reinitialisation du booleen valable
 	 * pour pouvoir rejouer les unites.
+	 * @throws CloneNotSupportedException 
 	 */
-	void passertour() {
-		//Change de joueur
-		entrainjouer++;
-		if (entrainjouer >= joueurs.size()) {
-			entrainjouer = 0;
-			tour++; //Change de tour
-		}
+	void passertour() throws CloneNotSupportedException {
+		do{
+			entrainjouer++;	//on passe au prochain joueur en vie
+			if (entrainjouer == 5) {
+				entrainjouer = 1;
+				tour++; //Change de tour
+			}
+		}while(!(map.joueurs.get(entrainjouer).isalive));
+		map.joueurs.get(entrainjouer).rendreValable();
+		map.joueurs.get(entrainjouer).printSituation();
 		menu=0;
+		map.joueurs.get(entrainjouer).actiondesbatiments();
 		
-    	joueurs.get(entrainjouer).rendreValable();
-		
-		
-		/**for (int k = 0; k < listeunit.size();k++) { // Remettre valable les unites du joueur
-			
-		}*/
 	}
+	
 
 	/**
 	 * Reinitialise jeu lorsque l'on arrete la partie.
 	 */
+    
 	void fin() {
 		
-        joueurs = new ArrayList<Joueur>();
+		//reinitialisation des joueurs :
+		map.joueurs = new ArrayList<Joueur>();
+		for (int i = 0; i <= 4;i++) {
+			map.joueurs.add(new Joueur("sansnom")); 
+		}
+		map.ecranfin = 0;
 		tour = 0;
-		entrainjouer = 0;
-		menu = 0;
-		positioncurseur1 = 0;
-		update = true;
-		atq = new Gestionatq(map, gc);
+		entrainjouer=1;
+		menu=0;
+		update=true;
+		atq = new Gestionatq(map,sd);
 		depl = new Gestiondepl(map,this);
 		capt = new Gestioncapture(map);
-		menuinfo = new MenuInfo(gc,map);
-		ingame = false;
+		ingame=false;
+		map.selectionne=map.plateau[51];
+		map.rangcorner = 0;
 	}
 
 }
