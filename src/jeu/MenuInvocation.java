@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class Menuinvocation {
+public class MenuInvocation {
 	/**Menu info pour les invocations */
 	MenuInfo menuinfoinvoc;
 	/**Image de fond du menuinvocation */
@@ -32,7 +32,7 @@ public class Menuinvocation {
 	int positioncurseurconf;
 	
 	
-	Menuinvocation(Portal portail, int positionxmenuinfo) {
+	MenuInvocation(Portal portail, int positionxmenuinfo) {
 		
 		fond = new Image("menuinvoc/fondmenuinvoc.png", 1100, 750, false, false);
 		curseur = new Image("menuinvoc/curseurinvoc.png", 730, 75, false, false );

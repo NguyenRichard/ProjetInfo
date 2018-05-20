@@ -16,7 +16,7 @@ import java.io.ObjectInputStream;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Menuprinc {
+public class MenuPrinc {
 	/**L'image de fond du menu*/
 	Image fond;
 	int positioncurseur;
@@ -26,7 +26,7 @@ public class Menuprinc {
 	FXDialogs fx;
    	
 	/* Constructeur de Menu*/
-	Menuprinc(Jeu game,CreationMap crea,int width, int height){
+	MenuPrinc(Jeu game,CreationMap crea,int width, int height){
 		fond = new Image("InsectWorldWar.png", width, height, false, false);
 		this.game=game;
 		this.crea=crea;
@@ -63,7 +63,7 @@ public class Menuprinc {
 					crea.mapcode=crea.map.remakemap(f,false);
 				}
 				else {
-					Sauvegardemap sauvegarde = new Sauvegardemap(); crea.mapcode = sauvegarde.grillemap; // si nouveau 
+					SauvegardeMap sauvegarde = new SauvegardeMap(); crea.mapcode = sauvegarde.grillemap; // si nouveau 
 				}
 				crea.increa=true;
 			}

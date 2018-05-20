@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class Menucrea {
+public class MenuCrea {
 	/**Image de fond du Mencucrea */
 	Image fond;
 	/**Image du curseur de Menucrea */
@@ -35,7 +35,7 @@ public class Menucrea {
     /**Cache les options qui ne sont pas valide */
 	Image cache;
 	
-	Menucrea(ArrayList<Terrain> referencecodeterrain, Case visu,int positionxmenu){
+	MenuCrea(ArrayList<Terrain> referencecodeterrain, Case visu,int positionxmenu){
 		fond = new Image("menucrea.png", 200, 320, false, false);
 		curseur = new Image("curseurmenu1.png",200, 320, false, false);
 		this.positionxmenu=positionxmenu+50;

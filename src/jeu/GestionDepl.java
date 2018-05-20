@@ -2,7 +2,7 @@ package jeu;
 
 import javafx.scene.image.Image;
 
-public class Gestiondepl {
+public class GestionDepl {
 	/**Determine si un deplacement est en cours */
 	boolean deplacementencours;
 	/**Le rang des cases possibles pour un deplacement */
@@ -32,7 +32,7 @@ public class Gestiondepl {
 	Image droitverti;
 	
 	
-	Gestiondepl(Map map,Jeu jeu){
+	GestionDepl(Map map,Jeu jeu){
 		deplacementencours=false;
 		this.map=map;
 		this.jeu = jeu;

@@ -9,7 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import terrain.Void;
 
-public class Gestionatq {
+public class GestionAtq {
 	int portee;
 	int porteemin;
 	int rang;
@@ -40,7 +40,7 @@ public class Gestionatq {
 	boolean animatqencoursligne;
 	Sound sd;
 	
- 	Gestionatq(Map map, Sound sd){
+ 	GestionAtq(Map map, Sound sd){
 		attaqueencours=false;
 		animatqencoursligne=false;
 		this.map=map;

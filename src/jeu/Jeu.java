@@ -26,21 +26,21 @@ public class Jeu {
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
 	/**Objet contenant les methodes pour gerer l'attaque entre unites*/
-	Gestionatq atq;
+	GestionAtq atq;
 	/**Objet contenant les methodes pour gerer le deplacement des unites*/
-	Gestiondepl depl;
+	GestionDepl depl;
 	/**Objet contenant les methodes pour gerer la capture des batiments*/
-	Gestioncapture capt;
+	GestionCapture capt;
 	boolean ingame;
 	/**MenuInfo */
 	MenuInfo menuinfo;
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non lors d'un deplacement ou d'une attaque: true = il faut rafraichir */
 	boolean updatemenu;
 	/** Menu pour les invocations*/
-	Menuinvocation menuinvoc;
+	MenuInvocation menuinvoc;
 	/** Menu de droite pour faire les actions: Attaquer, se deplacer, capturer et passer le tour*/
-	Menuaction menudroite;
-	Menuoption menuoption;
+	MenuAction menudroite;
+	MenuOption menuoption;
 	MenuSon menuson;
 	Sound sd;
 	Clip clip;
@@ -64,15 +64,15 @@ public class Jeu {
 		this.gc=gc;
 		menu=0;
 		update=true;
-		atq = new Gestionatq(map,sd);
-		depl = new Gestiondepl(map,this);
-		capt = new Gestioncapture(map);
+		atq = new GestionAtq(map,sd);
+		depl = new GestionDepl(map,this);
+		capt = new GestionCapture(map);
 		ingame = false;
-		menudroite= new Menuaction(gc,map.taillec*map.nombrecaseaffichee,width,height);
+		menudroite= new MenuAction(gc,map.taillec*map.nombrecaseaffichee,width,height);
 		menuinfo = new MenuInfo(map,menudroite.positionxmenu);
 		updatemenu=false;
-		menuinvoc = new Menuinvocation(new Portal(75,0,0),menudroite.positionxmenu);
-		menuoption = new Menuoption(0,width,height);
+		menuinvoc = new MenuInvocation(new Portal(75,0,0),menudroite.positionxmenu);
+		menuoption = new MenuOption(0,width,height);
 		menuson = new MenuSon(width,height, clip, sd);
 		this.sd=sd;
 		this.clip=clip;
@@ -435,9 +435,9 @@ public class Jeu {
 		entrainjouer=1;
 		menu=0;
 		update=true;
-		atq = new Gestionatq(map,sd);
-		depl = new Gestiondepl(map,this);
-		capt = new Gestioncapture(map);
+		atq = new GestionAtq(map,sd);
+		depl = new GestionDepl(map,this);
+		capt = new GestionCapture(map);
 		ingame=false;
 		map.selectionne=map.plateau[51];
 		map.rangcorner = 0;

@@ -3,7 +3,7 @@ package jeu;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Menuaction {
+public class MenuAction {
 	/**Image de fond du menu lateral droit**/
 	Image menucache;
 	/**Image du menu d'action quand l'unite attaque**/
@@ -22,7 +22,7 @@ public class Menuaction {
 	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer*/
 	int positioncurseur1;
 	
-	Menuaction(GraphicsContext gc, int positionxmenu,int width, int height){
+	MenuAction(GraphicsContext gc, int positionxmenu,int width, int height){
 		this.positionxmenu=positionxmenu;
 		positionymenu= 110;
 		menucache = new Image("fondmenu.png", width-positionxmenu,height,false,false);

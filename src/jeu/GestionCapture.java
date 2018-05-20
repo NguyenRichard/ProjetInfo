@@ -2,11 +2,11 @@ package jeu;
 
 import batiments.Portal;
 
-public class Gestioncapture {
+public class GestionCapture {
 	
 	Map map;
 	
-	Gestioncapture(Map map){
+	GestionCapture(Map map){
 		this.map=map;
 	}
 	

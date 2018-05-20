@@ -3,7 +3,7 @@ package jeu;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Menuoption {
+public class MenuOption {
 	
 	/** Entier pour le type de menu: 0 en jeu; 1 en editeur de map;*/
 	int menu;
@@ -25,7 +25,7 @@ public class Menuoption {
 	boolean inmenuop;
 	boolean update;
 	
-	Menuoption(int type, int width, int height){
+	MenuOption(int type, int width, int height){
 		menu0=new Image("menuoption/menuoption0.png",250,370,false,false);
 		curseur=new Image("menuoption/curseurmenuoption.png",250,370,false,false);
 		menu1=new Image("menuoption/menuoption1.png",250,370,false,false);

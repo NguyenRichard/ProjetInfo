@@ -23,14 +23,14 @@ public class CreationMap {
 	/**Boolean qui decrit si l'on doit rafraichir l'affichage ou non : true = il faut rafraichir */
 	boolean update;
 	/**le menu permettant de selectionner l'element a placer */
-	Menucrea menucrea;
+	MenuCrea menucrea;
 	boolean increa;
 	Image menucache;
 	String namesave;
 	int[] mapcode;
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
-    Menuoption menuoption;
+    MenuOption menuoption;
     MenuSon menuson;
     Sound sd;
     Clip clip;
@@ -52,11 +52,11 @@ public class CreationMap {
 		menucache = new Image("fondmenu.png",width-map.taillec*map.nombrecaseaffichee,height,false,false);
 		map.selectionne = map.plateau[51];
 		this.gc=gc;
-		menucrea= new Menucrea(map.referencecodeterrain,map.plateau[2500],positionxmenu);
+		menucrea= new MenuCrea(map.referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		map.affichageEquipe();
 		update=true;
-		menuoption = new Menuoption(1,width,height);
+		menuoption = new MenuOption(1,width,height);
 		menuson = new MenuSon(width,height, clip, sd);
 		this.sd=sd;
 		this.clip=clip;
@@ -155,7 +155,7 @@ public class CreationMap {
 	    			case 2:
 	    				try {
 	    					FileOutputStream fos = new FileOutputStream("creamap.ser"); // nom du fichier contenant la sauvegarde
-	    					Sauvegardemap sauvegarde = new Sauvegardemap();
+	    					SauvegardeMap sauvegarde = new SauvegardeMap();
 	    					sauvegarde.grillemap = mapcode;
 	    					ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    					oos.writeObject(sauvegarde);
@@ -308,7 +308,7 @@ public class CreationMap {
 		increa = false;
 		map.selectionne = map.plateau[51];
 		map.rangcorner = 0;
-		menucrea= new Menucrea(map.referencecodeterrain,map.plateau[2500],positionxmenu);
+		menucrea= new MenuCrea(map.referencecodeterrain,map.plateau[2500],positionxmenu);
 		actualiservisu(); //a faire apres Menucrea
 		update=true;
 	}
