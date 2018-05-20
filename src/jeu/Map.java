@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import terrain.Eau;
 import terrain.Marais;
 import terrain.Terre;
 import terrain.Void;
@@ -81,6 +82,7 @@ public class Map {
 		referencecodeterrain.add(new Void(taillec)); //permet de faire le lien entre code et element
 		referencecodeterrain.add(new Terre(taillec)); // /!\laisser void en premier !
 		referencecodeterrain.add(new Marais(taillec));
+		referencecodeterrain.add(new Eau(taillec));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		
 		nombrecaseaffichee = 10;

@@ -151,13 +151,7 @@ public class MenuInfo {
 		gc.strokeText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
 		
 		if(pourinvocation) {
-			String txtcout = "cout : " + unite.cost;
-			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-			gc.setFill(Color.LIMEGREEN);
-			gc.setStroke(Color.BLACK);
-			gc.setLineWidth(1);
-			gc.fillText(txtcout, positionxmenuinfo*1.29, positionymenuinfo+100);
-			gc.strokeText(txtcout, positionxmenuinfo*1.29, positionymenuinfo+100);
+			//mettre ici ci info specifique a afficher sur l'unite dans le menuinvocation
 		}
 		else {
 			int ratiopvpvmax = (int) 100*unite.pv/unite.pvmax;
