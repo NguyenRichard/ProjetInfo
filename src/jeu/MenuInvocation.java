@@ -58,7 +58,7 @@ public class MenuInvocation {
 		for (Unite cur : portail.listeinvoc) {
 	        if (0 <= joueur.ressources-cur.cost) {
 	        	cur.render(gc, positionxmenu, positionymenu+compteur);
-				gc.setFill(Color.LIMEGREEN);
+				gc.setFill(Color.WHITE);
 		        gc.fillText(cur.toString()+" -  Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
 		        gc.strokeText(cur.toString()+" -  Cout: "+cur.cost, positionxmenu+100, positionymenu+50+compteur );
 	        	gc.drawImage(indicateurvalide,positionxmenu+600,positionymenu+25+compteur);
