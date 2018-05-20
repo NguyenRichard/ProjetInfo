@@ -72,13 +72,8 @@ public class Jeu {
 		menudroite= new MenuAction(gc,map.taillec*map.nombrecaseaffichee,width,height);
 		menuinfo = new MenuInfo(map,menudroite.positionxmenu);
 		updatemenu=false;
-<<<<<<< Upstream, based on origin/master
 		menuinvoc = new MenuInvocation(new Portal(75,0,0),menudroite.positionxmenu);
 		menuoption = new MenuOption(0,width,height);
-=======
-		menuinvoc = new Menuinvocation(new Portal(75,0,0),menudroite.positionxmenu);
-		menuoption = new Menuoption(0,width,height);
->>>>>>> 7699536 up
 		menuson = new MenuSon(width,height, clip, sd);
 		this.sd=sd;
 		this.clip=clip;
