@@ -104,7 +104,7 @@ public class Jeu {
 				else {	
 					map.renderanim(gc); //animation des sprites si pas de combat
 				}
-				if (update) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
+				if (update && map.nomperdant==null) { // on evite d'afficher toute la map a chaque fois, seulement quand c'est necessaire
 			         String tour = "Tour: "+this.tour;
 			         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			         gc.setLineWidth(1);
@@ -115,7 +115,10 @@ public class Jeu {
 			         gc.fillText(tour, menudroite.positionxmenu-120, 730);
 			         gc.strokeText(tour, menudroite.positionxmenu-120, 730 );
 				}
-			
+				if (map.nomperdant != null) {
+					map.affichageperdant(gc);
+				}
+				
 			    if (menu==1) {
 			    		if (depl.deplacementencours) {
 			    			depl.render(this);
@@ -390,12 +393,7 @@ public class Jeu {
 	    }
 		}
 		else {
-			switch(code) { //dans le cas ou il y a l'ecran de fin, on quitte a l'appui de n'importe quelle touche
-				default:
-			    	fin();
-					break;
-			}
-		}
+			fin();
 		}
 	}
 
