@@ -10,7 +10,7 @@ public class ArcherSquelette extends Unite{
 			for (int k = 0; k < images.length; k++ ) {
 				images[k] = new Image("Archer_Squelette/Archer_Squelette_"+k+".png",taille, taille,false,false);
 			}
-			deplacement=3;
+			deplacement=6;
 			restdeplacement=deplacement;
 			valable=true;
 			maxcompteur = 75;

@@ -12,7 +12,7 @@ public class PapillonPsychique extends Unite{
 				int l = k+1;
 				images[k] = new Image("papillonpsychique/papillon-psychique-"+l+".png",taille, taille,false,false);
 			}
-			deplacement=3;
+			deplacement=5;
 			restdeplacement=deplacement;
 			valable=true;
 			animcompteur = 0;

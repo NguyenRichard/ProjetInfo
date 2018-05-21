@@ -30,10 +30,12 @@ public class GestionAtq {
 	/**Entier qui donne la fin de l'animation de diminution des pv*/
 	int pvfin;
 	Image red;
+	Image vert;
 	Image viseur;
 	Image viseursoin;
 	Image viseurzone1;
 	Image viseurzone2;
+	Image viseurzonesoin;
 	boolean animatqencoursligne;
 	Son sd;
 	
@@ -46,8 +48,10 @@ public class GestionAtq {
 		animatqencours=false;
 		animatq=0;
 		red = new Image("redsquare.png", map.taillec, map.taillec, false, false);
+		vert = new Image("greensquare.png", map.taillec, map.taillec, false, false);
 		viseur = new Image("viseur.png", map.taillec, map.taillec,false,false);
 		viseurzone1 = new Image("ciblezone1.png", map.taillec*3, map.taillec*3,false,false);
+		viseurzonesoin = new Image("ciblezonesoin.png", map.taillec*3, map.taillec*3,false,false);
 		viseurzone2 = new Image("ciblezone2.png", map.taillec*5, map.taillec*5,false,false);
 		viseursoin = new Image("viseursoin.png",map.taillec, map.taillec,false,false);
 		portee = 0;
@@ -105,6 +109,13 @@ public class GestionAtq {
 					sd.runSoundattack();
 					animatqencoursligne=true;
 				}
+				else if (type.compareTo("zonesoin")==0) { // Pour soin de zone
+					rang = map.selectionnemenu.rang;
+					portee = map.selectionnemenu.unite.portee[1];
+					porteemin = map.selectionnemenu.unite.portee[0];
+					sd.runSoundheal();
+					animatqencoursligne=true;
+				}
 				else if (type.compareTo("soigneur")== 0) {
 					// Son de soin
 					sd.runSoundheal();
@@ -123,7 +134,7 @@ public class GestionAtq {
 		else {
 			if ((type.compareTo("soldat")==0)||(type.compareTo("ligne")!= 0)) {
 				listcaseaportee(); //liste pour l'affichage de l'attaque
-				if ((type.compareTo("zone1")*(type.compareTo("zone2"))==0) && !atqlist.isEmpty()) {
+				if ((type.compareTo("zone1")*(type.compareTo("zone2")*(type.compareTo("zonesoin")))==0) && !atqlist.isEmpty()) {
 					map.selectionne = atqlist.get(0);
 				}
 			} else if (type.compareTo("ligne")== 0) {
@@ -237,7 +248,7 @@ public class GestionAtq {
 		 if (map.selectionne.unite == null) {
 			 return false;
 		 }
-		 else if ((map.selectionne.unite.type.compareTo("soigneur")*map.selectionne.unite.type.compareTo("zone1")*map.selectionne.unite.type.compareTo("zone2")) != 0) { //cas general (non soigneur)
+		 else if ((map.selectionne.unite.type.compareTo("soigneur")*map.selectionne.unite.type.compareTo("zone1")*map.selectionne.unite.type.compareTo("zone2")*(map.selectionne.unite.type.compareTo("zone1"))) != 0) { //cas general (non soigneur)
 			 if (carre.unite != null && (map.selectionne.unite.joueur == carre.unite.joueur) ){ 
 				return false;
 			}
@@ -263,14 +274,18 @@ public class GestionAtq {
 			if ((jeu.updatemenu)||(cible.unite!=null)||(cible.batiment!=null)||(cible.terrain.toString().compareTo("Eau")==0)) {
 				int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 				int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-				jeu.gc.drawImage(red, x, y);
+				if(map.selectionnemenu.unite.type.compareTo("soigneur")*map.selectionnemenu.unite.type.compareTo("zonesoin")==0) {
+					jeu.gc.drawImage(vert, x, y);
+				}
+				else {jeu.gc.drawImage(red, x, y);}
+				
 			}
 			
 		}
 	}
 	
 	void rendercible(Jeu jeu) {
-		if((map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2"))!=0) {
+		if((map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")*(map.selectionnemenu.unite.type.compareTo("zonesoin")))!=0) {
 			for(Case cible: atqlist) {
 				int x = (cible.rang%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 				int y = (cible.rang/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
@@ -286,7 +301,12 @@ public class GestionAtq {
 				int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
 				int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
 				jeu.gc.drawImage(viseurzone1, x-map.taillec, y-map.taillec);
-		} 
+		}
+		else if (map.selectionnemenu.unite.type.compareTo("zonesoin")==0) {
+			int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
+			int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
+			jeu.gc.drawImage(viseurzonesoin, x-map.taillec, y-map.taillec);
+		}
 		else if (map.selectionnemenu.unite.type.compareTo("zone2")==0) {
 				int x = (map.selectionne.rang%50 - map.rangcorner%50)*map.taillec;
 				int y = (map.selectionne.rang/50 - map.rangcorner/50)*map.taillec;
@@ -411,6 +431,27 @@ public class GestionAtq {
 		return listanim;
 	}
 	
+	int[] animdegatzonesoin(GraphicsContext gc) {
+		int[] listanim = new int[5];
+		listanim = rangzone1(map.selectionne.rang);
+		int[] x = new int[5];
+		int[] y = new int[5];
+		for (int i = 0;i<5;i++) {
+			x[i]=(listanim[i]%50 - map.rangcorner%50)*map.taillec;
+			y[i]=(listanim[i]/50 - map.rangcorner/50)*map.taillec;
+		}
+		for (int i = 0;i<5;i++) {
+			if (listanim[i]!=-1) {
+				if (animatq<4) {gc.drawImage(Im_hea, x[i]+(map.taillec/2), y[i]);}
+				else if(animatq<8) {gc.drawImage(Im_hea, x[i], y[i]+(map.taillec/2));}
+				else if(animatq<12) {gc.drawImage(Im_hea, x[i], y[i]);}
+				else if(animatq<16) {gc.drawImage(Im_hea, x[i]+(map.taillec/2), y[i]+(map.taillec/2));}
+				else if (animatq<30) {gc.drawImage(Im_hea, x[i], y[i], map.taillec, map.taillec);;}
+			}
+		}
+		return listanim;
+	}
+	
 	int[] animdegatzone2(GraphicsContext gc) {
 		int[] listanim = new int[13];
 		listanim = rangzone2(map.selectionne.rang);
@@ -458,6 +499,8 @@ public class GestionAtq {
 				list = animdegatligne(gc);
 			} else if  (map.plateau[rang].unite.type.compareTo("zone1")== 0) {
 				list = animdegatzone1(gc);
+			} else if  (map.plateau[rang].unite.type.compareTo("zonesoin")== 0) {
+				list = animdegatzonesoin(gc);
 			} else if  (map.plateau[rang].unite.type.compareTo("zone2")== 0) {
 				list = animdegatzone2(gc);
 			}
@@ -559,7 +602,7 @@ public class GestionAtq {
 	 */
 	boolean deplacementzoneadjacente(int e) {
 		return attaqueencours
-		&& (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")==0)
+		&& (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")*map.selectionnemenu.unite.type.compareTo("zonesoin")==0)
 		&& e<2500 && e>=0 
 		&& atqlist.contains(map.plateau[e]);
 	}
@@ -570,7 +613,7 @@ public class GestionAtq {
 	 */
 	void deplacementzonesaut(int direction) {
 		if( attaqueencours && atqlist.size() != 0 &&
-				map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")==0) {
+				map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")*map.selectionnemenu.unite.type.compareTo("zonesoin")==0) {
 			int position = atqlist.indexOf(map.selectionne); //la position dans la liste de la case selectionne
 			if (direction ==0) { //on selectionne la case suivante dans la liste si elle est a droite sur la meme ligne
 				if ((atqlist.size()>position+1) && (atqlist.get(position+1).rang < map.selectionne.rang + 50)) {

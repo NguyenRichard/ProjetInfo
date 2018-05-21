@@ -10,7 +10,7 @@ public class Terre extends Terrain{
 		maxcompteur = 1;
 		images = new Image[1];
 		images[0]=new Image("terrains/terre.png",taille, taille,false,false);
-		deplacement=1;
+		deplacement=2;
 	}
 	public String toString() {
 		return "Terre : \ncout deplacement = " + deplacement;

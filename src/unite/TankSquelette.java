@@ -10,7 +10,7 @@ public class TankSquelette extends Unite{
 			for (int k = 0; k < images.length; k++ ) {
 				images[k] = new Image("Tank_Squelette/Tank_Squelette_"+k+".png",taille, taille,false,false);
 			}
-			deplacement=3;
+			deplacement=5;
 			restdeplacement=deplacement;
 			valable=true;
 			maxcompteur = 100;

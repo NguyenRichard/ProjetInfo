@@ -12,7 +12,7 @@ public class EpeisteVolant extends Unite {
 			int l = k+1;
 			images[k] = new Image("epeistevolant/epeiste-volant"+l+".png",taille, taille,false,false);
 		}
-		deplacement=2;
+		deplacement=4;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 40;

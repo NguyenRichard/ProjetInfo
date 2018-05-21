@@ -10,7 +10,7 @@ public class SkeletonSoldier extends Unite{
 			for (int k = 0; k < images.length; k++ ) {
 				images[k] = new Image("Skeleton_Soldier/Skeleton_Soldier_"+k+".png",taille, taille,false,false);
 			}
-			deplacement=4;
+			deplacement=8;
 			restdeplacement=deplacement;
 			valable=true;
 			maxcompteur = 75;

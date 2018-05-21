@@ -177,6 +177,9 @@ public class MenuInfo {
 				case "mineur" :
 					descriptiontype += "Unite capable de capturer \nen 1 tour au lieu de 2 \nmais pas de se battre";
 					break;
+				case "zonesoin" :
+					descriptiontype += "Unite capable de soigner \ndans une petite zone \n(peut toucher des ennemis)";
+					break;
 			}
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			gc.setFill(Color.BISQUE);
