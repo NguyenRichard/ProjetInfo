@@ -4,11 +4,11 @@ public class Dijkstra {
 	
 	/**Type Graphe le graphe sur lequel on utilise l'algorithme du plus chemin */
 	Graphe g;
-	/**Noeud de départ */
+	/**Noeud de depart */
 	int sommetcible;
 	/**Noeud d'arrivee */
 	int sommetdepart;
-	/**Matrice semblable à celle d'adjacence avec plus d'informations : { {distance,provenance,visité (1 non ou 0 oui)},...} */
+	/**Matrice semblable a� celle d'adjacence avec plus d'informations : { {distance,provenance,visite (1 non ou 0 oui)},...} */
 	int[][] sommets;
 	/**Nombre de sommets du graphe */
 	int nbsommets;
@@ -72,7 +72,7 @@ public class Dijkstra {
 	}
 	
 	/**
-	 * Trouve le plus petit sommets (en distance) non visité
+	 * Trouve le plus petit sommets (en distance) non visite
 	 * 			
 	 */
 	int pluspetitsommet() {
@@ -107,7 +107,7 @@ public class Dijkstra {
 	}
 	
 	/**
-	 * Trouve le plus petit sommets (en distance) non visité
+	 * Trouve le plus petit sommets (en distance) non visite
 	 * 			
 	 */
 	int plusPetitNonVisite() {
@@ -149,7 +149,7 @@ public class Dijkstra {
 	}
 	
 	/**
-	 * Renvoie le chemin le plus court entre le sommets de départ et celui d'arrivee en prenant la matrice final
+	 * Renvoie le chemin le plus court entre le sommets de depart et celui d'arrivee en prenant la matrice final
 	 * 			
 	 */
 	int[] chemin() {

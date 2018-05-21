@@ -37,31 +37,29 @@ public class MenuAction {
 	}
 
 	/**
-	 * Affichage du menu de deplacement et d'attaque, true le montre en false le cache en recouvrant tout le coter(a adapter plus tard)
-	 * @param jeu TODO
-	 * 			
+	 * Affichage du menu de deplacement, d'attaque et de capture
 	 */	
 	void menurender(Jeu jeu) {
-		jeu.gc.drawImage(menucache, positionxmenu, 0);
+		gc.drawImage(menucache, positionxmenu, 0);
 	    switch(jeu.menu) {
 	    case 1:
-	    		if (jeu.map.selectionnemenu.unite.type.compareTo("healer")!=0){
-	    			jeu.gc.drawImage(menu1attaque, positionxmenu*1.05, positionymenu);
+	    		if (jeu.carte.selectionnemenu.unite.type.compareTo("soigneur")!=0){
+	    			gc.drawImage(menu1attaque, positionxmenu*1.05, positionymenu);
 	    		}
 	    		else {
-	    			jeu.gc.drawImage(menu1soin, positionxmenu*1.05, positionymenu);
+	    			gc.drawImage(menu1soin, positionxmenu*1.05, positionymenu);
 	    		}
-				if (jeu.map.selectionnemenu.unite.restdeplacement == 0) {
-	    			jeu.gc.drawImage(cache, positionxmenu*1.05,positionymenu+1*52);
+				if (jeu.carte.selectionnemenu.unite.restdeplacement == 0) {
+	    			gc.drawImage(cache, positionxmenu*1.05,positionymenu+1*52);
 	    		}
-				if ((jeu.map.selectionnemenu.batiment == null)||(jeu.map.selectionnemenu.batiment.joueur == jeu.map.selectionnemenu.unite.joueur)) {
-					jeu.gc.drawImage(cache, positionxmenu*1.05,positionymenu+2*52);
+				if ((jeu.carte.selectionnemenu.batiment == null)||(jeu.carte.selectionnemenu.batiment.joueur == jeu.carte.selectionnemenu.unite.joueur)) {
+					gc.drawImage(cache, positionxmenu*1.05,positionymenu+2*52);
 				}
 				gc.drawImage(curseur, positionxmenu*1.05,positionymenu+positioncurseur1*52);
 				break;
 	    case 2:
-	    		jeu.gc.drawImage(menu2, positionxmenu*1.05, positionymenu);
-	    		jeu.gc.drawImage(curseur, positionxmenu*1.05,positionymenu+positioncurseur1*52);
+	    		gc.drawImage(menu2, positionxmenu*1.05, positionymenu);
+	    		gc.drawImage(curseur, positionxmenu*1.05,positionymenu+positioncurseur1*52);
 	    		break;
 	
 	    default:

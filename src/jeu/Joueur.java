@@ -2,7 +2,7 @@ package jeu;
 
 import java.util.ArrayList;
 import batiments.Crystal;
-import batiments.Portal;
+import batiments.Portail;
 
 
 public class Joueur {
@@ -16,7 +16,7 @@ public class Joueur {
 /*_Creation du joueur de base________________________________________________________________________*/
 	Joueur(String name) {
 		this.name = name;
-		isalive=false; //on met les bon joueurs en vie lors de la recreation de la map ingame
+		isalive=false; //on met les bon joueurs en vie lors de la recreation de la carte ingame
 		armee= new ArrayList<Unite>();
 		possessions=new ArrayList<Case>();
 		ressources = 100;
@@ -70,7 +70,7 @@ public class Joueur {
 	 */
 	public boolean verifvivant() {
 		for (Case cur : possessions) {
-			if (cur.batiment instanceof Portal) {
+			if (cur.batiment instanceof Portail) {
 				return false;
 			}
 		}
@@ -90,9 +90,9 @@ public class Joueur {
 			if (cur.batiment instanceof Crystal) {
 				ressources+=50;
 			}
-			if (cur.batiment instanceof Portal) {
+			if (cur.batiment instanceof Portail) {
 				if (cur.unite==null) {
-					Portal portail = (Portal) cur.batiment;
+					Portail portail = (Portail) cur.batiment;
 					if (portail.uniteainvoque!=null) {
 						cur.unite = portail.uniteainvoque.clone();
 						armee.add(cur.unite);

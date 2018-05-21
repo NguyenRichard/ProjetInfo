@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class MenuOption {
 	
-	/** Entier pour le type de menu: 0 en jeu; 1 en editeur de map;*/
+	/** Entier pour le type de menu: 0 en jeu; 1 en editeur de carte;*/
 	int menu;
 	/** Position du menu sur l'axe des abscisses*/
 	int positionxmenu;

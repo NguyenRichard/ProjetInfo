@@ -7,7 +7,7 @@ public class GestionDepl {
 	boolean deplacementencours;
 	/**Le rang des cases possibles pour un deplacement */
 	int[] deplist;
-	Map map;
+	Carte carte;
 	/** Objet permettant de convertir la matrice en graphe et vice-versa */
 	GrapheDepl cgd;
 	/** Objet permettant de realiser l'algorithme de Dijkstra */
@@ -32,21 +32,21 @@ public class GestionDepl {
 	Image droitverti;
 	
 	
-	GestionDepl(Map map,Jeu jeu){
+	GestionDepl(Carte carte,Jeu jeu){
 		deplacementencours=false;
-		this.map=map;
+		this.carte=carte;
 		this.jeu = jeu;
-		bleu = new Image("bluesquare.png", map.taillec, map.taillec, false, false);
-		basdroite = new Image("fleche/bas-droite.png", map.taillec, map.taillec, false, false);
-		basgauche = new Image("fleche/bas-gauche.png", map.taillec, map.taillec, false, false);
-		hautdroite = new Image("fleche/haut-droite.png", map.taillec, map.taillec, false, false);
-		hautgauche = new Image("fleche/haut-gauche.png", map.taillec, map.taillec, false, false);
-		flechebas = new Image("fleche/fleche-bas.png", map.taillec, map.taillec, false, false);
-		flechehaut = new Image("fleche/fleche-haut.png", map.taillec, map.taillec, false, false);
-		flechedroite = new Image("fleche/fleche-droite.png", map.taillec, map.taillec, false, false);
-		flechegauche = new Image("fleche/fleche-gauche.png", map.taillec, map.taillec, false, false);
-		droithoriz = new Image("fleche/droit-horiz.png", map.taillec, map.taillec, false, false);
-		droitverti = new Image("fleche/droit-verti.png", map.taillec, map.taillec, false, false);
+		bleu = new Image("bluesquare.png", carte.taillec, carte.taillec, false, false);
+		basdroite = new Image("fleche/bas-droite.png", carte.taillec, carte.taillec, false, false);
+		basgauche = new Image("fleche/bas-gauche.png", carte.taillec, carte.taillec, false, false);
+		hautdroite = new Image("fleche/haut-droite.png", carte.taillec, carte.taillec, false, false);
+		hautgauche = new Image("fleche/haut-gauche.png", carte.taillec, carte.taillec, false, false);
+		flechebas = new Image("fleche/fleche-bas.png", carte.taillec, carte.taillec, false, false);
+		flechehaut = new Image("fleche/fleche-haut.png", carte.taillec, carte.taillec, false, false);
+		flechedroite = new Image("fleche/fleche-droite.png", carte.taillec, carte.taillec, false, false);
+		flechegauche = new Image("fleche/fleche-gauche.png", carte.taillec, carte.taillec, false, false);
+		droithoriz = new Image("fleche/droit-horiz.png", carte.taillec, carte.taillec, false, false);
+		droitverti = new Image("fleche/droit-verti.png", carte.taillec, carte.taillec, false, false);
 	}
 
 	/**
@@ -54,10 +54,10 @@ public class GestionDepl {
 	 * 
 	 * @param jeu TODO
 	 * @param carre TODO
-	 * @see Map#selectionne
+	 * @see Carte#selectionne
 	 */	
 	boolean verifCase(Case carre) { // Doit aussi verifier si l'emplacement est pris par un adversaire.
-		if ((map.selectionne.unite.joueur!=jeu.entrainjouer)) {
+		if ((carte.selectionne.unite.joueur!=jeu.entrainjouer)) {
 			return false;
 		}
 		return (carre.terrain.deplacement != 100);
@@ -74,9 +74,9 @@ public class GestionDepl {
 
 		for(int i = 1; i<deplist.length;i++) {
 			if (deplist[i] != -1) {
-				if((jeu.updatemenu)||(jeu.map.plateau[deplist[i]].unite!=null)||(jeu.map.plateau[deplist[i]].batiment!=null)||(jeu.map.plateau[deplist[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
-					int x = (deplist[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (deplist[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+				if((jeu.updatemenu)||(jeu.carte.plateau[deplist[i]].unite!=null)||(jeu.carte.plateau[deplist[i]].batiment!=null)||(jeu.carte.plateau[deplist[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
+					int x = (deplist[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+					int y = (deplist[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 					jeu.gc.drawImage(bleu, x, y);
 				}
 			}
@@ -84,14 +84,14 @@ public class GestionDepl {
 	}
 	
 	void arrowrender(Jeu jeu) {
-		int center = jeu.map.selectionnemenu.rang;
-		int cursor = jeu.map.selectionne.rang;
+		int center = jeu.carte.selectionnemenu.rang;
+		int cursor = jeu.carte.selectionne.rang;
 		if (cursor!=center) {
 			
 			// Plus court chemin entre curseur et centre
-			int depl = map.selectionnemenu.unite.deplacement;
-			boolean volant = map.selectionnemenu.unite.volant;
-			cgd=new GrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer,volant);
+			int depl = carte.selectionnemenu.unite.deplacement;
+			boolean volant = carte.selectionnemenu.unite.volant;
+			cgd=new GrapheDepl(depl,firstcase,center,50,carte,jeu.entrainjouer,volant);
 			cgd.transforme();
 			int newcenter = (center/50-firstcase/50)*(2*depl+1)+(center%50-firstcase%50);
 			int newcursor = (cursor/50-firstcase/50)*(2*depl+1)+(cursor%50-firstcase%50);
@@ -107,51 +107,51 @@ public class GestionDepl {
 			
 			
 			for (int i=1;i<chemin.length-1;i++) {
-				if((jeu.updatemenu)||(jeu.map.plateau[chemin[i]].unite!=null)||(jeu.map.plateau[chemin[i]].batiment!=null)||(jeu.map.plateau[chemin[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a unun element sur la case
+				if((jeu.updatemenu)||(jeu.carte.plateau[chemin[i]].unite!=null)||(jeu.carte.plateau[chemin[i]].batiment!=null)||(jeu.carte.plateau[chemin[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a unun element sur la case
 					if (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+50))) {
-						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+						int y = (chemin[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 						jeu.gc.drawImage(basgauche, x, y);
 					} else if (((chemin[i-1]==chemin[i]+1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]+1)&&(chemin[i-1]==chemin[i]+50))) {
-						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+						int y = (chemin[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 						jeu.gc.drawImage(basdroite, x, y);
 					} else if  (((chemin[i-1]==chemin[i]+1)&&(chemin[i+1]==chemin[i]-50)) || ((chemin[i+1]==chemin[i]+1)&&(chemin[i-1]==chemin[i]-50))) {
-						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+						int y = (chemin[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 						jeu.gc.drawImage(hautdroite, x, y);
 					} else if  (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]-50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]-50))) {
-						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+						int y = (chemin[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 						jeu.gc.drawImage(hautgauche, x, y);
 					} else if  (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+1)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+1))) {
-						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+						int y = (chemin[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 						jeu.gc.drawImage(droithoriz, x, y);
 					} else if  (((chemin[i-1]==chemin[i]-50)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-50)&&(chemin[i-1]==chemin[i]+50))) {
-						int x = (chemin[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-						int y = (chemin[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+						int y = (chemin[i]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 						jeu.gc.drawImage(droitverti, x, y);
 					}
 				}
 			}
 			int n = chemin.length;
-			if((jeu.updatemenu)||(jeu.map.plateau[chemin[n-1]].unite!=null)||(jeu.map.plateau[chemin[n-1]].batiment!=null)||(jeu.map.plateau[chemin[n-1]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
+			if((jeu.updatemenu)||(jeu.carte.plateau[chemin[n-1]].unite!=null)||(jeu.carte.plateau[chemin[n-1]].batiment!=null)||(jeu.carte.plateau[chemin[n-1]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
 				if (chemin[n-1]==chemin[n-2]+50) {
-					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					int x = (chemin[n-1]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+					int y = (chemin[n-1]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 					jeu.gc.drawImage(flechebas, x, y);
 				} else if (chemin[n-1]==chemin[n-2]-50) {
-					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					int x = (chemin[n-1]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+					int y = (chemin[n-1]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 					jeu.gc.drawImage(flechehaut, x, y);
 				} else if (chemin[n-1]==chemin[n-2]+1) {
-					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					int x = (chemin[n-1]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+					int y = (chemin[n-1]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 					jeu.gc.drawImage(flechedroite, x, y);
 				} else if (chemin[n-1]==chemin[n-2]-1) {
-					int x = (chemin[n-1]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
-					int y = (chemin[n-1]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
+					int x = (chemin[n-1]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
+					int y = (chemin[n-1]/50)*carte.taillec-(jeu.carte.rangcorner/50)*carte.taillec;
 					jeu.gc.drawImage(flechegauche, x, y);
 				}
 			}
@@ -165,18 +165,18 @@ public class GestionDepl {
 	 */
 	int deplacement() {
 		if (deplacementencours) {
-			if (map.selectionne.unite==null) {
-				map.selectionnemenu.unite.restdeplacement = 0; //on prend en compte le cout en deplacement
-				if (map.selectionnemenu.batiment != null) {
-					if (map.selectionnemenu.batiment.entraincapture) {
-						map.selectionnemenu.batiment.entraincapture=false;
-						map.selectionnemenu.batiment.pv=100;
+			if (carte.selectionne.unite==null) {
+				carte.selectionnemenu.unite.restdeplacement = 0; //on prend en compte le cout en deplacement
+				if (carte.selectionnemenu.batiment != null) {
+					if (carte.selectionnemenu.batiment.entraincapture) {
+						carte.selectionnemenu.batiment.entraincapture=false;
+						carte.selectionnemenu.batiment.pv=100;
 					}
 				}
-				map.moveUnite(map.selectionnemenu,map.selectionne);
-				map.selectionnemenu = map.selectionne;
+				carte.moveUnite(carte.selectionnemenu,carte.selectionne);
+				carte.selectionnemenu = carte.selectionne;
 				listUpdate();
-				if (map.selectionnemenu.unite.restdeplacement == 0) { // on arrive a 0 deplacements
+				if (carte.selectionnemenu.unite.restdeplacement == 0) { // on arrive a 0 deplacements
 					deplacementencours=false;
 				}
 			}
@@ -191,7 +191,7 @@ public class GestionDepl {
 	/**
 	 * Met a jour la deplist pour la case selectionne
 	 * 
-	 * @see Map#selectionne
+	 * @see Carte#selectionne
 	 * @see #deplist	
 	 * @param jeu TODO
 	 * @see #MISSING()
@@ -199,9 +199,9 @@ public class GestionDepl {
 	 */
 	void listUpdate() {
 		
-		int depl = map.selectionne.unite.deplacement;
-		boolean volant = map.selectionnemenu.unite.volant;
-		int center = map.selectionne.rang;
+		int depl = carte.selectionne.unite.deplacement;
+		boolean volant = carte.selectionnemenu.unite.volant;
+		int center = carte.selectionne.rang;
 		deplist = new int[(2*depl+1)*(2*depl+1)];
 		
 		if (center/50!=(center-depl)/50) { // cote gauche
@@ -228,7 +228,7 @@ public class GestionDepl {
 			firstcase=((center/50)-depl)*50+center%50-depl;
 		}
 		
-		cgd=new GrapheDepl(depl,firstcase,center,50,map,jeu.entrainjouer,volant);
+		cgd=new GrapheDepl(depl,firstcase,center,50,carte,jeu.entrainjouer,volant);
 		cgd.transforme();
 		
 		
@@ -242,7 +242,7 @@ public class GestionDepl {
 				graphe= cgd.generate();
 				dijkstra= new Dijkstra(graphe,newcenter,j*(2*depl+1)+k);
 				int dist = dijkstra.runDijkstra();
-				if ((dist <= depl)&&(verifCase(map.plateau[firstcase+j*50+k]))) {
+				if ((dist <= depl)&&(verifCase(carte.plateau[firstcase+j*50+k]))) {
 					deplist[j*(2*depl+1)+k]=firstcase+j*50+k;
 				}
 			}

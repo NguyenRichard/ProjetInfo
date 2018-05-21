@@ -10,8 +10,9 @@ public class Case {
 	Terrain terrain;
 	/**Batiment lie a la case */
 	Batiment batiment;
-	/**Rang de la case, sert a la localiser par rapport a map */
+	/**Rang de la case, sert a la localiser par rapport a carte */
 	int rang;
+	/**taille de la case en pixel lors de l'affichage*/
 	int taillec;
 
 	
@@ -27,7 +28,7 @@ public class Case {
 	 * @param rang
 	 * 			Entier qui identifie la position d'une case dans la matrice plateau.
 	 * 
-	 * @see jeu.Map#Map
+	 * @see jeu.Carte#Map
 	 * L'ensemble de ses parametres sont determines ici
 	 * 			
 	 */
@@ -66,8 +67,8 @@ public class Case {
 		 * 
 		 * @param gc 
 		 * 		Contexte graphique dans lequel on affiche
-		 * @see Map#rangcorner
-		 * @see Map#rangcorner
+		 * @see Carte#rangcorner
+		 * @see Carte#rangcorner
 		 */
 	void render(GraphicsContext gc, int rangcorner) {
 		int x = (rang%50 - rangcorner%50)*taillec;

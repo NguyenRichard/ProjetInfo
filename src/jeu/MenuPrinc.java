@@ -3,6 +3,10 @@ package jeu;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+
 import java.io.File;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -11,12 +15,12 @@ public class MenuPrinc {
 	Image fond;
 	int positioncurseur;
 	Jeu game;
-	CreationMap crea;
+	CreationCarte crea;
    	boolean update;
 	FXDialogs fx;
    	
 	/* Constructeur de Menu*/
-	MenuPrinc(Jeu game,CreationMap crea,int width, int height){
+	MenuPrinc(Jeu game,CreationCarte crea,int width, int height){
 		fond = new Image("DimensionalWar.png", width, height, false, false);
 		this.game=game;
 		this.crea=crea;
@@ -37,10 +41,10 @@ public class MenuPrinc {
 			if (positioncurseur == 0) {
 				File f = new File(crea.namesave); // nom du fichier contenant la sauvegarde
 				if (f.exists()){
-					game.map.remakemap(f,true);
+					game.carte.remakecarte(f,true);
 					game.ingame=true;
-					game.map.affichageEquipe();
-					game.map.joueurs.get(game.entrainjouer).actiondesbatiments();
+					game.carte.affichageEquipe();
+					game.carte.joueurs.get(game.entrainjouer).actiondesbatiments();
 				}
 				else {
 					fx.showWarning("Attention", "Le fichier n'existe pas");
@@ -51,10 +55,10 @@ public class MenuPrinc {
 			else if (positioncurseur == 1) {
 				File f = new File(crea.namesave); // nom du fichier contenant la sauvegarde
 				if (f.exists()){
-					crea.mapcode=crea.map.remakemap(f,false);
+					crea.cartecode=crea.carte.remakecarte(f,false);
 				}
 				else {
-					SauvegardeMap sauvegarde = new SauvegardeMap(); crea.mapcode = sauvegarde.grillemap; // si nouveau 
+					SauvegardeCarte sauvegarde = new SauvegardeCarte(); crea.cartecode = sauvegarde.grillecarte; // si nouveau 
 				}
 				crea.increa=true;
 			}
@@ -70,8 +74,35 @@ public class MenuPrinc {
 
 		}
 	}
+	
+	void update() {
+		GraphicsContext gc = game.gc;
+		String start = "Commencer la partie";
+		String edit = "Editer la carte";
+		if (update) {
+			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
+			gc.setFill(Color.WHITE);
+			gc.setStroke(Color.BLACK);
+			gc.setLineWidth(1);
+			if (positioncurseur == 0) {
+				render(gc);
+				gc.strokeText(edit, 360, 450 );
+				gc.fillText(edit, 360, 450 );
+				gc.setFill(Color.YELLOW);
+				gc.fillText(start, 360, 400 );
+			}
+			else if (positioncurseur == 1) {
+				render(gc);
+				gc.fillText(start, 360, 400 );
+				gc.strokeText(start, 360, 400 );
+				gc.setFill(Color.YELLOW);
+				gc.fillText(edit, 360, 450 );
+			}
+			update = false;
 
-	    
+		}
+	}
+	
 	    /*_Mettre a jour la position du curseur du menu1__________________________________________________________________________________ */		
 		
 		void upcurseur() {if (positioncurseur != 0) {positioncurseur -= 1;}}

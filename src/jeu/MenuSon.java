@@ -131,6 +131,7 @@ public class MenuSon {
 			}
 	}
 	
+	/** Augmente le niveau de la musique*/
 	public void moreMusic() {
 		if (sd.soundlevelmusic==80) {
 			sd.changeVolumeMusic(clip, -50);
@@ -140,6 +141,7 @@ public class MenuSon {
 		}
 	}
 	
+	/** Diminue le niveau de la musique*/
 	public void lessMusic() {
 		if (sd.soundlevelmusic==30) {
 			sd.changeVolumeMusic(clip, 50);
@@ -149,6 +151,7 @@ public class MenuSon {
 		}
 	}
 	
+	/** Augmente le niveau des effets*/
 	public void moreEffect() {
 		if (sd.soundleveleffect==80) {
 			sd.changeVolumeEffects(-50);
@@ -158,6 +161,7 @@ public class MenuSon {
 		}
 	}
 	
+	/** Diminue le niveau des effets*/
 	public void lessEffect() {
 		if (sd.soundleveleffect==30) {
 			sd.changeVolumeEffects(50);

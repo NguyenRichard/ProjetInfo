@@ -1,6 +1,6 @@
 package jeu;
 
-import batiments.Portal;
+import batiments.Portail;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 
 public class MenuInfo {
 	/**Carte du jeu */
-	Map map;
+	Carte carte;
 	/**Image de l'element qu'il faut afficher */
 	Image[] images;
 	/**position x du menu*/
@@ -18,8 +18,8 @@ public class MenuInfo {
 	/**position y du menu*/
 	int positionymenuinfo;
 
-	MenuInfo(Map map, int positionxmenu) {
-		this.map = map;
+	MenuInfo(Carte carte, int positionxmenu) {
+		this.carte = carte;
 		this.positionxmenuinfo=positionxmenu+10;
 		positionymenuinfo=500;
 	}
@@ -30,7 +30,7 @@ public class MenuInfo {
 	}
 
 	void MenuInforender(GraphicsContext gc) {
-		Case selectionne = map.selectionne;
+		Case selectionne = carte.selectionne;
 		if (selectionne != null) {
 
 			if (selectionne.unite!=null) {
@@ -47,8 +47,8 @@ public class MenuInfo {
 				gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
 				gc.fillText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
 				gc.strokeText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
-				if (selectionne.batiment instanceof Portal) {
-					Portal portail = (Portal) selectionne.batiment;
+				if (selectionne.batiment instanceof Portail) {
+					Portail portail = (Portail) selectionne.batiment;
 					if (portail.uniteainvoque!=null) {
 						portail.uniteainvoque.render(gc, positionxmenuinfo+150, positionymenuinfo+50);
 					}
@@ -64,16 +64,16 @@ public class MenuInfo {
 	}
 
 	/**
-	 * Permet d'afficher les infos d'une unité ainsi qu'un visuel
+	 * Permet d'afficher les infos d'une unite ainsi qu'un visuel
 	 * 
-	 * Parameters :
 	 * 
-	 * gc : GarphicsContext dans lequel le jeu se passe
-	 * unite : Unite à afficher
-	 * positionymenuinfo : position verticale de l'affichage
-	 * pourinvocation : booleen indiquant si on veut afficher le cout (utile lors des invocations
-	 * uniteinvoquee : indique si l'unite est celle en train d'être invoquée (pour être indiqué au joueur)
-	 * */
+	 * 
+	 *@param gc GarphicsContext dans lequel le jeu se passe
+	 *@param unite Unite a afficher
+	 *@param positionymenuinfo position verticale de l'affichage
+	 *@param pourinvocation booleen indiquant si on veut afficher le cout (utile lors des invocations
+	 *@param uniteinvoquee indique si l'unite est celle en train d'etre invoquee (pour etre indique au joueur)
+	 */
 	void InfoUniterender(GraphicsContext gc, Unite unite, int positionymenuinfo, boolean pourinvocation) {
 		int animcompteur= unite.animcompteur;
 		int maxcompteur = unite.maxcompteur;
