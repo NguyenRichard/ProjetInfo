@@ -17,7 +17,7 @@ public class MenuPrinc {
    	
 	/* Constructeur de Menu*/
 	MenuPrinc(Jeu game,CreationMap crea,int width, int height){
-		fond = new Image("InsectWorldWar.png", width, height, false, false);
+		fond = new Image("DimensionalWar.png", width, height, false, false);
 		this.game=game;
 		this.crea=crea;
 		update = true;

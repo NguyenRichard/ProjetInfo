@@ -19,8 +19,13 @@ public class GestionCapture {
 	
 	 public int capture(){
 	        if (this.verifCase()) {
-	            map.selectionnemenu.batiment.pv -=50;
-	            map.selectionne.batiment.entraincapture=true;
+	        	if (map.selectionnemenu.unite.type.compareTo("mineur")==0) { //si c'est un mineur on capture en 1 tour
+	        		map.selectionnemenu.batiment.pv = 0;
+	        	}
+	        	else {
+		            map.selectionnemenu.batiment.pv -=50;
+		            map.selectionne.batiment.entraincapture=true;
+	        	}
 	            if ( map.selectionnemenu.batiment.pv == 0) {
 	                int joueurcapture = map.selectionnemenu.batiment.joueur;
 	                int joueurquicapture = map.selectionnemenu.unite.joueur;

@@ -17,10 +17,10 @@ public class Scarabe extends Unite {
 		valable=true;
 		maxcompteur = 75;
 		portee = new int[] {0,3};
-		pvmax=99;
+		pvmax=150;
 		pv=pvmax;
-		dmg=80;
-		cost=20;
+		dmg=50;
+		cost=70;
 		type="ligne";
 	}
 	

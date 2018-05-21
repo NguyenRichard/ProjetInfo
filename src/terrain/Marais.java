@@ -11,7 +11,7 @@ public class Marais extends Terrain {
 		maxcompteur = 1;
 		images = new Image[1];
 		images[0]=new Image("terrains/marais.jpg",taille, taille,false,false);
-		deplacement=2;
+		deplacement=4;
 	}
 	public String toString() {
 		return "Marais : \ncout deplacement = " + deplacement;

@@ -253,7 +253,7 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang-1,depl.deplist))) {
 								map.leftcurseur(); //on selectionne case pour deplacement
 							}
-							else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")!=0)) {
+							else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")*map.selectionnemenu.unite.type.compareTo("zonesoin")!=0)) {
 								atq.downenemi(); //on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}
@@ -288,7 +288,7 @@ public class Jeu {
 							if ((depl.deplacementencours)&&(depl.inlist(map.selectionne.rang+1,depl.deplist))) {
 								map.rightcurseur(); //on selectionne case pour deplacement
 							}
-							else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")!=0)) {
+							else if (atq.attaqueencours && atq.atqenemi.size()!=0 && (map.selectionnemenu.unite.type.compareTo("zone1")*map.selectionnemenu.unite.type.compareTo("zone2")*map.selectionnemenu.unite.type.compareTo("zonesoin")!=0)) {
 								atq.upenemi();//on change la cible de l'attaque
 								map.adaptaffichage(map.selectionne.rang);
 							}

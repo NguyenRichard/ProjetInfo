@@ -12,15 +12,16 @@ public class Fourmis extends Unite{
 			int l = k+1;
 			images[k] = new Image("fourmis/fourmis_"+l+".png",taille, taille,false,false);
 		}
-		deplacement=3;
+		deplacement=7;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 50;
 		portee = new int[] {0,1};
-		pvmax=99;
+		pvmax=33;
 		pv=pvmax;
-		dmg=20;
-		cost=20;
+		dmg=15;
+		cost=40;
+		type="mineur";
 	}
 	
 	public String toString() {

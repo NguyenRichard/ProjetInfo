@@ -12,7 +12,7 @@ public class AbeilleSamourai extends Unite{
 			int l = k+1;
 			images[k] = new Image("abeillesamouraille/abeille-samouraille-"+l+".png",taille, taille,false,false);
 		}
-		deplacement=2;
+		deplacement=3;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 50;
@@ -20,7 +20,7 @@ public class AbeilleSamourai extends Unite{
 		pvmax=99;
 		pv=pvmax;
 		dmg=50;
-		cost=20;
+		cost=60;
 		type="assassin";
 		volant = true;
 	}

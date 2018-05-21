@@ -19,7 +19,7 @@ public class GestionDepl {
 	/**Pour avoir le Joueur en train de jouer */
 	Jeu jeu;	
 	
-	Image green;
+	Image bleu;
 	Image basdroite;
 	Image basgauche;
 	Image hautdroite;
@@ -36,7 +36,7 @@ public class GestionDepl {
 		deplacementencours=false;
 		this.map=map;
 		this.jeu = jeu;
-		green = new Image("greensquare.png", map.taillec, map.taillec, false, false);
+		bleu = new Image("bluesquare.png", map.taillec, map.taillec, false, false);
 		basdroite = new Image("fleche/bas-droite.png", map.taillec, map.taillec, false, false);
 		basgauche = new Image("fleche/bas-gauche.png", map.taillec, map.taillec, false, false);
 		hautdroite = new Image("fleche/haut-droite.png", map.taillec, map.taillec, false, false);
@@ -77,7 +77,7 @@ public class GestionDepl {
 				if((jeu.updatemenu)||(jeu.map.plateau[deplist[i]].unite!=null)||(jeu.map.plateau[deplist[i]].batiment!=null)||(jeu.map.plateau[deplist[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a un element sur la case
 					int x = (deplist[i]%50)*map.taillec-(jeu.map.rangcorner%50)*map.taillec;
 					int y = (deplist[i]/50)*map.taillec-(jeu.map.rangcorner/50)*map.taillec;
-					jeu.gc.drawImage(green, x, y);
+					jeu.gc.drawImage(bleu, x, y);
 				}
 			}
 		}

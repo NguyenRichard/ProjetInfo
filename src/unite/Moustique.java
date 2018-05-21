@@ -17,11 +17,11 @@ public class Moustique extends Unite{
 		valable=true;
 		maxcompteur = 60;
 		portee = new int[] {0,1};
-		pvmax=99;
+		pvmax=50;
 		pv=pvmax;
-		dmg=-30;
+		dmg=-35;
 		type = "soigneur";
-		cost=20;
+		cost=45;
 		volant = true;
 	}
 	

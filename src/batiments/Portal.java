@@ -46,10 +46,10 @@ public class Portal extends Batiment {
 		switch(typearmee) {
 			case 0:
 					listeinvoc.add(new Abeille(taille,joueur));
-					listeinvoc.add(new AbeilleSamourai(taille,joueur));
 					listeinvoc.add(new Fourmis(taille,joueur));
-					listeinvoc.add(new Scarabe(taille,joueur));
 					listeinvoc.add(new Moustique(taille,joueur));
+					listeinvoc.add(new AbeilleSamourai(taille,joueur));
+					listeinvoc.add(new Scarabe(taille,joueur));
 					listeinvoc.add(new PapillonPsychique(taille,joueur));
 					
 					break;
@@ -57,9 +57,9 @@ public class Portal extends Batiment {
 					listeinvoc.add(new EpeisteVolant(taille,joueur));
 					break;
 			case 2:
-					listeinvoc.add(new TankSquelette(taille,joueur));
 					listeinvoc.add(new SkeletonSoldier(taille,joueur));
 					listeinvoc.add(new ArcherSquelette(taille,joueur));
+					listeinvoc.add(new TankSquelette(taille,joueur));
 					break;
 			default:
 					break;
