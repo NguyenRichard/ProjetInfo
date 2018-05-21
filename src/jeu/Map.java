@@ -51,7 +51,7 @@ public class Map {
 	Case selectionnemenu;
 	Image fond;
 	int nombrecaseaffichee;
-	/**Liste des joueurs avec leurs unitï¿½s, batiments etc... */
+	/**Liste des joueurs avec leurs unites, batiments etc... */
 	ArrayList<Joueur> joueurs;
 	/**Tableau d'element permettant de faire le lien entre le code de l'element et le type de terrain */
 	ArrayList<Terrain> referencecodeterrain;
