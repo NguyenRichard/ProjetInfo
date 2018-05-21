@@ -26,7 +26,7 @@ public class MenuInfo {
 
 	MenuInfo(int positionxmenu){
 		this.positionxmenuinfo=positionxmenu+10;
-		
+
 	}
 
 	void MenuInforender(GraphicsContext gc) {
@@ -84,8 +84,10 @@ public class MenuInfo {
 			k=0;
 		}
 		gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
-
-		String txtatq = "attaque : " + unite.dmg;
+		
+		String txtatq;
+		if (unite.dmg>0) {txtatq = "attaque : " + unite.dmg; }
+		else {txtatq = "soin : " + (-1)*unite.dmg;}
 		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 		gc.setFill(Color.BISQUE);
 		gc.setStroke(Color.BLACK);
@@ -120,7 +122,7 @@ public class MenuInfo {
 			gc.fillText(txtportee, positionxmenuinfo*1.15, positionymenuinfo+150);
 			gc.strokeText(txtportee, positionxmenuinfo*1.15, positionymenuinfo+150);
 		}
-		
+
 		if (unite.volant) { //affichage dans menuinfo des specifications liees au type de l'unite
 			String type = "type : " + unite.type + " | " + "volant";
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -139,12 +141,12 @@ public class MenuInfo {
 			gc.fillText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
 			gc.strokeText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
 		}
-		
-		
+
+
 		String txtnom = unite.toString();
 		gc.fillText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
 		gc.strokeText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
-		
+
 		if(pourinvocation) {
 			String deplacement = "deplacement : " + unite.deplacement;
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -153,33 +155,33 @@ public class MenuInfo {
 			gc.setLineWidth(1);
 			gc.fillText(deplacement, positionxmenuinfo*1.03, positionymenuinfo+250);
 			gc.strokeText(deplacement, positionxmenuinfo*1.03, positionymenuinfo+250);
-			
+
 			String descriptiontype = "----------------\n";
 			switch(unite.type){
-				case "soldat" :
-					descriptiontype += "Unite specialise dans le \ncorp a corp";
-					break;
-				case "soigneur" :
-					descriptiontype += "Unite capable de soigner \nmais pas de se battre";
-					break;
-				case "assassin" :
-					descriptiontype += "Unite qui peut rejouer \nchaque fois qu'elle \nporte le coup de grace";
-					break;
-				case "zone1" :
-					descriptiontype += "Unite infligeant ses degats \ndans une petite zone\n(peut toucher des allies)";
-					break;
-				case "zone2" :
-					descriptiontype += "Unite infligeant ses degats \ndans une grande zone\n(peut toucher des allies)";
-					break;
-				case "ligne" :
-					descriptiontype += "Unite infligeant ses degats \nsur une ligne\n(peut toucher des allies)";
-					break;
-				case "mineur" :
-					descriptiontype += "Unite capable de capturer \nen 1 tour au lieu de 2 \nmais pas de se battre";
-					break;
-				case "zonesoin" :
-					descriptiontype += "Unite capable de soigner \ndans une petite zone \n(peut toucher des ennemis)";
-					break;
+			case "soldat" :
+				descriptiontype += "Unite specialise dans le \ncorp a corp";
+				break;
+			case "soigneur" :
+				descriptiontype += "Unite capable de soigner \nmais pas de se battre";
+				break;
+			case "assassin" :
+				descriptiontype += "Unite qui peut rejouer \nchaque fois qu'elle \nporte le coup de grace";
+				break;
+			case "zone1" :
+				descriptiontype += "Unite infligeant ses degats \ndans une petite zone\n(peut toucher des allies)";
+				break;
+			case "zone2" :
+				descriptiontype += "Unite infligeant ses degats \ndans une grande zone\n(peut toucher des allies)";
+				break;
+			case "ligne" :
+				descriptiontype += "Unite infligeant ses degats \nsur une ligne\n(peut toucher des allies)";
+				break;
+			case "mineur" :
+				descriptiontype += "Unite capable de capturer \nen 1 tour au lieu de 2 \nmais pas de se battre";
+				break;
+			case "zonesoin" :
+				descriptiontype += "Unite capable de soigner \ndans une petite zone \n(peut toucher des ennemis)";
+				break;
 			}
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			gc.setFill(Color.BISQUE);
