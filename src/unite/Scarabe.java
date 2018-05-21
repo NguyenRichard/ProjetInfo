@@ -12,15 +12,15 @@ public class Scarabe extends Unite {
 			int l = k+1;
 			images[k] = new Image("scarabe/scarabe-"+l+".png",taille, taille,false,false);
 		}
-		deplacement=5;
+		deplacement=3;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 75;
 		portee = new int[] {0,3};
-		pvmax=99;
+		pvmax=150;
 		pv=pvmax;
-		dmg=80;
-		cost=20;
+		dmg=50;
+		cost=70;
 		type="ligne";
 	}
 	

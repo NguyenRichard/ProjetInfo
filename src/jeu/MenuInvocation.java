@@ -78,10 +78,7 @@ public class MenuInvocation {
 		if (confirmationencours) {
 			this.renderconfirmation(gc);
 		}
-		menuinfoinvoc.InfoUniterender(gc, portail.listeinvoc.get(positioncurseur), 150, true, false);
-		if (portail.uniteainvoque!=null) {
-			menuinfoinvoc.InfoUniterender(gc, portail.uniteainvoque, 400, true, true);
-		}
+		menuinfoinvoc.InfoUniterender(gc, portail.listeinvoc.get(positioncurseur), 150, true);
 	}
 	
 	/** Deplacement du curseur vers le bas pour la selection de l'unite a invoque*/

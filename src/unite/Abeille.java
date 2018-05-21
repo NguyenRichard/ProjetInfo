@@ -12,15 +12,15 @@ public class Abeille extends Unite{
 			int l = k+1;
 			images[k] = new Image("abeille/abeille"+l+".png",taille, taille,false,false);
 		}
-		deplacement=1;
+		deplacement=4;
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 30;
 		portee = new int[] {0,1};
-		pvmax=99;
+		pvmax=70;
 		pv=pvmax;
-		dmg=1;
-		cost=20;
+		dmg=35;
+		cost=10;
 		volant = true;
 	}
 	

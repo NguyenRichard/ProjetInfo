@@ -34,7 +34,7 @@ public class MenuInfo {
 		if (selectionne != null) {
 
 			if (selectionne.unite!=null) {
-				InfoUniterender(gc, selectionne.unite, positionymenuinfo, false, false);
+				InfoUniterender(gc, selectionne.unite, positionymenuinfo, false);
 			} else if (selectionne.batiment!=null) {
 				int animcompteur= selectionne.batiment.animcompteur;
 				int maxcompteur = selectionne.batiment.maxcompteur;
@@ -74,7 +74,7 @@ public class MenuInfo {
 	 * pourinvocation : booleen indiquant si on veut afficher le cout (utile lors des invocations
 	 * uniteinvoquee : indique si l'unite est celle en train d'être invoquée (pour être indiqué au joueur)
 	 * */
-	void InfoUniterender(GraphicsContext gc, Unite unite, int positionymenuinfo, boolean pourinvocation, boolean uniteinvoquee) {
+	void InfoUniterender(GraphicsContext gc, Unite unite, int positionymenuinfo, boolean pourinvocation) {
 		int animcompteur= unite.animcompteur;
 		int maxcompteur = unite.maxcompteur;
 		this.images = unite.images;
@@ -140,18 +140,50 @@ public class MenuInfo {
 			gc.strokeText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
 		}
 		
-		String txtnom = "";
-		if(uniteinvoquee) {
-			txtnom = "Unite invoquée : ";
-			if (unite.toString().length()>10) {txtnom+=unite.toString().substring(0,10);}
-			else {txtnom+=unite.toString();}
-		}
-		else {txtnom += unite.toString();}
+		
+		String txtnom = unite.toString();
 		gc.fillText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
 		gc.strokeText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
 		
 		if(pourinvocation) {
-			//mettre ici ci info specifique a afficher sur l'unite dans le menuinvocation
+			String deplacement = "deplacement : " + unite.deplacement;
+			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+			gc.setFill(Color.BISQUE);
+			gc.setStroke(Color.BLACK);
+			gc.setLineWidth(1);
+			gc.fillText(deplacement, positionxmenuinfo*1.03, positionymenuinfo+250);
+			gc.strokeText(deplacement, positionxmenuinfo*1.03, positionymenuinfo+250);
+			
+			String descriptiontype = "----------------\n";
+			switch(unite.type){
+				case "soldat" :
+					descriptiontype += "Unite specialise dans le \ncorp a corp";
+					break;
+				case "soigneur" :
+					descriptiontype += "Unite capable de soigner \nmais pas de se battre";
+					break;
+				case "assassin" :
+					descriptiontype += "Unite qui peut rejouer \nchaque fois qu'elle \nporte le coup de grace";
+					break;
+				case "zone1" :
+					descriptiontype += "Unite infligeant ses degats \ndans une petite zone\n(peut toucher des allies)";
+					break;
+				case "zone2" :
+					descriptiontype += "Unite infligeant ses degats \ndans une grande zone\n(peut toucher des allies)";
+					break;
+				case "ligne" :
+					descriptiontype += "Unite infligeant ses degats \nsur une ligne\n(peut toucher des allies)";
+					break;
+				case "mineur" :
+					descriptiontype += "Unite capable de capturer \nen 1 tour au lieu de 2 \nmais pas de se battre";
+					break;
+			}
+			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+			gc.setFill(Color.BISQUE);
+			gc.setStroke(Color.BLACK);
+			gc.setLineWidth(1);
+			gc.fillText(descriptiontype, positionxmenuinfo*1.03, positionymenuinfo+300);
+			gc.strokeText(descriptiontype, positionxmenuinfo*1.03, positionymenuinfo+300);
 		}
 		else {
 			int ratiopvpvmax = (int) 100*unite.pv/unite.pvmax;
