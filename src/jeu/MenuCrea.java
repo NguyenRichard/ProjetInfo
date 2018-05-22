@@ -31,8 +31,10 @@ public class MenuCrea {
 	ArrayList<Terrain> referencecodeterrain;
 	/**Cette case sert a pouvoir afficher un apercu de l'element en cours de selection */
 	Case visualisation;
-	/**Entier a partir du quel affiche le menu lateral droit**/
+	/**Entier decrivant le nombre de pixel en abscisse a partir du quel affiche le menu lateral droit**/
     int positionxmenu;
+    /**Entier decrivant le nombre de pixel en ordonnee a partir du quel affiche le menu lateral droit**/
+    int positionymenu;
     /**Cache les options qui ne sont pas valide */
 	Image cache;
 	
@@ -46,20 +48,21 @@ public class MenuCrea {
 		choixtype=0;
 		numjoueur=0;
 		visualisation = visu;
+		positionymenu= 110;
 		this.referencecodeterrain = referencecodeterrain;
 		cache = new Image("cache.png",200, 320, false, false);
 	}
 	
 	void render(GraphicsContext gc) {
-		gc.drawImage(fond, positionxmenu, 50);
+		gc.drawImage(fond, positionxmenu, positionymenu);
 		//affichage du numjoueur
 		String txt = "joueur : " + numjoueur;
         gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
         gc.setFill(Color.BISQUE);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1);
-        gc.fillText(txt, positionxmenu+30, 310);
-        gc.strokeText(txt, positionxmenu+30, 310);
+        gc.fillText(txt, positionxmenu+30, positionymenu + 260);
+        gc.strokeText(txt, positionxmenu+30, positionymenu + 260);
         //affichage du choixtype
         if (choixtype==0) {
         	String type = "terrain";
@@ -67,10 +70,10 @@ public class MenuCrea {
             gc.setFill(Color.BISQUE);
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(1);
-            gc.fillText(type, positionxmenu+50, 135);
-            gc.strokeText(type, positionxmenu+50, 135);
-            gc.drawImage(cache, positionxmenu,270);
-            visualisation.terrain.render(gc, positionxmenu+65, 200);
+            gc.fillText(type, positionxmenu+50, positionymenu + 85);
+            gc.strokeText(type, positionxmenu+50, positionymenu + 85);
+            gc.drawImage(cache, positionxmenu,positionymenu + 220);
+            visualisation.terrain.render(gc, positionxmenu+65, positionymenu + 150);
         }
         if (choixtype==1) {
         	String type = "unitee";
@@ -78,9 +81,9 @@ public class MenuCrea {
             gc.setFill(Color.BISQUE);
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(1);
-            gc.fillText(type, positionxmenu+50, 135);
-            gc.strokeText(type, positionxmenu+50, 135);
-            visualisation.unite.render(gc, positionxmenu+65, 200);
+            gc.fillText(type, positionxmenu+50, positionymenu + 85);
+            gc.strokeText(type, positionxmenu+50, positionymenu + 85);
+            visualisation.unite.render(gc, positionxmenu+65, positionymenu + 150);
             
         }
         if (choixtype==2) {
@@ -89,14 +92,14 @@ public class MenuCrea {
             gc.setFill(Color.BISQUE);
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(1);
-            gc.fillText(type, positionxmenu+50, 135);
-            gc.strokeText(type, positionxmenu+50, 135);
-            visualisation.batiment.render(gc, positionxmenu+65, 200);
+            gc.fillText(type, positionxmenu+50, positionymenu + 85);
+            gc.strokeText(type, positionxmenu+50, positionymenu + 85);
+            visualisation.batiment.render(gc, positionxmenu+65, positionymenu + 150);
             
         }
         
 		if (choix) {
-			gc.drawImage(curseur, positionxmenu,100+positioncurseurcrea*85);
+			gc.drawImage(curseur, positionxmenu,positionymenu + 50 +positioncurseurcrea*85);
 		}
 	}
 	

@@ -3,7 +3,7 @@ package terrain;
 import javafx.scene.image.Image;
 import jeu.Terrain;
 
-public class Void extends Terrain {
+public class Vide extends Terrain {
 
 /*_Methode de base de l'objet_______________________________________________________________________________________________________ */
 	
@@ -16,7 +16,7 @@ public class Void extends Terrain {
 	 * La taille du terrain est fixee par la taille de la case
 	 * 			
 	 */	
-	public Void(int taille){
+	public Vide(int taille){
 		super(taille);
 		maxcompteur = 1;
 		images = new Image[1];
@@ -24,7 +24,7 @@ public class Void extends Terrain {
 		deplacement=100;
 	}
 	public String toString() {
-		return "Void";
+		return "Vide";
 	}
 
 }

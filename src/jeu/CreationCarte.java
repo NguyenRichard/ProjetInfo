@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import son.Son;
-import terrain.Void;
+import terrain.Vide;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -203,11 +203,11 @@ public class CreationCarte {
 			    	if (menucrea.choixtype == 0) {
 			    		changeterrainsave(carte.selectionne.rang,codeS);
 			    	}
-			    	else if ((menucrea.choixtype == 2)&&(carte.selectionne.batiment == null)&&!(carte.selectionne.terrain instanceof Void)) {
+			    	else if ((menucrea.choixtype == 2)&&(carte.selectionne.batiment == null)&&!(carte.selectionne.terrain instanceof Vide)) {
 			    		carte.remakebatiment(carte.selectionne.rang,codeS,false);
 			    		changebatimentsave(carte.selectionne.rang,codeS);
 			    	}
-			    	else if ((menucrea.choixtype == 1)&&(carte.selectionne.unite == null)&&!(carte.selectionne.terrain instanceof Void)) {
+			    	else if ((menucrea.choixtype == 1)&&(carte.selectionne.unite == null)&&!(carte.selectionne.terrain instanceof Vide)) {
 			    		carte.remakeunite(carte.selectionne.rang,codeS,false); 
 			    		changeunitesave(carte.selectionne.rang,codeS);
 			    	}

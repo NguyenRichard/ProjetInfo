@@ -9,7 +9,7 @@ public abstract class Unite extends Element implements Cloneable{
 	protected boolean valable;
 	/**Entier qui decrit le nombre de case max que l'unite peut parcourir. */
 	protected int deplacement;
-	/**Entier qui decrit le nombre de case que l'unite peut encore parcourir (pour les déplacements en cours). */
+	/**Entier qui decrit le nombre de case que l'unite peut encore parcourir (pour les deplacements en cours). */
 	protected int restdeplacement;
 	/**Entier representant la portee de l'unite */
 	protected int[] portee;

@@ -40,7 +40,7 @@ public class MenuInvocation {
 		curseur = new Image("menuinvoc/curseurinvoc.png", 730, 75, false, false );
 		curseurconf= new Image("menuinvoc/confirmationcurseur.png", 90, 40,false,false);
 		confirmation= new Image("menuinvoc/confirmation.png",250,100,false,false);
-		indicateurvalide = new Image("indicateurvalide.png",32,32,false,false);
+		indicateurvalide = new Image("menuinvoc/indicateurvalide.png",32,32,false,false);
 		menuinfoinvoc = new MenuInfo(positionxmenuinfo);
 		this.portail = portail;
 		positioncurseur = 0;
