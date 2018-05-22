@@ -1,7 +1,7 @@
 package jeu;
 
 import javafx.scene.canvas.GraphicsContext;
-import terrain.Void;
+import terrain.Vide;
 
 public class Case {
 	/**Unite liee a la case */
@@ -39,7 +39,7 @@ public class Case {
 		
 		this.unite=null;
 		this.taillec=taillec;
-		this.terrain = new Void(taillec);
+		this.terrain = new Vide(taillec);
 		this.batiment=null;
 		this.rang = rang;
 	}

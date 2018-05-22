@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import son.Son;
-import terrain.Void;
+import terrain.Vide;
 
 public class GestionAtq {
 	/**La portee d'attaque maximale de l'unite en train d'attaquer */
@@ -83,6 +83,7 @@ public class GestionAtq {
 	    	}
 			if 	(carte.selectionnemenu.unite.type.compareTo("assassin")== 0) {
 				carte.selectionnemenu.unite.valable=true;
+				carte.selectionnemenu.unite.restdeplacement = carte.selectionnemenu.unite.deplacement;
 				sd.runSoundrefresh();
 			}
 		}
@@ -280,7 +281,7 @@ public class GestionAtq {
 			}
 		}
 		
-		return (! (carre.terrain instanceof Void)); //Pour pour enlever le vide
+		return (! (carre.terrain instanceof Vide)); //Pour pour enlever le vide
 	}
 
 	/**

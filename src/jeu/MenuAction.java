@@ -16,7 +16,9 @@ public class MenuAction {
 	Image curseur;
 	/**Cache des options qui ne sont plus valide */
 	Image cache;
+	/**Entier decrivant le nombre de pixel en abscisse a partir du quel affiche le menu lateral droit**/
 	int positionxmenu;
+	/**Entier decrivant le nombre de pixel en ordonnee a partir du quel affiche le menu lateral droit**/
 	int positionymenu;
 	GraphicsContext gc;
 	/**Position du curseur dans le menu 0 : attaquer; 1 : deplacer; 2 : capturer*/
@@ -26,8 +28,8 @@ public class MenuAction {
 		this.positionxmenu=positionxmenu;
 		positionymenu= 110;
 		menucache = new Image("fondmenu.png", width-positionxmenu,height,false,false);
-		menu1attaque = new Image("menu1attaque(10x16).png", 200, 320, false, false);
-		menu1soin = new Image("menu1soin(10x16).png", 200, 320, false, false);
+		menu1attaque = new Image("menuaction/menu1attaque(10x16).png", 200, 320, false, false);
+		menu1soin = new Image("menuaction/menu1soin(10x16).png", 200, 320, false, false);
 		curseur = new Image("curseurmenu1.png",200, 320, false, false);
 		menu2 = new Image("menu2(10x16).jpg", 200, 320, false, false);
 		cache = new Image("cache.png",200, 320, false, false);

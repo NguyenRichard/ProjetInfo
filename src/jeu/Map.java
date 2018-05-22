@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import terrain.*;
-import terrain.Void;
+import terrain.Vide;
 import unite.Abeille;
 import unite.AbeilleSamourai;
 import unite.ArcherSquelette;
@@ -77,7 +77,7 @@ public class Map {
 		
 	/*~~~~~~TABLE REFERENCE CODE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		referencecodeterrain = new ArrayList<Terrain>();
-		referencecodeterrain.add(new Void(taillec)); //permet de faire le lien entre code et element
+		referencecodeterrain.add(new Vide(taillec)); //permet de faire le lien entre code et element
 		referencecodeterrain.add(new Terre(taillec)); // /!\laisser void en premier !
 		referencecodeterrain.add(new Marais(taillec));
 		referencecodeterrain.add(new Eau(taillec));
