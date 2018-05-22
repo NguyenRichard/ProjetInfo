@@ -1,6 +1,7 @@
 package jeu;
 
 import javafx.scene.image.Image;
+import terrain.Vide;
 
 public class GestionDepl {
 	/**Determine si un deplacement est en cours */
@@ -60,7 +61,7 @@ public class GestionDepl {
 		if ((carte.selectionne.unite.joueur!=jeu.entrainjouer)) {
 			return false;
 		}
-		return (carre.terrain.deplacement != 100);
+		return !(carre.terrain instanceof Vide);
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class TankSquelette extends Unite{
 			portee = new int[] {0,1};
 			pvmax=200;
 			pv=pvmax;
-			dmg=80;
+			dmg=40;
 			cost=70;
 		}
 		

@@ -15,12 +15,12 @@ public class CraneVolant extends Unite {
 		restdeplacement=deplacement;
 		valable=true;
 		maxcompteur = 50;
-		portee = new int[] {0,1};
+		portee = new int[] {3,5};
 		pvmax=99;
 		pv=pvmax;
-		dmg=50;
+		dmg=25;
 		cost=60;
-		type="assassin";
+		type="zone2";
 		volant = true;
 	}
 		

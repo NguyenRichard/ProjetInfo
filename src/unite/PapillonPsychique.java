@@ -18,9 +18,9 @@ public class PapillonPsychique extends Unite{
 			animcompteur = 0;
 			maxcompteur = 60;
 			portee = new int[] {2,4};
-			pvmax=99;
+			pvmax=50;
 			pv=pvmax;
-			dmg=35;
+			dmg=60;
 			cost=100;
 			type="zone1";
 			volant = true;

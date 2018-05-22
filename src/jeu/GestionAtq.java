@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import son.Son;
+import terrain.Montagne;
 import terrain.Vide;
 
 public class GestionAtq {
@@ -173,6 +174,10 @@ public class GestionAtq {
 		
 		int rang = carte.selectionnemenu.rang;
 		int portee = carte.selectionnemenu.unite.portee[1];
+		if((carte.selectionnemenu.terrain instanceof Montagne)&&(carte.selectionnemenu.unite.portee[1]>1)) {
+			portee += 1; //les unites a distance gagnent 1 de portée sur les montagnes
+		}
+	
 		int porteemin = carte.selectionnemenu.unite.portee[0];
 		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
 		int col = rang%50;
@@ -210,6 +215,9 @@ public class GestionAtq {
 	void listcaseaporteeligne() {
 		int rang = carte.selectionnemenu.rang;
 		int portee = carte.selectionnemenu.unite.portee[1];
+		if((carte.selectionnemenu.terrain instanceof Montagne)&&(carte.selectionnemenu.unite.portee[1]>1)) {
+			portee += 1; //les unites a distance gagnent 1 de portée sur les montagnes
+		}
 		int porteemin = carte.selectionnemenu.unite.portee[0];
 		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
 		int col = rang%50;
