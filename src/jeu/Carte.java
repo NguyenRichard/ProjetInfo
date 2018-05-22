@@ -20,6 +20,7 @@ import terrain.Void;
 import unite.Abeille;
 import unite.AbeilleSamourai;
 import unite.ArcherSquelette;
+import unite.CraneVolant;
 import unite.EpeisteVolant;
 import unite.Fourmis;
 import unite.Moustique;
@@ -27,6 +28,7 @@ import unite.PapillonPsychique;
 import unite.Scarabe;
 import unite.SkeletonSoldier;
 import unite.TankSquelette;
+import unite.ZombieMineur;
 
 
 
@@ -521,6 +523,12 @@ public class Carte {
 				else if (codeunite == 10) {
 					addunite(k,new ArcherSquelette(taillec,joueur));
 				}
+				else if (codeunite == 11) {
+					addunite(k,new ZombieMineur(taillec,joueur));
+				}
+				else if (codeunite ==12) {
+					addunite(k,new CraneVolant(taillec,joueur));
+				}
 				if (startgame) {
 					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unite la liste d'unites du bon joueur si on est en jeu
 				}
@@ -534,7 +542,7 @@ public class Carte {
 	 * 
 	 * Permet le defilement du choix des unites dans le menucrea (qui correspond a la partie modification de la sauvegarde)
 	 */
-	int nombretotunite() {return 10;}
+	int nombretotunite() {return 12;}
 
 	/**ajoute le batiment correspondant au bon code au rang k de la carte
 	 * 

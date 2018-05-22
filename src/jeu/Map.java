@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import batiments.Crystal;
-import batiments.Portal;
+import batiments.Portail;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -20,6 +20,7 @@ import terrain.Void;
 import unite.Abeille;
 import unite.AbeilleSamourai;
 import unite.ArcherSquelette;
+import unite.CraneVolant;
 import unite.EpeisteVolant;
 import unite.Fourmis;
 import unite.Moustique;
@@ -498,6 +499,9 @@ public class Map {
 				else if (codeunite == 11) {
 					addunite(k,new ZombieMineur(taillec,joueur));
 				}
+				else if (codeunite ==12) {
+					addunite(k,new CraneVolant(taillec,joueur));
+				}
 				if (startgame) {
 					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unitï¿½ ï¿½ la liste d'unitï¿½s du bon joueur si on est en jeu
 				}
@@ -509,7 +513,7 @@ public class Map {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
 	 */
-	int nombretotunite() {return 11;}
+	int nombretotunite() {return 12;}
 
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
@@ -523,7 +527,7 @@ public class Map {
 		if (codebatiment !=0) {
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types de batiments !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codebatiment == 1) {
-				plateau[k].batiment = new Portal(taillec,joueur,joueurs.get(joueur).typearmee);
+				plateau[k].batiment = new Portail(taillec,joueur,joueurs.get(joueur).typearmee);
 				}
 			else if (codebatiment == 2) {
 				plateau[k].batiment = new Crystal(taillec,joueur);
