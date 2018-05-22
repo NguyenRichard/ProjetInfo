@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import son.Son;
+import terrain.Foret;
 import terrain.Montagne;
 import terrain.Vide;
 import unite.ArcherSquelette;
@@ -190,11 +191,17 @@ public class GestionAtq {
 		assert rang < 2501;
 		assert rang >= 0;
 		int portee = carte.selectionnemenu.unite.portee[1];
+		int porteemin = carte.selectionnemenu.unite.portee[0];
 		if((carte.selectionnemenu.terrain instanceof Montagne)&&(carte.selectionnemenu.unite.portee[1]>1)) {
-			portee += 1; //les unites a distance gagnent 1 de port�e sur les montagnes
+			portee += 1; //les unites a distance gagnent 1 de portee sur les montagnes
+		}
+		if((carte.selectionnemenu.terrain instanceof Foret)&&(carte.selectionnemenu.unite.portee[1]>1)) {
+			portee -= 1; //les unites a distance perdent 1 de portee sur les forets
+			if (porteemin > 0) {
+				porteemin -= 1;
+			}
 		}
 	
-		int porteemin = carte.selectionnemenu.unite.portee[0];
 		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
 		int col = rang%50;
 		int lign = rang/50;
@@ -233,10 +240,16 @@ public class GestionAtq {
 		assert rang < 2501;
 		assert rang >= 0;
 		int portee = carte.selectionnemenu.unite.portee[1];
+		int porteemin = carte.selectionnemenu.unite.portee[0];
 		if((carte.selectionnemenu.terrain instanceof Montagne)&&(carte.selectionnemenu.unite.portee[1]>1)) {
 			portee += 1; //les unites a distance gagnent 1 de port�e sur les montagnes
 		}
-		int porteemin = carte.selectionnemenu.unite.portee[0];
+		if((carte.selectionnemenu.terrain instanceof Foret)&&(carte.selectionnemenu.unite.portee[1]>1)) {
+			portee -= 1; //les unites a distance perdent 1 de portee sur les forets
+			if (porteemin > 0) {
+				porteemin -= 1;
+			}
+		}
 		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
 		int col = rang%50;
 		int lign = rang/50;
