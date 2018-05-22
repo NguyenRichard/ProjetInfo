@@ -27,6 +27,7 @@ import unite.PapillonPsychique;
 import unite.Scarabe;
 import unite.SkeletonSoldier;
 import unite.TankSquelette;
+import unite.ZombieMineur;
 
 
 
@@ -494,6 +495,9 @@ public class Map {
 				else if (codeunite == 10) {
 					addunite(k,new ArcherSquelette(taillec,joueur));
 				}
+				else if (codeunite == 11) {
+					addunite(k,new ZombieMineur(taillec,joueur));
+				}
 				if (startgame) {
 					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unitï¿½ ï¿½ la liste d'unitï¿½s du bon joueur si on est en jeu
 				}
@@ -505,7 +509,7 @@ public class Map {
 	/**
 	 * A METTRE A JOUR LORSQU'ON AJOUTE UN NOUVEAU TYPE D'UNITE
 	 */
-	int nombretotunite() {return 10;}
+	int nombretotunite() {return 11;}
 
 	/**ajoute le batiment correspondant au bon code au rang k
 	 * @param k
