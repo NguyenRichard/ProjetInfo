@@ -548,8 +548,8 @@ public class Map {
 		try { // si la sauvegarde existe on reconstruit la map a l'aide du code
 			FileInputStream fis = new FileInputStream(f.getName());
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			SauvegardeMap sauvegarde = (SauvegardeMap) ois.readObject();
-			int[] mapcode = sauvegarde.grillemap;
+			SauvegardeCarte sauvegarde = (SauvegardeCarte) ois.readObject();
+			int[] mapcode = sauvegarde.grillecarte;
 			for(int k=0; k<2500; k++) {
 				int codeS = mapcode[k];
 				if(startgame) {
