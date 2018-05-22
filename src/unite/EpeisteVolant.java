@@ -22,6 +22,7 @@ public class EpeisteVolant extends Unite {
 		dmg=1;
 		cost=20;
 		volant = true;
+		type = "assassin";
 	}
 		
 	public String toString() {

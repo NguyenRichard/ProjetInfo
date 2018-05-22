@@ -90,6 +90,7 @@ public class Carte {
 		referencecodeterrain.add(new Eau(taillec)); // c'est le seul endroit qu'il est necessaire de modifier de la sorte dans le cas des terrains
 		referencecodeterrain.add(new Sable(taillec));
 		referencecodeterrain.add(new Montagne(taillec));
+		referencecodeterrain.add(new Foret(taillec));
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		
 		nombrecaseaffichee = 10;
