@@ -187,9 +187,11 @@ public class GestionAtq {
 	void listcaseaportee() {
 		
 		int rang = carte.selectionnemenu.rang;
+		assert rang < 2501;
+		assert rang >= 0;
 		int portee = carte.selectionnemenu.unite.portee[1];
 		if((carte.selectionnemenu.terrain instanceof Montagne)&&(carte.selectionnemenu.unite.portee[1]>1)) {
-			portee += 1; //les unites a distance gagnent 1 de portée sur les montagnes
+			portee += 1; //les unites a distance gagnent 1 de portï¿½e sur les montagnes
 		}
 	
 		int porteemin = carte.selectionnemenu.unite.portee[0];
@@ -228,9 +230,11 @@ public class GestionAtq {
 	 */
 	void listcaseaporteeligne() {
 		int rang = carte.selectionnemenu.rang;
+		assert rang < 2501;
+		assert rang >= 0;
 		int portee = carte.selectionnemenu.unite.portee[1];
 		if((carte.selectionnemenu.terrain instanceof Montagne)&&(carte.selectionnemenu.unite.portee[1]>1)) {
-			portee += 1; //les unites a distance gagnent 1 de portée sur les montagnes
+			portee += 1; //les unites a distance gagnent 1 de portï¿½e sur les montagnes
 		}
 		int porteemin = carte.selectionnemenu.unite.portee[0];
 		//on va balayer le carre de cases comprenant les cases a portes d'attaque de l'unite selectionne pour attaquer
@@ -642,6 +646,8 @@ public class GestionAtq {
 	/**@return le rang des cases touchees pour une attaque de type zone 1 a partir du rang du centre*/
 
 	int[] rangzone1(int center) {
+		assert center < 2501;
+		assert center >= 0;
 		int[] list = new int[5];
 		for (int i=0;i<list.length;i++) {
 			list[i]=-1;
@@ -656,6 +662,8 @@ public class GestionAtq {
 	
 	/**@return le rang des cases touchees pour une attaque de type zone 2 a partir du rang du centre*/
 	int[] rangzone2(int center) {
+		assert center < 2501;
+		assert center >= 0;
 		int[] list = new int[13];
 		for (int i=0;i<list.length;i++) {
 			list[i]=-1;
@@ -730,7 +738,7 @@ public class GestionAtq {
 				if(k==1) {
 					carte.selectionne = atqlist.get(position);
 				}
-			}
+			} else { assert false; }
 			
 			carte.adaptaffichage(carte.selectionne.rang);
 		}

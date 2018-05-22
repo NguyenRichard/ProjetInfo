@@ -111,6 +111,7 @@ public class MenuSon {
 			gc.drawImage(curseur, positionxmenu, positionymenu+160);
 			break;
 		default:
+			assert false;
 			break;
 		}
 	}
@@ -118,17 +119,17 @@ public class MenuSon {
 	/** Deplacement du curseur vers le bas*/
 	public void upcurseur(){
 		positioncurseur-=1;
-			if (positioncurseur<=-1) {
-				positioncurseur=0;
-			}
+		if (positioncurseur<=-1) {
+			positioncurseur=0;
+		}
 	}
 	
 	/** Deplacement du curseur vers le bas*/
 	public void downcurseur() {
 		positioncurseur+=1;
-			if (positioncurseur>=maxpos) {
-				positioncurseur=1;
-			}
+		if (positioncurseur>=maxpos) {
+			positioncurseur=1;
+		}
 	}
 	
 	/** Augmente le niveau de la musique*/
@@ -138,7 +139,7 @@ public class MenuSon {
 		}
 		else if ((sd.soundlevelmusic<=30)&&(sd.soundlevelmusic>0)) {
 			sd.changeVolumeMusic(clip, -1);
-		}
+		} else { assert false;}
 	}
 	
 	/** Diminue le niveau de la musique*/
@@ -148,7 +149,7 @@ public class MenuSon {
 		}
 		else if ((sd.soundlevelmusic<30)&&(sd.soundlevelmusic>=0)) {
 			sd.changeVolumeMusic(clip, 1);
-		}
+		} else { assert false;}
 	}
 	
 	/** Augmente le niveau des effets*/
@@ -158,7 +159,7 @@ public class MenuSon {
 		}
 		else if ((sd.soundleveleffect<=30)&&(sd.soundleveleffect>0)) {
 			sd.changeVolumeEffects(-1);
-		}
+		} else { assert false;}
 	}
 	
 	/** Diminue le niveau des effets*/
@@ -168,7 +169,7 @@ public class MenuSon {
 		}
 		else if ((sd.soundleveleffect<30)&&(sd.soundleveleffect>=0)) {
 			sd.changeVolumeEffects(1);
-		}
+		} else { assert false;}
 	}
 
 }

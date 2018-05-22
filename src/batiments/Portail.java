@@ -76,6 +76,7 @@ public class Portail extends Batiment {
 					listeinvoc.add(new CraneVolant(taille,joueur));
 					break;
 			default:
+					assert true;
 					break;
 		}
 		

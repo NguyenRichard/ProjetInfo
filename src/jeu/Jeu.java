@@ -156,7 +156,7 @@ public class Jeu {
 		case 3:
 			gc.setFill(Color.GREEN);
 			break;
-		}
+		default : assert false; break;}
 
 		gc.fillText(infojoueur, menudroite.positionxmenu*1.05, 40 );
 		gc.strokeText(infojoueur, menudroite.positionxmenu*1.05, 40 );
@@ -197,7 +197,7 @@ public class Jeu {
 	    		else if (menudroite.positioncurseur1==2) {
 	    			// gestion de la capture
 	    			menu = capt.capture();
-	    		}
+	    		} else { assert false; }
 	    		update=true;
 	    		updatemenu=true;
 	    		break;
@@ -217,6 +217,7 @@ public class Jeu {
 	    				fin();
 	    				break;
 	    			default:
+	    				assert false;
 	    				break;
 	    			}
 	    			if (!menuson.inmenusd) {menuoption.inmenuop=false;}
@@ -245,6 +246,7 @@ public class Jeu {
 	    		update=true;
 	    		break;
 	    	default:
+	    		assert false;
 	    		break;
 	    	}
 	    	break; 
@@ -293,6 +295,7 @@ public class Jeu {
 								menuinvoc.leftcurseurconf();
 							}
 					default:
+							assert false;
 							break;
 					}
 					break;
@@ -329,6 +332,7 @@ public class Jeu {
 							}
 							break;
 					default:
+							assert false;
 							break;
 					}
 					break;
@@ -363,6 +367,7 @@ public class Jeu {
 							}
 							break;
 					default:
+							assert false;
 							break;
 					}
 					break; 
@@ -398,6 +403,7 @@ public class Jeu {
 							}
 							break;
 					default:
+							assert false;
 							break;
 					}
 					break;

@@ -76,6 +76,9 @@ public class CreationCarte {
 	void changebatimentsave(int rang, int codeS) {
 		int codebatiment = (codeS/(50*50*50))%50;
 		int joueur = (codeS/(50*50*50*50))%50;
+		assert rang >= 0;
+		assert rang < 2501;
+		assert joueur < 5;
 		cartecode[rang] = cartecode[rang] - ((cartecode[rang]/125000)%50)*50 + codebatiment*125000; //on change le batiment dans la sauvegarde
 		cartecode[rang] = cartecode[rang] - ((cartecode[rang]/(6250000))%50)*50*50 + joueur*6250000; //de meme pour le joueur
 	}
@@ -88,7 +91,10 @@ public class CreationCarte {
 	void changeunitesave(int rang, int codeS) {
 		int codeunite = (codeS/50)%50;
 		int joueur = (codeS/(50*50))%50;
-		System.out.println(joueur);
+		//System.out.println(joueur);
+		assert rang >= 0;
+		assert rang < 2501;
+		assert joueur < 5;
 		cartecode[rang] = cartecode[rang] - ((cartecode[rang]/50)%50)*50 + codeunite*50; //on change l'unite dans la sauvegarde
 		cartecode[rang] = cartecode[rang] - ((cartecode[rang]/(50*50))%50)*50*50 + joueur*50*50; //de meme pour le joueur
 

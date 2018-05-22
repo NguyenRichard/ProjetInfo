@@ -185,7 +185,7 @@ public class MenuInfo {
 			case "faucheur" :
 				descriptiontype += "Unite qui transforme ses\nvictimes en Archer ou\nSoldat Squelette a sa \nsolde";
 				break;
-			}
+			default :  assert false; break; }
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			gc.setFill(Color.BISQUE);
 			gc.setStroke(Color.BLACK);

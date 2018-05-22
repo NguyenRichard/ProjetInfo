@@ -61,7 +61,7 @@ public class MenuPrinc {
 					SauvegardeCarte sauvegarde = new SauvegardeCarte(); crea.cartecode = sauvegarde.grillecarte; // si nouveau 
 				}
 				crea.increa=true;
-			}
+			} else {assert false;}
 			break; 
 		case UP: 
 			this.upcurseur();

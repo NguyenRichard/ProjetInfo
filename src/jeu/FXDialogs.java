@@ -20,6 +20,14 @@ import java.util.Optional;
 
 public class FXDialogs {
 	
+	/**
+	 * 	Affichage d'une fenetre pop up d'infromation
+	 * 
+	 * @param title
+	 * 		titre de la fenetre
+	 * @param message
+	 * 		message informatif
+	 */
 	public static void showInformation(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
@@ -30,6 +38,14 @@ public class FXDialogs {
         alert.showAndWait();
     }
 
+	/**
+	 * 	Affichage d'une fenetre pop up de mise en garde
+	 * 
+	 * @param title
+	 * 		titre de la fenetre
+	 * @param message
+	 * 		message de mise en garde
+	 */
     public static void showWarning(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.initStyle(StageStyle.UTILITY);
@@ -39,7 +55,15 @@ public class FXDialogs {
 
         alert.showAndWait();
     }
-
+    
+    /**
+	 * 	Affichage d'une fenetre pop up d'erreur
+	 * 
+	 * @param title
+	 * 		titre de la fenetre
+	 * @param message
+	 * 		message d'erreur
+	 */
     public static void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initStyle(StageStyle.UTILITY);
@@ -49,7 +73,15 @@ public class FXDialogs {
 
         alert.showAndWait();
     }
-
+    
+    /**
+	 * 	Affichage d'une fenetre pop up d'exception
+	 * 
+	 * @param title
+	 * 		titre de la fenetre
+	 * @param message
+	 * 		message d'exception
+	 */
     public static void showException(String title, String message, Exception exception) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initStyle(StageStyle.UTILITY);
@@ -88,6 +120,16 @@ public class FXDialogs {
     public static final String OK = "OK";
     public static final String CANCEL = "Cancel";
 
+    /**
+	 * 	Affichage d'une fenetre pop up avec choix multiple
+	 * 
+	 * @param title
+	 * 		titre de la fenetre
+	 * @param message
+	 * 		message informatif
+	 * @param options
+	 * 		noms des différents choix 
+	 */
     public static String showConfirm(String title, String message, String... options) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initStyle(StageStyle.UTILITY);
@@ -128,6 +170,16 @@ public class FXDialogs {
         }
     }
 
+    /**
+   	 * 	Affichage d'une fenetre pop up demandant un String ecrit au clavier
+   	 * 
+   	 * @param title
+   	 * 		titre de la fenetre
+   	 * @param message
+   	 * 		message informatif
+   	 * @param defaultValue
+   	 * 		Valeur par default du string demande
+   	 */
     public static String showTextInput(String title, String message, String defaultValue) {
         TextInputDialog dialog = new TextInputDialog(defaultValue);
         dialog.initStyle(StageStyle.UTILITY);

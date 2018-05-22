@@ -33,16 +33,13 @@ public class Case {
 	 * 			
 	 */
 	Case(int taillec, int rang){
-		
-		
-		
-		
 		this.unite=null;
 		this.taillec=taillec;
 		this.terrain = new Vide(taillec);
 		this.batiment=null;
 		this.rang = rang;
 	}
+	
 	public String toString() {
 		String affichage="Terrain: "+this.terrain.toString()+"\n";
 		if (this.unite !=null) {
@@ -95,6 +92,7 @@ public class Case {
 	 */
 	
 	int distance(Case cible) {
+		assert cible != null;
 		int distanceCol = Math.abs(this.rang%50-cible.rang%50);
 		int distanceLin = Math.abs(this.rang/50-cible.rang/50);
 		return distanceCol + distanceLin;

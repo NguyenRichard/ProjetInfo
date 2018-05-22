@@ -20,6 +20,7 @@ public class GestionDepl {
 	/**Pour avoir le Joueur en train de jouer */
 	Jeu jeu;	
 	
+	//Images necessaires pour le deplacement
 	Image bleu;
 	Image basdroite;
 	Image basgauche;
@@ -87,6 +88,10 @@ public class GestionDepl {
 	void arrowrender(Jeu jeu) {
 		int center = jeu.carte.selectionnemenu.rang;
 		int cursor = jeu.carte.selectionne.rang;
+		assert center < 2501;
+		assert center >= 0;
+		assert cursor < 2501;
+		assert cursor >= 0;
 		if (cursor!=center) {
 			
 			// Plus court chemin entre curseur et centre
@@ -108,6 +113,7 @@ public class GestionDepl {
 			
 			
 			for (int i=1;i<chemin.length-1;i++) {
+				// Pour l'affichage de la fleche il est necessaire de tester tous les cas possibles pour toute les differentes position de la fleche
 				if((jeu.updatemenu)||(jeu.carte.plateau[chemin[i]].unite!=null)||(jeu.carte.plateau[chemin[i]].batiment!=null)||(jeu.carte.plateau[chemin[i]].terrain.toString().compareTo("Eau")==0)) { //on render si on doit update ou si il y a unun element sur la case
 					if (((chemin[i-1]==chemin[i]-1)&&(chemin[i+1]==chemin[i]+50)) || ((chemin[i+1]==chemin[i]-1)&&(chemin[i-1]==chemin[i]+50))) {
 						int x = (chemin[i]%50)*carte.taillec-(jeu.carte.rangcorner%50)*carte.taillec;
@@ -203,6 +209,8 @@ public class GestionDepl {
 		int depl = carte.selectionne.unite.deplacement;
 		boolean volant = carte.selectionnemenu.unite.volant;
 		int center = carte.selectionne.rang;
+		assert center < 2501;
+		assert center >= 0;
 		deplist = new int[(2*depl+1)*(2*depl+1)];
 		
 		if (center/50!=(center-depl)/50) { // cote gauche

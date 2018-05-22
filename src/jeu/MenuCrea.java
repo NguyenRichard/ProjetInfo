@@ -65,8 +65,8 @@ public class MenuCrea {
         gc.strokeText(txt, positionxmenu+30, positionymenu + 260);
         //affichage du choixtype
         if (choixtype==0) {
-        	String type = "terrain";
-        	gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+        		String type = "terrain";
+        		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
             gc.setFill(Color.BISQUE);
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(1);
@@ -75,9 +75,9 @@ public class MenuCrea {
             gc.drawImage(cache, positionxmenu,positionymenu + 220);
             visualisation.terrain.render(gc, positionxmenu+65, positionymenu + 150);
         }
-        if (choixtype==1) {
-        	String type = "unitee";
-        	gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+        else if (choixtype==1) {
+        		String type = "unitee";
+        		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
             gc.setFill(Color.BISQUE);
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(1);
@@ -86,9 +86,9 @@ public class MenuCrea {
             visualisation.unite.render(gc, positionxmenu+65, positionymenu + 150);
             
         }
-        if (choixtype==2) {
-        	String type = "batiment";
-        	gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
+        else if (choixtype==2) {
+        		String type = "batiment";
+        		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
             gc.setFill(Color.BISQUE);
             gc.setStroke(Color.BLACK);
             gc.setLineWidth(1);
@@ -96,7 +96,7 @@ public class MenuCrea {
             gc.strokeText(type, positionxmenu+50, positionymenu + 85);
             visualisation.batiment.render(gc, positionxmenu+65, positionymenu + 150);
             
-        }
+        } else { assert false;}
         
 		if (choix) {
 			gc.drawImage(curseur, positionxmenu,positionymenu + 50 +positioncurseurcrea*85);

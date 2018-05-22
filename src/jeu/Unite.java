@@ -15,7 +15,7 @@ public abstract class Unite extends Element implements Cloneable{
 	protected int[] portee;
 	/**Entier qui represente le nombre de vie*/
 	protected int pv;
-	/**Entier qui permet de connaitre la quantité de pt de vie pr affichage barre de vie*/
+	/**Entier qui permet de connaitre la quantitï¿½ de pt de vie pr affichage barre de vie*/
 	protected int pvmax; 
 	/**Entier qui represente le nombre d'attaque*/
 	protected int dmg;
@@ -55,7 +55,7 @@ public abstract class Unite extends Element implements Cloneable{
 	public abstract String toString() ;
 	
 	/**
-	 * Sert a  dire si l'unite appartient au joueur en train de jouer.
+	 * Sert a dire si l'unite appartient au joueur en train de jouer.
 	 * 
 	 */
 	boolean goodplayer(int joueur) {

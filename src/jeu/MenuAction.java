@@ -65,6 +65,7 @@ public class MenuAction {
 	    		break;
 	
 	    default:
+	    		assert false;
 	    		break;
 		} 
 	}

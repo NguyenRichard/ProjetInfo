@@ -8,7 +8,7 @@ public class Dijkstra {
 	int sommetcible;
 	/**Noeud d'arrivee */
 	int sommetdepart;
-	/**Matrice semblable a  celle d'adjacence avec plus d'informations : { {distance,provenance,visite (1 non ou 0 oui)},...} */
+	/**Matrice semblable aï¿½ celle d'adjacence avec plus d'informations : { {distance,provenance,visite (1 non ou 0 oui)},...} */
 	int[][] sommets;
 	/**Nombre de sommets du graphe */
 	int nbsommets;
@@ -78,6 +78,7 @@ public class Dijkstra {
 	int pluspetitsommet() {
 		int res = INF;
 		int rang = sommetdepart;
+		assert rang < sommets.length;
 		for(int i = 0; i<sommets.length;i++) {
 			if (res > sommets[i][0]) {
 				res = sommets[i][0];
@@ -126,12 +127,12 @@ public class Dijkstra {
 	 * Affichage tableau de tableau d'entier
 	 * 			
 	 */
-	void displaytot(int[][] tab) {
+	void affichetot(int[][] tab) {
 		System.out.print("{");
-		display(tab[0]);
+		affiche(tab[0]);
 		for (int i = 1; i<tab.length;i++) {
 			System.out.print(", ");
-			display(tab[i]);
+			affiche(tab[i]);
 		}
 		System.out.println("}");
 	}
@@ -140,7 +141,7 @@ public class Dijkstra {
 	 * affichage tableau d'entier
 	 * 			
 	 */
-	void display(int[] tab) {
+	void affiche(int[] tab) {
 		System.out.print("{" + tab[0]);
 		for (int i = 1; i<tab.length;i++) {
 			System.out.print(", " + tab[i]);

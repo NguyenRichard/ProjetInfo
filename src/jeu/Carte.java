@@ -193,7 +193,7 @@ public class Carte {
 			// Si on depasse ce bord et que l'on reste dans les dimensions du plateau de jeu, on decalle l'affichage d'un cran vers la gauche
 			rangcorner-=1;
 			selectionne=plateau[selectionne.rang-1];
-		}
+		} else { assert false; }
 	}
 	
 	/**
@@ -209,7 +209,7 @@ public class Carte {
 		else if (rangcorner%50 < 50-nombrecaseaffichee ) {
 			rangcorner+=1;
 			selectionne=plateau[selectionne.rang+1];
-		}
+		} else { assert false; }
 	}
 	
 	/**
@@ -225,7 +225,7 @@ public class Carte {
 		else if (rangcorner/50 > 0 ) {
 			rangcorner-=50;
 			selectionne=plateau[selectionne.rang-50];
-		}
+		} else { assert false; }
 	}
 	
 	/**
@@ -241,7 +241,7 @@ public class Carte {
 		else if (rangcorner/50 < 50-nombrecaseaffichee ) {
 			rangcorner+=50;
 			selectionne=plateau[selectionne.rang+50];
-		}
+		} else { assert false; }
 	}
 
 	/**deplace l'unite de la case a vers la case b
@@ -253,7 +253,7 @@ public class Carte {
 		if (a != b) {
 		b.unite = a.unite;
 		a.unite = null;
-		}
+		} else { assert false; }
 	}
 	
 	/*_Creation de la carte du jeu___________________________________________________________________________________________________ */
@@ -261,19 +261,25 @@ public class Carte {
 	 */
 
     void addterrain(int rang, Terrain terrain) {
+    		assert rang >= 0;
+    		assert rang < 2501;
         plateau[rang].terrain=terrain;
     }
     
     /**Fonction qui ajoute le batiment sur le rang "rang" de la carte.
      */
     void addbatiment(int rang, Batiment batiment) {
-    	plateau[rang].batiment=batiment;
+    		assert rang >= 0;
+		assert rang < 2501;
+		plateau[rang].batiment=batiment;
     }
     
     /**
      * Fonction qui ajoute l'unite "unite" sur le rang "rang" de la carte. 
      */
     void addunite(int rang, Unite unite) {
+    		assert rang >= 0;
+		assert rang < 2501;
     		plateau[rang].unite=unite;
     }
     
@@ -289,7 +295,7 @@ public class Carte {
      * @see Case#rang
      */
     void curseurRender(GraphicsContext gc) {
-    	int x = (selectionne.rang%50 - rangcorner%50)*taillec;
+    		int x = (selectionne.rang%50 - rangcorner%50)*taillec;
 		int y = (selectionne.rang/50 - rangcorner/50)*taillec;
 		gc.drawImage(curseur, x, y);
     }
@@ -297,8 +303,8 @@ public class Carte {
     /*_Affichage equipe dans le terminal______________________________________________________________________________________ */
     
     void affichageEquipe() {
-    	for (int k = 0; k < joueurs.size(); k++) {
-	    	joueurs.get(k).printSituation();
+    		for (int k = 0; k < joueurs.size(); k++) {
+    			joueurs.get(k).printSituation();
 	    }
 		
     }
@@ -313,14 +319,16 @@ public class Carte {
      * @see #kdefine(int)
      */
     boolean isShown(int rang) {
-    	for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
+    		assert rang >= 0;
+		assert rang < 2501;
+    		for (int k = rangcorner; k <= rangcorner+(nombrecaseaffichee-1)*51; k++) {
     		// test pour chaque case affiche
 			if(k==rang) {
 				return true;
 			}
 			k=kdefine(k);
 		}
-    	return false;
+    		return false;
     }
 	   
 	/**
@@ -328,7 +336,9 @@ public class Carte {
 	 * @param rang le rang de la case a centrer
 	 */
     void centre(int rang) {
-    	int colcase = rang%50;
+    		assert rang >= 0;
+		assert rang < 2501;
+    		int colcase = rang%50;
 	   	int ligncase = rang/50;
 	   	if(colcase<5) {colcase = 5;}
 	   	if(colcase>43) {colcase = 43;}
@@ -341,9 +351,11 @@ public class Carte {
      * @param rang rang a tester et a centrer
      */
     void adaptaffichage(int rang) {
-    	if(!isShown(rang)){
-    		centre(rang);
-    	}
+    		assert rang >= 0;
+		assert rang < 2501;
+		if(!isShown(rang)){
+    			centre(rang);
+		}
     }
     
     /**
@@ -352,6 +364,7 @@ public class Carte {
      * @param joueur joueur possedant l'unite
      */
     void delunite(Unite unite,int joueur) {
+    		assert joueur <= 4;
 	    joueurs.get(joueur).remove(unite);
     }
     
@@ -361,7 +374,8 @@ public class Carte {
      * @param joueur joueur possedant l'unite
      */
     void delbatiment(Case casebatiment,int joueur) {
-    	joueurs.get(joueur).remove(casebatiment);
+    		assert joueur <= 4;
+    		joueurs.get(joueur).remove(casebatiment);
     }
 
     /**
@@ -372,37 +386,38 @@ public class Carte {
      * @return 0 si la partie continue et le numero du joueur gagnant sinon
      */
 	public void perdu(int joueur) {
+			assert joueur <= 4;
 			System.out.println(joueur+" a perdu !");
 			Joueur perdant = joueurs.get(joueur);
 			int res = 0;
 			int i = 0;
-            while( i<2500 && perdant.possedeunite()) {
-                if((plateau[i].unite != null)&&(plateau[i].unite.joueur == joueur)) {
+            	while(i<2500 && perdant.possedeunite()) {
+            		if((plateau[i].unite != null)&&(plateau[i].unite.joueur == joueur)) {
                     delunite(plateau[i].unite,joueur);
                     plateau[i].unite = null;
-                }
-                i++;
-            }
-			while(perdant.possedebatiment()) {
-				Case casebatiment = perdant.possessions.get(perdant.possessions.size()-1);
-				casebatiment.batiment.joueur=0;
-				perdant.possessions.remove(perdant.possessions.size()-1);
-			}
-			perdant.isalive=false;
-			int j = 0;
-			for(int k=1; k<=4;k++){
+            		}
+            		i++;
+            	}
+            	while(perdant.possedebatiment()) {
+            		Case casebatiment = perdant.possessions.get(perdant.possessions.size()-1);
+            		casebatiment.batiment.joueur=0;
+            		perdant.possessions.remove(perdant.possessions.size()-1);
+            	}
+            	perdant.isalive=false;
+            	int j = 0;
+            	for(int k=1; k<=4;k++){
 				if ((joueurs.get(k).isalive)){
 					j++;
 					res = k;
 				}
-			}
-			if (j==1) {
-				System.out.println("gagné ");
-				ecranfin=res;
-			}
-			else {
-				nomperdant=perdant.toString();
-			}
+            	}
+            	if (j==1) {
+            		System.out.println("gagné ");
+            		ecranfin=res;
+            	}
+            	else {
+            		nomperdant=perdant.toString();
+            	}
 			
 	}
 
@@ -487,6 +502,9 @@ public class Carte {
 	void remakeunite(int k, int codeS, boolean startgame) {
 		int codeunite = (codeS/50)%50;
 		int joueur = (codeS/(50*50))%50;
+		assert joueur <= 5;
+		assert k >= 0;
+		assert k < 2501;
 		
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types d'unitees !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 		// Ne pas oublier de modifier le nombre total d'unite dans la fonction en dessous
@@ -555,6 +573,9 @@ public class Carte {
 	void remakebatiment(int k, int codeS, boolean startgame) {
 		int codebatiment = (codeS/(50*50*50))%50;
 		int joueur = (codeS/(50*50*50*50))%50;
+		assert joueur < 5;
+		assert k >= 0;
+		assert k < 2501;
 		if (codebatiment !=0) {
 		/*~~~~~~Partie a mettre a jour quand on ajoute des types de batiments !~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	*/
 			if (codebatiment == 1) {

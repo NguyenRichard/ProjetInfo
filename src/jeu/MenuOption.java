@@ -9,7 +9,7 @@ public class MenuOption {
 	int menu;
 	/** Position du menu sur l'axe des abscisses*/
 	int positionxmenu;
-	/** Position du menu sur l'axe des ordonnées*/
+	/** Position du menu sur l'axe des ordonnï¿½es*/
 	int positionymenu;
 	/** Position du curseur */
 	int positioncurseur;
@@ -55,6 +55,7 @@ public class MenuOption {
 				gc.drawImage(curseur, positionxmenu, positionymenu+260);
 				break;
 			default:
+				assert false;
 				break;
 			}
 		}
@@ -74,6 +75,7 @@ public class MenuOption {
 				gc.drawImage(curseur, positionxmenu, positionymenu+260);
 				break;
 			default:
+				assert false;
 				break;
 			}
 		}
@@ -93,7 +95,7 @@ public class MenuOption {
 			if (positioncurseur<=-1) {
 				positioncurseur=maxpos-1;
 			}
-		}
+		} else { assert false; }
 	}
 	/** Deplacement du curseur vers le bas*/
 	public void downcurseur() {
@@ -107,7 +109,7 @@ public class MenuOption {
 			if (positioncurseur>=maxpos) {
 				positioncurseur=0;
 			}
-		}
+		} else { assert false; }
 	}
 	
 	
