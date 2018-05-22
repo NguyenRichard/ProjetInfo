@@ -45,7 +45,7 @@ public class MenuAction {
 		gc.drawImage(menucache, positionxmenu, 0);
 	    switch(jeu.menu) {
 	    case 1:
-	    		if (jeu.carte.selectionnemenu.unite.type.compareTo("soigneur")!=0){
+	    		if (jeu.carte.selectionnemenu.unite.type.compareTo("soigneur")!=0 &&jeu.carte.selectionnemenu.unite.type.compareTo("zonesoin")!=0){
 	    			gc.drawImage(menu1attaque, positionxmenu*1.05, positionymenu);
 	    		}
 	    		else {

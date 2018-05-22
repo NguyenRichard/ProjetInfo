@@ -18,11 +18,11 @@ public class MenuSon {
 	int positioncurseur;
 	/** Position maximale du curseur dans le menu 0*/
 	int maxpos;
-	/** Curseur du popup confiramtion */
+	/** Curseur du popup confirmation */
 	Image curseur;
 	/** Image du menu 0*/
 	Image menuim;
-	/** Boolean qui decrit si on est dans le menu option ou non*/
+	/** Boolean qui decrit si on est dans le menu de son ou non*/
 	boolean inmenusd;
 	boolean update;
 	Clip clip;

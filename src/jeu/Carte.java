@@ -19,10 +19,12 @@ import terrain.*;
 import terrain.Vide;
 import unite.Abeille;
 import unite.AbeilleSamourai;
+import unite.ApprentiNecromancien;
 import unite.ArcherSquelette;
 import unite.CraneVolant;
 import unite.EpeisteVolant;
 import unite.Fourmis;
+import unite.MaitreNecromancien;
 import unite.Moustique;
 import unite.PapillonPsychique;
 import unite.Scarabe;
@@ -413,7 +415,7 @@ public class Carte {
 				}
             	}
             	if (j==1) {
-            		System.out.println("gagné ");
+            		System.out.println("gagne ");
             		ecranfin=res;
             	}
             	else {
@@ -549,6 +551,12 @@ public class Carte {
 				else if (codeunite ==12) {
 					addunite(k,new CraneVolant(taillec,joueur));
 				}
+				else if (codeunite == 13) {
+					addunite(k,new ApprentiNecromancien(taillec,joueur));
+				}
+				else if (codeunite == 14) {
+					addunite(k,new MaitreNecromancien(taillec,joueur));
+				}
 				if (startgame) {
 					joueurs.get(joueur).add(plateau[k].unite); //on ajoute l'unite la liste d'unites du bon joueur si on est en jeu
 				}
@@ -562,7 +570,7 @@ public class Carte {
 	 * 
 	 * Permet le defilement du choix des unites dans le menucrea (qui correspond a la partie modification de la sauvegarde)
 	 */
-	int nombretotunite() {return 12;}
+	int nombretotunite() {return 14;}
 
 	/**ajoute le batiment correspondant au bon code au rang k de la carte
 	 * 

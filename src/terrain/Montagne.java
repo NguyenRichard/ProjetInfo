@@ -11,7 +11,7 @@ public class Montagne extends Terrain {
 		maxcompteur = 4000;
 		images = new Image[1];
 		for (int k = 0; k < images.length; k++ ) {
-			images[k] = new Image("terrains/Montagne.png",taille, taille,false,false);
+			images[k] = new Image("terrains/montagne.png",taille, taille,false,false);
 		}
 		deplacement=5;
 	}

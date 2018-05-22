@@ -9,13 +9,13 @@ public class MenuOption {
 	int menu;
 	/** Position du menu sur l'axe des abscisses*/
 	int positionxmenu;
-	/** Position du menu sur l'axe des ordonn�es*/
+	/** Position du menu sur l'axe des ordonnees*/
 	int positionymenu;
 	/** Position du curseur */
 	int positioncurseur;
 	/** Position maximale du curseur dans le menu 0*/
 	int maxpos;
-	/** Curseur du popup confiramtion */
+	/** Curseur du popup confirmation */
 	Image curseur;
 	/** Image du menu 0*/
 	Image menu0;
