@@ -19,7 +19,7 @@ public class CraneVolant extends Unite {
 		pvmax=99;
 		pv=pvmax;
 		dmg=25;
-		cost=60;
+		cost=80;
 		type="zone2";
 		volant = true;
 	}

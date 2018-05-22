@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import son.Son;
 import terrain.Montagne;
 import terrain.Vide;
+import unite.ArcherSquelette;
+import unite.SkeletonSoldier;
 
 public class GestionAtq {
 	/**La portee d'attaque maximale de l'unite en train d'attaquer */
@@ -76,7 +78,19 @@ public class GestionAtq {
 		if (carte.selectionne.unite.pv <= 0) {
 			System.out.println("AA"+carte.selectionne.unite+carte.selectionne.batiment);
 	    	carte.joueurs.get(carte.selectionne.unite.joueur).remove(carte.selectionne.unite); //on enleve l'unite de la liste d'unite du joueur
-	    	carte.selectionne.unite=null;
+	    	if 	(carte.selectionnemenu.unite.type.compareTo("faucheur")== 0) {
+	    		if(carte.selectionne.unite.portee[1]==1) {
+	    			carte.selectionne.unite=new SkeletonSoldier(carte.taillec,carte.selectionnemenu.unite.joueur);
+	    		}
+	    		else {
+	    			carte.selectionne.unite=new ArcherSquelette(carte.taillec,carte.selectionnemenu.unite.joueur);
+	    		}
+	    		carte.joueurs.get(carte.selectionnemenu.unite.joueur).add(carte.selectionne.unite);
+	    		carte.selectionne.unite.valable=false;
+	    	}
+	    	else {
+	    		carte.selectionne.unite=null;
+	    	}
 	    	pvendiminution = false;
 	    	if(carte.selectionne.batiment!=null && carte.selectionne.batiment.entraincapture) {
 	    		carte.selectionne.batiment.pv=100;

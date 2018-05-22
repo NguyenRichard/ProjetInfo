@@ -71,8 +71,8 @@ public class Portail extends Batiment {
 			case 2:
 					listeinvoc.add(new SkeletonSoldier(taille,joueur));
 					listeinvoc.add(new ArcherSquelette(taille,joueur));
-					listeinvoc.add(new TankSquelette(taille,joueur));
 					listeinvoc.add(new ZombieMineur(taille,joueur));
+					listeinvoc.add(new TankSquelette(taille,joueur));
 					listeinvoc.add(new CraneVolant(taille,joueur));
 					break;
 			default:

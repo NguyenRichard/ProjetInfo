@@ -182,6 +182,9 @@ public class MenuInfo {
 			case "zonesoin" :
 				descriptiontype += "Unite capable de soigner \ndans une petite zone \n(peut toucher des ennemis)";
 				break;
+			case "faucheur" :
+				descriptiontype += "Unite qui transforme ses\nvictimes en Archer ou\nSoldat Squelette a sa \nsolde";
+				break;
 			}
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			gc.setFill(Color.BISQUE);

@@ -19,6 +19,7 @@ public class TankSquelette extends Unite{
 			pv=pvmax;
 			dmg=40;
 			cost=70;
+			type = "faucheur";
 		}
 		
 		public String toString() {
