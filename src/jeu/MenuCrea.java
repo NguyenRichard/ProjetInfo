@@ -29,6 +29,7 @@ public class MenuCrea {
 	int numjoueur;
 	/**Tableau d'element permettant de faire le lien entre le code de l'element et le type de terrain */
 	ArrayList<Terrain> referencecodeterrain;
+	/**Cette case sert a pouvoir afficher un apercu de l'element en cours de selection */
 	Case visualisation;
 	/**Entier a partir du quel affiche le menu lateral droit**/
     int positionxmenu;

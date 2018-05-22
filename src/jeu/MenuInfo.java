@@ -1,6 +1,6 @@
 package jeu;
 
-import batiments.Portal;
+import batiments.Portail;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 
 public class MenuInfo {
 	/**Carte du jeu */
-	Map map;
+	Carte carte;
 	/**Image de l'element qu'il faut afficher */
 	Image[] images;
 	/**position x du menu*/
@@ -18,19 +18,19 @@ public class MenuInfo {
 	/**position y du menu*/
 	int positionymenuinfo;
 
-	MenuInfo(Map map, int positionxmenu) {
-		this.map = map;
+	MenuInfo(Carte carte, int positionxmenu) {
+		this.carte = carte;
 		this.positionxmenuinfo=positionxmenu+10;
 		positionymenuinfo=500;
 	}
 
 	MenuInfo(int positionxmenu){
 		this.positionxmenuinfo=positionxmenu+10;
-		
+
 	}
 
 	void MenuInforender(GraphicsContext gc) {
-		Case selectionne = map.selectionne;
+		Case selectionne = carte.selectionne;
 		if (selectionne != null) {
 
 			if (selectionne.unite!=null) {
@@ -47,8 +47,8 @@ public class MenuInfo {
 				gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
 				gc.fillText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
 				gc.strokeText(selectionne.batiment.toString(), positionxmenuinfo*1.03, positionymenuinfo);
-				if (selectionne.batiment instanceof Portal) {
-					Portal portail = (Portal) selectionne.batiment;
+				if (selectionne.batiment instanceof Portail) {
+					Portail portail = (Portail) selectionne.batiment;
 					if (portail.uniteainvoque!=null) {
 						portail.uniteainvoque.render(gc, positionxmenuinfo+150, positionymenuinfo+50);
 					}
@@ -64,16 +64,16 @@ public class MenuInfo {
 	}
 
 	/**
-	 * Permet d'afficher les infos d'une unité ainsi qu'un visuel
+	 * Permet d'afficher les infos d'une unite ainsi qu'un visuel
 	 * 
-	 * Parameters :
 	 * 
-	 * gc : GarphicsContext dans lequel le jeu se passe
-	 * unite : Unite à afficher
-	 * positionymenuinfo : position verticale de l'affichage
-	 * pourinvocation : booleen indiquant si on veut afficher le cout (utile lors des invocations
-	 * uniteinvoquee : indique si l'unite est celle en train d'être invoquée (pour être indiqué au joueur)
-	 * */
+	 * 
+	 *@param gc GarphicsContext dans lequel le jeu se passe
+	 *@param unite Unite a afficher
+	 *@param positionymenuinfo position verticale de l'affichage
+	 *@param pourinvocation booleen indiquant si on veut afficher le cout (utile lors des invocations
+	 *@param uniteinvoquee indique si l'unite est celle en train d'etre invoquee (pour etre indique au joueur)
+	 */
 	void InfoUniterender(GraphicsContext gc, Unite unite, int positionymenuinfo, boolean pourinvocation) {
 		int animcompteur= unite.animcompteur;
 		int maxcompteur = unite.maxcompteur;
@@ -84,8 +84,10 @@ public class MenuInfo {
 			k=0;
 		}
 		gc.drawImage(images[k],positionxmenuinfo+10,positionymenuinfo+50);
-
-		String txtatq = "attaque : " + unite.dmg;
+		
+		String txtatq;
+		if (unite.dmg>0) {txtatq = "attaque : " + unite.dmg; }
+		else {txtatq = "soin : " + (-1)*unite.dmg;}
 		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 		gc.setFill(Color.BISQUE);
 		gc.setStroke(Color.BLACK);
@@ -120,7 +122,7 @@ public class MenuInfo {
 			gc.fillText(txtportee, positionxmenuinfo*1.15, positionymenuinfo+150);
 			gc.strokeText(txtportee, positionxmenuinfo*1.15, positionymenuinfo+150);
 		}
-		
+
 		if (unite.volant) { //affichage dans menuinfo des specifications liees au type de l'unite
 			String type = "type : " + unite.type + " | " + "volant";
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -139,12 +141,12 @@ public class MenuInfo {
 			gc.fillText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
 			gc.strokeText(type, positionxmenuinfo*1.03, positionymenuinfo+200);
 		}
-		
-		
+
+
 		String txtnom = unite.toString();
 		gc.fillText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
 		gc.strokeText(txtnom, positionxmenuinfo*1.03, positionymenuinfo);
-		
+
 		if(pourinvocation) {
 			String deplacement = "deplacement : " + unite.deplacement;
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
@@ -153,33 +155,33 @@ public class MenuInfo {
 			gc.setLineWidth(1);
 			gc.fillText(deplacement, positionxmenuinfo*1.03, positionymenuinfo+250);
 			gc.strokeText(deplacement, positionxmenuinfo*1.03, positionymenuinfo+250);
-			
+
 			String descriptiontype = "----------------\n";
 			switch(unite.type){
-				case "soldat" :
-					descriptiontype += "Unite specialise dans le \ncorp a corp";
-					break;
-				case "soigneur" :
-					descriptiontype += "Unite capable de soigner \nmais pas de se battre";
-					break;
-				case "assassin" :
-					descriptiontype += "Unite qui peut rejouer \nchaque fois qu'elle \nporte le coup de grace";
-					break;
-				case "zone1" :
-					descriptiontype += "Unite infligeant ses degats \ndans une petite zone\n(peut toucher des allies)";
-					break;
-				case "zone2" :
-					descriptiontype += "Unite infligeant ses degats \ndans une grande zone\n(peut toucher des allies)";
-					break;
-				case "ligne" :
-					descriptiontype += "Unite infligeant ses degats \nsur une ligne\n(peut toucher des allies)";
-					break;
-				case "mineur" :
-					descriptiontype += "Unite capable de capturer \nen 1 tour au lieu de 2 \nmais pas de se battre";
-					break;
-				case "zonesoin" :
-					descriptiontype += "Unite capable de soigner \ndans une petite zone \n(peut toucher des ennemis)";
-					break;
+			case "soldat" :
+				descriptiontype += "Unite specialise dans le \ncorp a corp";
+				break;
+			case "soigneur" :
+				descriptiontype += "Unite capable de soigner \nmais pas de se battre";
+				break;
+			case "assassin" :
+				descriptiontype += "Unite qui peut rejouer \nchaque fois qu'elle \nporte le coup de grace";
+				break;
+			case "zone1" :
+				descriptiontype += "Unite infligeant ses degats \ndans une petite zone\n(peut toucher des allies)";
+				break;
+			case "zone2" :
+				descriptiontype += "Unite infligeant ses degats \ndans une grande zone\n(peut toucher des allies)";
+				break;
+			case "ligne" :
+				descriptiontype += "Unite infligeant ses degats \nsur une ligne\n(peut toucher des allies)";
+				break;
+			case "mineur" :
+				descriptiontype += "Unite capable de capturer \nen 1 tour au lieu de 2 \nmais pas de se battre";
+				break;
+			case "zonesoin" :
+				descriptiontype += "Unite capable de soigner \ndans une petite zone \n(peut toucher des ennemis)";
+				break;
 			}
 			gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 			gc.setFill(Color.BISQUE);

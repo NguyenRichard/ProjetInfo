@@ -8,9 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import son.Son;
 import javax.sound.sampled.Clip;
@@ -42,10 +39,8 @@ public class Main extends Application { //Nouveau test
 	    root.getChildren().add(canvas);
 	    GraphicsContext gc = canvas.getGraphicsContext2D();
 	    Jeu game = new Jeu(gc,width,height,sd,clip);	// Creation d'une partie
-	    CreationMap crea = new CreationMap(gc, "creamap.ser",width,height,game.ingame,sd,clip);	// Creation de l'editeur
+	    CreationCarte crea = new CreationCarte(gc, "creacarte.ser",width,height,sd,clip);	// Creation de l'editeur. C'est ici qu'on choisi le nom de la sauvegarde !!
 	   	MenuPrinc menu = new MenuPrinc(game,crea,width,height); //Creation du menu
-		String start = "Commencer la partie";
-		String edit = "Editer la carte";
 		menu.render(gc);
 		
 		
@@ -56,56 +51,12 @@ public class Main extends Application { //Nouveau test
 
 				if (game.ingame) {
 					game.update();
-					Joueur entrainjouer = game.map.joueurs.get(game.entrainjouer);
-					String infojoueur = "Joueur: "+entrainjouer+"\nRessources: "+entrainjouer.ressources;
-					gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-					gc.setLineWidth(1);
-					switch(game.entrainjouer) {
-					case 4: 
-						gc.setFill(Color.WHITE);
-						break;
-					case 1:
-						gc.setFill(Color.BLUE);
-						break;
-					case 2:
-						gc.setFill(Color.RED);
-						break;
-					case 3:
-						gc.setFill(Color.GREEN);
-						break;
-					}
-
-					gc.fillText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
-					gc.strokeText(infojoueur, game.menudroite.positionxmenu*1.05, 40 );
-					gc.setFill(Color.BISQUE);
-					gc.setStroke(Color.BLACK);
 				}
 				if (crea.increa) {
 					crea.update();
 				}
 				if (!(menu.game.ingame || menu.crea.increa)) {
-					if (menu.update) {
-						gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 32));
-						gc.setFill(Color.WHITE);
-						gc.setStroke(Color.BLACK);
-						gc.setLineWidth(1);
-						if (menu.positioncurseur == 0) {
-							menu.render(gc);
-							gc.strokeText(edit, 360, 450 );
-							gc.fillText(edit, 360, 450 );
-							gc.setFill(Color.YELLOW);
-							gc.fillText(start, 360, 400 );
-						}
-						else if (menu.positioncurseur == 1) {
-							menu.render(gc);
-							gc.fillText(start, 360, 400 );
-							gc.strokeText(start, 360, 400 );
-							gc.setFill(Color.YELLOW);
-							gc.fillText(edit, 360, 450 );
-						}
-						menu.update = false;
-
-					}
+					menu.update();
 				}
 			}
 		}.start();

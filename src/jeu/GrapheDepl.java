@@ -7,16 +7,16 @@ public class GrapheDepl {
 	int firstcase;
 	int centre;
 	int Nmatricedepl;
-	Map map;
+	Carte carte;
 	int entraindejouer;
 	boolean volant;
 	
-	public GrapheDepl(int depl,int firstcase,int centre, int Nmatricedepl, Map map, int entraindejouer, boolean volant) {
+	public GrapheDepl(int depl,int firstcase,int centre, int Nmatricedepl, Carte carte, int entraindejouer, boolean volant) {
 		this.depl=depl;
 		this.firstcase=firstcase;
 		this.centre=centre;
 		this.Nmatricedepl=Nmatricedepl;
-		this.map=map;
+		this.carte=carte;
 		this.cases=transforme();
 		this.entraindejouer=entraindejouer;
 		this.volant = volant;
@@ -61,12 +61,12 @@ public class GrapheDepl {
 		int[][] res = new int[N][N];
 		for (int i=0;i<N;i++) {
 			for (int j=0;j<N;j++) {
-				if ((map.plateau[firstcase+i*NN+j].unite!=null)&&(map.plateau[firstcase+i*NN+j].unite.joueur!=entraindejouer)) {
+				if ((carte.plateau[firstcase+i*NN+j].unite!=null)&&(carte.plateau[firstcase+i*NN+j].unite.joueur!=entraindejouer)) {
 					res[i][j]=100;
 				}
 				else {
 					if (!volant) {
-						res[i][j]=map.plateau[firstcase+i*NN+j].terrain.deplacement;
+						res[i][j]=carte.plateau[firstcase+i*NN+j].terrain.deplacement;
 					}
 					else {res[i][j]=1;} //on ne prend pas en compte le cout en deplacement du terrain si c'est une unite volante
 				}

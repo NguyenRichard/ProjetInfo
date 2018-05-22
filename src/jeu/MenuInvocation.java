@@ -1,6 +1,6 @@
 package jeu;
 
-import batiments.Portal;
+import batiments.Portail;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -21,7 +21,7 @@ public class MenuInvocation {
 	/** Indicateur de si l'unite est dans les moyens du joueur*/
 	Image indicateurvalide;
 	/** Portail ou se deroule l'invocation*/
-	Portal portail;
+	Portail portail;
 	/** Position du curseur */
 	int positioncurseur;
 	/** Position du menu sur l'axe des abscisses*/
@@ -34,7 +34,7 @@ public class MenuInvocation {
 	int positioncurseurconf;
 	
 	
-	MenuInvocation(Portal portail, int positionxmenuinfo) {
+	MenuInvocation(Portail portail, int positionxmenuinfo) {
 		
 		fond = new Image("menuinvoc/fondmenuinvoc.png", 1100, 750, false, false);
 		curseur = new Image("menuinvoc/curseurinvoc.png", 730, 75, false, false );
