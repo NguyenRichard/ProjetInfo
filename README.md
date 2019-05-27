@@ -12,6 +12,7 @@ Enter to call the menu, R to remove a cell in creation mode.
 The rules are simple:
 Each player have several building and units.
 There are two types of building: one to summon more unit (the cyan portal) and another to generate resources for summoning. (the golden floating crystal)
+
 To win, the player have to capture all the summoning portal of the oponents or have them surrender.
 Units have different range of movement/attack, type of attack, HP, and speed of capture.
 
