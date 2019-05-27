@@ -18,4 +18,5 @@ Units have different range of movement/attack, type of attack, HP, and speed of 
 Only two armies are playable at moment: the first one is an insect army and the second one is the undead army. The last one was planned to be chinese
 mythological army but only one sprite has been made.
 
+//To play, you can either launch an IDE like eclipse and Run the Main or simply execute DimensionalWar.jar
 For more information about how the code is structured you can check out the folder Diagramme. It is available in both English and French.
