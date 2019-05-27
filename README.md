@@ -20,4 +20,5 @@ Only two armies are playable at moment: the first one is an insect army and the 
 mythological army but only one sprite has been made.
 
 //To play, you can either launch an IDE like eclipse and Run the Main or simply execute DimensionalWar.jar
-For more information about how the code is structured you can check out the folder Diagramme. It is available in both English and French.
+
+//For more information about how the code is structured you can check out the folder Diagramme. It is available in both English and French.
